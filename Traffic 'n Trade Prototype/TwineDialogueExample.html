@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Traffic & Trade - Protótipo V2</title>
+<style>
+  body { font-family: monospace; background-color: #121212; color: #e0e0e0; }
+  #passages { max-width: 650px; margin: 40px auto; padding: 25px; border: 2px solid #333; background: #1e1e1e; border-radius: 8px; }
+  a { color: #4ea8de; text-decoration: none; font-weight: bold; }
+  a:hover { color: #90e0ef; text-decoration: underline; }
+  .stats-box { background: #0a0a0a; padding: 12px; margin-bottom: 20px; border: 1px solid #444; border-radius: 4px; display: flex; justify-content: space-between; }
+  .alert { color: #ff6b6b; font-weight: bold; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/twine-sugarcube@2.36.1/dist/sugarcube.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/twine-sugarcube@2.36.1/dist/sugarcube.min.css">
+</head>
+<body>
+<div id="passages"></div>
+
+<tw-storydata name="TrafficAndTrade_V2" startnode="1" format="SugarCube" format-version="2.36.1" hidden>
+
+<!-- 1. INICIALIZAÇÃO DE VARIÁVEIS -->
+<tw-passagedata pid="1" name="StoryInit" tags="" position="100,100">
+<<set $investidores to 50>>
+<<set $clientes to 50>>
+<<set $governo to 50>>
+
+<<set $flag_auditoria to false>>
+<<set $flag_greve_agendada to false>>
+</tw-passagedata>
+
+<!-- 2. TELA DE INÍCIO -->
+<tw-passagedata pid="2" name="Start" tags="" position="100,250">
+**TRAFFIC & TRADE: GESTÃO DE CRISE**
+
+Uma vaga de gestor abriu após boatos de um 'acidente de trabalho' na cidade[cite: 1]. Seu objetivo é gerenciar os pilares da empresa sem ser demitido ou preso.
+
+[[Assumir o Cargo|Gerenciador]]
+</tw-passagedata>
+
+<!-- 3. HUB CENTRAL (O GERENCIADOR DE CARTAS) -->
+<tw-passagedata pid="3" name="Gerenciador" tags="" position="300,250">
+<<nobr>>
+  /* 1. Verificação de Condições de Derrota */
+  <<if $investidores lte 0>>
+    <<goto "GameOver_Investidores">>
+  <<elseif $governo lte 0>>
+    <<goto "GameOver_Governo">>
+  <<elseif $clientes lte 0>>
+    <<goto "GameOver_Clientes">>
+  
+  /* 2. Prioridade: Cartas de Desdobramento por Flags */
+  <<elseif $flag_auditoria is true and random(1, 100) gte 40>>
+    <<goto "CARD_104_Batida_Fiscal">>
+  <<elseif $flag_greve_agendada is true>>
+    <<goto "CARD_105_Dia_Da_Greve">>
+  
+  /* 3. Baralho de Cartas Aleatórias Comuns */
+  <<else>>
+    <<set _sorteio to random(1, 3)>>
+    <<if _sorteio is 1>>
+      <<goto "CARD_101_Acidente_Fabrica">>
+    <<elseif _sorteio is 2>>
+      <<goto "CARD_102_Corte_Custos_Seguranca">>
+    <<else>>
+      <<goto "CARD_103_Campanha_Marketing">>
+    <</if>>
+  <</if>>
+<</nobr>>
+</tw-passagedata>
+
+<!-- BARRA DE STATUS (CABEÇALHO DE TODA CARTA) -->
+<tw-passagedata pid="4" name="PassageHeader" tags="" position="100,400">
+<div class="stats-box">
+  <span>💼 Investidores: $investidores%</span>
+  <span>🤝 Clientes: $clientes%</span>
+  <span>🏛️ Governo: $governo%</span>
+</div>
+</tw-passagedata>
+
+<!-- CARTAS COMUNS -->
+<tw-passagedata pid="5" name="CARD_101_Acidente_Fabrica" tags="" position="500,100">
+Um boato sobre um sério acidente de trabalho em uma das fábricas começou a circular nas redes sociais[cite: 1].
+
+[[Subornar a imprensa local para abafar a notícia|Gerenciador][
+  $investidores -= 10;
+  $governo -= 10;
+  $flag_auditoria to true
+]]
+
+[[Emitir um pedido de desculpas público e pagar os custos médicos|Gerenciador][
+  $investidores -= 15;
+  $clientes += 15
+]]
+</tw-passagedata>
+
+<tw-passagedata pid="6" name="CARD_102_Corte_Custos_Seguranca" tags="" position="500,200">
+A equipe financeira sugere desligar os sensores de segurança do galpão principal para economizar energia elétrica.
+
+[[Aprovar o corte de custos|Gerenciador][
+  $investidores += 15;
+  $governo -= 15;
+  $flag_greve_agendada to true
+]]
+
+[[Manter os sensores ligados|Gerenciador][
+  $investidores -= 10
+]]
+</tw-passagedata>
+
+<tw-passagedata pid="7" name="CARD_103_Campanha_Marketing" tags="" position="500,300">
+A equipe de marketing quer lançar uma campanha agressiva zombando da qualidade do concorrente[cite: 1].
+
+[[Autorizar a campanha|Gerenciador][
+  $clientes += 15;
+  $investidores -= 5
+]]
+
+[[Optar por um marketing tradicional e neutro|Gerenciador][
+  $clientes -= 5;
+  $investidores += 5
+]]
+</tw-passagedata>
+
+<!-- CARTAS GATILHADAS POR FLAGS -->
+<tw-passagedata pid="8" name="CARD_104_Batida_Fiscal" tags="" position="700,100">
+<span class="alert">⚠️ CONSEQÜÊNCIA:</span> A tentativa de abafar o acidente chamou a atenção de fiscais do trabalho, que estão no seu saguão.
+
+[[Subornar os fiscais|Gerenciador][
+  $investidores -= 20;
+  $governo -= 20;
+  $flag_auditoria to false
+]]
+
+[[Entregar todos os relatórios e aceitar a multa|Gerenciador][
+  $investidores -= 25;
+  $governo += 15;
+  $flag_auditoria to false
+]]
+</tw-passagedata>
+
+<tw-passagedata pid="9" name="CARD_105_Dia_Da_Greve" tags="" position="700,200">
+<span class="alert">⚠️ CONSEQÜÊNCIA:</span> Cientes do corte na segurança, os operários cruzarão os braços hoje.
+
+[[Negociar e reinstalar os equipamentos de segurança|Gerenciador][
+  $investidores -= 15;
+  $clientes += 10;
+  $flag_greve_agendada to false
+]]
+
+[[Contratar trabalhadores temporários para furar a greve|Gerenciador][
+  $clientes -= 20;
+  $governo -= 15;
+  $flag_greve_agendada to false
+]]
+</tw-passagedata>
+
+<!-- TELAS DE DERROTA -->
+<tw-passagedata pid="10" name="GameOver_Investidores" tags="" position="300,450">
+**FIM DE JOGO: FALÊNCIA**
+Sua rentabilidade caiu tanto que o conselho de administração destituiu você do cargo.
+
+[[Tentar Novamente|Start]]
+</tw-passagedata>
+
+<tw-passagedata pid="11" name="GameOver_Governo" tags="" position="300,550">
+**FIM DE JOGO: PRISÃO**
+As irregularidades trabalhistas e fiscais acumuladas resultaram na cassação do CNPJ e na sua prisão preventiva.
+
+[[Tentar Novamente|Start]]
+</tw-passagedata>
+
+<tw-passagedata pid="12" name="GameOver_Clientes" tags="" position="300,650">
+**FIM DE JOGO: BOICOTE TOTAL**
+Sua marca perdeu toda a credibilidade no mercado. Ninguém mais compra seus produtos.
+
+[[Tentar Novamente|Start]]
+</tw-passagedata>
+
+</tw-storydata>
+</body>
+</html>

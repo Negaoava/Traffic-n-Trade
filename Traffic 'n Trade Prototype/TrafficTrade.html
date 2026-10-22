@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Essential mobile viewport settings -->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#1a1a1a">
+
+  <title>Traffic & Trade - Protótipo</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    /* =========================================================
+       GLOBAL RESET
+       ========================================================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+
+      font-family:
+        'Press Start 2P',
+        monospace,
+        sans-serif;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      min-height: 100vh;
+      min-height: 100dvh;
+
+      padding:
+        max(10px, env(safe-area-inset-top))
+        max(10px, env(safe-area-inset-right))
+        max(10px, env(safe-area-inset-bottom))
+        max(10px, env(safe-area-inset-left));
+
+      touch-action: manipulation;
+    }
+
+
+    /* =========================================================
+       MAIN GAME MACHINE
+       ========================================================= */
+
+    #game-container {
+      width: min(800px, 100%);
+
+      background-color: #4a4e51;
+
+      border:
+        clamp(4px, 1vw, 8px)
+        solid
+        #2b2b2b;
+
+      box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.8),
+        0 10px 20px rgba(0, 0, 0, 0.5);
+
+      padding: clamp(10px, 3vw, 20px);
+
+      border-radius: 4px;
+
+      position: relative;
+
+      /* Prevents content from escaping on small screens */
+      overflow: hidden;
+    }
+
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      gap: 10px;
+
+      border-bottom: 2px dashed #486b49;
+
+      padding-bottom: clamp(8px, 2vw, 10px);
+
+      margin-bottom: clamp(10px, 3vw, 15px);
+
+      font-size: clamp(7px, 2vw, 12px);
+
+      line-height: 1.5;
+
+      /* Allows the header to wrap instead of overflow */
+      flex-wrap: wrap;
+    }
+
+    .header-bar span {
+      overflow-wrap: anywhere;
+    }
+
+
+    /* =========================================================
+       STATUS PANEL
+       ========================================================= */
+
+    .status-panel {
+      background: #383c3e;
+
+      border:
+        clamp(2px, 0.8vw, 4px)
+        solid
+        #222;
+
+      padding: clamp(10px, 3vw, 15px);
+
+      margin-bottom: clamp(12px, 3vw, 20px);
+    }
+
+    .meter-group {
+      margin-bottom: clamp(10px, 2.5vw, 12px);
+    }
+
+    .meter-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .meter-label {
+      font-size: clamp(7px, 1.8vw, 10px);
+
+      margin-bottom: 5px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-end;
+
+      gap: 8px;
+
+      color: #dcdcdc;
+
+      line-height: 1.5;
+    }
+
+    .meter-label span:first-child {
+      flex: 1;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .meter-label span:last-child {
+      flex-shrink: 0;
+    }
+
+    .meter-bg {
+      background-color: #222;
+
+      height: clamp(14px, 4vw, 18px);
+
+      border: 2px solid #111;
+
+      position: relative;
+
+      overflow: hidden;
+    }
+
+    .meter-fill {
+      height: 100%;
+
+      background-color: #608b62;
+
+      width: 50%;
+
+      transition:
+        width 0.3s ease,
+        background-color 0.3s ease;
+    }
+
+
+    /* =========================================================
+       CRT SCREEN
+       ========================================================= */
+
+    .screen {
+      background-color: #1e291e;
+
+      border:
+        clamp(3px, 1vw, 6px)
+        solid
+        #111;
+
+      border-radius: 6px;
+
+      padding: clamp(10px, 3vw, 15px);
+
+      color: #72a373;
+
+      box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.9);
+
+      margin-bottom: clamp(12px, 3vw, 20px);
+
+      /*
+        Flexible height.
+
+        min-height keeps the CRT substantial,
+        but it can grow when text is longer.
+      */
+      min-height: clamp(180px, 35vw, 260px);
+
+      display: flex;
+      flex-direction: column;
+
+      justify-content: flex-start;
+
+      overflow: hidden;
+    }
+
+    .dialog-text {
+      font-size: clamp(9px, 2.2vw, 12px);
+
+      line-height: 1.7;
+
+      color: #a3cfa4;
+
+      width: 100%;
+
+      overflow-wrap: anywhere;
+
+      word-break: normal;
+    }
+
+    .dialog-text p {
+      margin-bottom: 12px;
+    }
+
+    .dialog-text strong {
+      color: #72a373;
+    }
+
+
+    /* =========================================================
+       DAILY REPORT
+       ========================================================= */
+
+    .daily-report {
+      background: #111;
+
+      color: #e0e0e0;
+
+      padding: clamp(10px, 3vw, 15px);
+
+      border: 2px solid #555;
+
+      font-size: clamp(8px, 2vw, 10px);
+
+      line-height: 1.7;
+
+      margin-top: 5px;
+
+      overflow-wrap: anywhere;
+    }
+
+    .daily-report p {
+      margin-bottom: 10px;
+    }
+
+    .daily-report p:last-child {
+      margin-bottom: 0;
+    }
+
+
+    /* =========================================================
+       BUTTON AREA
+       ========================================================= */
+
+    .controls {
+      display: flex;
+
+      gap: clamp(8px, 3vw, 15px);
+
+      width: 100%;
+    }
+
+
+    /* =========================================================
+       TOUCH-FRIENDLY BUTTONS
+       ========================================================= */
+
+    .btn {
+      flex: 1;
+
+      /*
+        Minimum 52px makes the buttons comfortable
+        for touch interaction.
+      */
+      min-height: 52px;
+
+      background: #60666a;
+
+      border: none;
+
+      border-bottom:
+        clamp(3px, 1vw, 5px)
+        solid
+        #333638;
+
+      border-right:
+        clamp(3px, 1vw, 5px)
+        solid
+        #333638;
+
+      border-top: 2px solid #888d91;
+
+      border-left: 2px solid #888d91;
+
+      color: #fff;
+
+      font-family:
+        'Press Start 2P',
+        monospace;
+
+      padding:
+        clamp(10px, 3vw, 15px);
+
+      font-size:
+        clamp(8px, 2vw, 10px);
+
+      cursor: pointer;
+
+      text-transform: uppercase;
+
+      line-height: 1.6;
+
+      /*
+        Critical for touch devices.
+        Prevents the browser from interpreting
+        the tap as scrolling/zooming.
+      */
+      touch-action: manipulation;
+
+      /*
+        Prevents text selection while tapping.
+      */
+      user-select: none;
+      -webkit-user-select: none;
+
+      /*
+        Removes default mobile button appearance.
+      */
+      appearance: none;
+      -webkit-appearance: none;
+
+      /*
+        Better touch response.
+      */
+      transition:
+        background-color 0.08s ease,
+        transform 0.08s ease;
+    }
+
+
+    /* Desktop hover only */
+    @media (hover: hover) and (pointer: fine) {
+      .btn:hover {
+        background: #70767b;
+      }
+    }
+
+
+    /* Physical/touch press */
+    .btn:active {
+      background: #4f5458;
+
+      border: none;
+
+      border-top:
+        clamp(3px, 1vw, 5px)
+        solid
+        #333638;
+
+      border-left:
+        clamp(3px, 1vw, 5px)
+        solid
+        #333638;
+
+      transform: translateY(2px);
+    }
+
+
+    /* Keyboard accessibility */
+    .btn:focus-visible {
+      outline: 3px solid #72a373;
+      outline-offset: 2px;
+    }
+
+
+    /* Restart button */
+    .btn-restart {
+      background: #8b3a3a;
+
+      border-color: #522222;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .btn-restart:hover {
+        background: #9e4343;
+      }
+    }
+
+
+    /* =========================================================
+       HIDDEN
+       ========================================================= */
+
+    .hidden {
+      display: none !important;
+    }
+
+
+    /* =========================================================
+       SMALL PHONES
+       ========================================================= */
+
+    @media (max-width: 420px) {
+
+      body {
+        align-items: flex-start;
+
+        padding-top:
+          max(8px, env(safe-area-inset-top));
+      }
+
+      #game-container {
+        width: 100%;
+
+        border-width: 4px;
+
+        padding: 9px;
+
+        border-radius: 2px;
+      }
+
+      .header-bar {
+        font-size: 7px;
+
+        gap: 6px;
+      }
+
+      .status-panel {
+        padding: 9px;
+      }
+
+      .meter-label {
+        font-size: 7px;
+      }
+
+      .meter-bg {
+        height: 14px;
+      }
+
+      .screen {
+        min-height: 200px;
+
+        padding: 10px;
+      }
+
+      .dialog-text {
+        font-size: 9px;
+
+        line-height: 1.65;
+      }
+
+      /*
+        Stack decision buttons vertically on
+        very narrow phones.
+      */
+      #controls-decision {
+        flex-direction: column;
+      }
+
+      .controls {
+        gap: 9px;
+      }
+
+      .btn {
+        width: 100%;
+
+        min-height: 56px;
+
+        font-size: 8px;
+
+        padding: 12px 9px;
+      }
+    }
+
+
+    /* =========================================================
+       VERY SMALL PHONES
+       ========================================================= */
+
+    @media (max-width: 340px) {
+
+      #game-container {
+        padding: 7px;
+      }
+
+      .header-bar {
+        font-size: 6px;
+      }
+
+      .meter-label {
+        font-size: 6px;
+      }
+
+      .dialog-text {
+        font-size: 8px;
+      }
+
+      .daily-report {
+        font-size: 7px;
+      }
+
+      .btn {
+        font-size: 7px;
+
+        min-height: 54px;
+      }
+    }
+
+
+    /* =========================================================
+       LANDSCAPE PHONES
+       ========================================================= */
+
+    @media (orientation: landscape) and (max-height: 600px) {
+
+      body {
+        align-items: flex-start;
+
+        padding-top:
+          max(6px, env(safe-area-inset-top));
+
+        padding-bottom:
+          max(6px, env(safe-area-inset-bottom));
+      }
+
+      #game-container {
+        margin: 6px auto;
+
+        padding: 10px;
+      }
+
+      .screen {
+        /*
+          Don't let the CRT consume the entire
+          vertical screen in landscape mode.
+        */
+        min-height: 130px;
+
+        max-height: 42vh;
+
+        overflow-y: auto;
+      }
+
+      .status-panel {
+        padding: 9px;
+
+        margin-bottom: 10px;
+      }
+
+      .meter-group {
+        margin-bottom: 7px;
+      }
+
+      .screen {
+        margin-bottom: 10px;
+      }
+
+      .btn {
+        min-height: 48px;
+
+        padding: 8px;
+      }
+    }
+
+
+    /* =========================================================
+       TABLETS / LARGER TOUCH DEVICES
+       ========================================================= */
+
+    @media (min-width: 601px) and (pointer: coarse) {
+
+      .btn {
+        min-height: 58px;
+
+        font-size: 11px;
+      }
+
+      .dialog-text {
+        font-size: 13px;
+      }
+    }
+
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .meter-fill,
+      .btn {
+        transition: none;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <main id="game-container">
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="header-bar">
+      <span>TRAFFIC &amp; TRADE</span>
+      <span id="day-display">DIA: 1/5</span>
+    </header>
+
+
+    <!-- =====================================================
+         STATUS PANEL
+         ===================================================== -->
+
+    <section class="status-panel">
+
+      <div class="meter-group">
+
+        <div class="meter-label">
+          <span>INVESTIDORES</span>
+          <span id="val-investors">50%</span>
+        </div>
+
+        <div class="meter-bg">
+          <div
+            id="bar-investors"
+            class="meter-fill"
+          ></div>
+        </div>
+
+      </div>
+
+
+      <div class="meter-group">
+
+        <div class="meter-label">
+          <span>CLIENTES</span>
+          <span id="val-clients">50%</span>
+        </div>
+
+        <div class="meter-bg">
+          <div
+            id="bar-clients"
+            class="meter-fill"
+          ></div>
+        </div>
+
+      </div>
+
+
+      <div class="meter-group">
+
+        <div class="meter-label">
+          <span>GOVERNO</span>
+          <span id="val-gov">50%</span>
+        </div>
+
+        <div class="meter-bg">
+          <div
+            id="bar-gov"
+            class="meter-fill"
+          ></div>
+        </div>
+
+      </div>
+
+
+      <div class="meter-group">
+
+        <div class="meter-label">
+          <span>AMEAÇA DA CONCORRÊNCIA</span>
+          <span id="val-rival">30%</span>
+        </div>
+
+        <div class="meter-bg">
+          <div
+            id="bar-rival"
+            class="meter-fill"
+            style="background-color: #b27a3e;"
+          ></div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CRT SCREEN
+         ===================================================== -->
+
+    <section class="screen">
+
+      <div
+        id="screen-content"
+        class="dialog-text"
+      >
+        Carregando terminal de gestão...
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DECISION BUTTONS
+         ===================================================== -->
+
+    <div
+      id="controls-decision"
+      class="controls"
+    >
+
+      <button
+        id="btn-a"
+        class="btn"
+        type="button"
+        aria-label="Escolher opção A"
+      >
+        Opção A
+      </button>
+
+      <button
+        id="btn-b"
+        class="btn"
+        type="button"
+        aria-label="Escolher opção B"
+      >
+        Opção B
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         NEXT BUTTON
+         ===================================================== -->
+
+    <div
+      id="controls-next"
+      class="controls hidden"
+    >
+
+      <button
+        id="btn-next"
+        class="btn"
+        type="button"
+      >
+        Continuar Turno
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         RESTART BUTTON
+         ===================================================== -->
+
+    <div
+      id="controls-restart"
+      class="controls hidden"
+    >
+
+      <button
+        id="btn-restart"
+        class="btn btn-restart"
+        type="button"
+      >
+        Tentar Novamente (Nova Run)
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    /* =========================================================
+       GAME STATE
+       ========================================================= */
+
+    let day = 1;
+
+    const maxDays = 5;
+
+    let state = {
+      investors: 50,
+      clients: 50,
+      gov: 50,
+      rival: 30
+    };
+
+    let currentEvent = null;
+
+
+    /* =========================================================
+       EVENTS
+       ========================================================= */
+
+    const events = [
+
+      {
+        day: 1,
+
+        situation:
+          "Uma empresa concorrente fez uma promoção agressiva em um de seus produtos para rivalizar diretamente com os nossos.",
+
+        optA:
+          "A: Fazer uma promoção equivalente para responder à altura.",
+
+        optB:
+          "B: Não reagir à ação da concorrência.",
+
+        resA: {
+          text:
+            "Seu produto vende mais, mas você não consegue atender à demanda. A concorrência absorveu os clientes insatisfeitos.",
+
+          changes: {
+            investors: -10,
+            clients: -10,
+            gov: 0,
+            rival: 20
+          }
+        },
+
+        resB: {
+          text:
+            "As vendas caem momentaneamente, mas a concorrência não suporta a alta demanda. Seu produto permanece como o favorito.",
+
+          changes: {
+            investors: 10,
+            clients: 15,
+            gov: 0,
+            rival: -10
+          }
+        }
+      },
+
+
+      {
+        day: 2,
+
+        situation:
+          "A prefeitura exige novas adequações ambientais e fiscais na linha de produção da empresa.",
+
+        optA:
+          "A: Adequar-se imediatamente assumindo os custos operacionais.",
+
+        optB:
+          "B: Recorrer judicialmente para adiar o cumprimento da exigência.",
+
+        resA: {
+          text:
+            "O Governo aprova a conduta e o público valoriza a responsabilidade, mas os investidores reclamam da margem de lucro.",
+
+          changes: {
+            investors: -15,
+            clients: 10,
+            gov: 25,
+            rival: 0
+          }
+        },
+
+        resB: {
+          text:
+            "Economia imediata de caixa. Porém, sanções governamentais parciais mancham a imagem da marca.",
+
+          changes: {
+            investors: 15,
+            clients: -15,
+            gov: -25,
+            rival: 10
+          }
+        }
+      },
+
+
+      {
+        day: 3,
+
+        situation:
+          "Surgiu uma denúncia sobre condições inadequadas de trabalho na fábrica (resquícios da gestão anterior).",
+
+        optA:
+          "A: Investir pesado na melhoria das instalações e auditoria externa.",
+
+        optB:
+          "B: Emitir uma nota pública de negação e focar em propaganda.",
+
+        resA: {
+          text:
+            "Ação rápida estanca a crise com o Governo e Clientes, mas os Investidores consideram o gasto excessivo.",
+
+          changes: {
+            investors: -20,
+            clients: 20,
+            gov: 15,
+            rival: -10
+          }
+        },
+
+        resB: {
+          text:
+            "Investidores aprovam a contenção de despesas, mas vazamentos na mídia corroem a confiança dos clientes e atraem fiscalização.",
+
+          changes: {
+            investors: 10,
+            clients: -25,
+            gov: -20,
+            rival: 15
+          }
+        }
+      },
+
+
+      {
+        day: 4,
+
+        situation:
+          "A concorrência lançou uma campanha agressiva tentando captar seus principais clientes institucionais.",
+
+        optA:
+          "A: Reduzir preços corporativos e oferecer bônus de fidelidade.",
+
+        optB:
+          "B: Manter os preços e investir no atendimento exclusivo ao cliente.",
+
+        resA: {
+          text:
+            "Você retém os clientes, mas a margem de lucro cai drasticamente gerando atrito com investidores.",
+
+          changes: {
+            investors: -15,
+            clients: 15,
+            gov: 0,
+            rival: -15
+          }
+        },
+
+        resB: {
+          text:
+            "Alguns clientes migram para a concorrência, mas a margem financeira mantida agrada o conselho de investidores.",
+
+          changes: {
+            investors: 15,
+            clients: -10,
+            gov: 0,
+            rival: 15
+          }
+        }
+      },
+
+
+      {
+        day: 5,
+
+        situation:
+          "Fim do ano fiscal. Um grande fundo de investimento oferece aporte financeiro extra em troca de demissões em massa.",
+
+        optA:
+          "A: Aceitar o aporte e cortar custos trabalhistas.",
+
+        optB:
+          "B: Recusar a oferta e focar em crescimento orgânico sustentável.",
+
+        resA: {
+          text:
+            "Aporte garantido e investidores eufóricos. Contudo, o governo e os consumidores penalizam fortemente a conduta moral da empresa.",
+
+          changes: {
+            investors: 30,
+            clients: -25,
+            gov: -20,
+            rival: 10
+          }
+        },
+
+        resB: {
+          text:
+            "A empresa mantém estabilidade social e apoio público, sacrificando o ganho financeiro rápido.",
+
+          changes: {
+            investors: -15,
+            clients: 20,
+            gov: 15,
+            rival: -10
+          }
+        }
+      }
+
+    ];
+
+
+    /* =========================================================
+       UTILITY
+       ========================================================= */
+
+    function clamp(value, min = 0, max = 100) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+
+    /* =========================================================
+       INITIALIZE GAME
+       ========================================================= */
+
+    function initGame() {
+
+      day = 1;
+
+      state = {
+        investors: 50,
+        clients: 50,
+        gov: 50,
+        rival: 30
+      };
+
+      document
+        .getElementById("controls-restart")
+        .classList.add("hidden");
+
+      document
+        .getElementById("controls-next")
+        .classList.add("hidden");
+
+      document
+        .getElementById("controls-decision")
+        .classList.remove("hidden");
+
+      updateUI();
+
+      loadDay();
+    }
+
+
+    /* =========================================================
+       UPDATE UI
+       ========================================================= */
+
+    function updateUI() {
+
+      document.getElementById("day-display").textContent =
+        `DIA: ${day}/${maxDays}`;
+
+
+      state.investors = clamp(state.investors);
+      state.clients = clamp(state.clients);
+      state.gov = clamp(state.gov);
+      state.rival = clamp(state.rival);
+
+
+      document.getElementById("val-investors").textContent =
+        `${state.investors}%`;
+
+      document.getElementById("bar-investors").style.width =
+        `${state.investors}%`;
+
+
+      document.getElementById("val-clients").textContent =
+        `${state.clients}%`;
+
+      document.getElementById("bar-clients").style.width =
+        `${state.clients}%`;
+
+
+      document.getElementById("val-gov").textContent =
+        `${state.gov}%`;
+
+      document.getElementById("bar-gov").style.width =
+        `${state.gov}%`;
+
+
+      document.getElementById("val-rival").textContent =
+        `${state.rival}%`;
+
+      document.getElementById("bar-rival").style.width =
+        `${state.rival}%`;
+    }
+
+
+    /* =========================================================
+       LOAD CURRENT DAY
+       ========================================================= */
+
+    function loadDay() {
+
+      currentEvent = events[day - 1];
+
+      const screen =
+        document.getElementById("screen-content");
+
+
+      screen.innerHTML = `
+        <p>
+          <strong>SITUAÇÃO DO DIA:</strong>
+        </p>
+
+        <p>
+          ${currentEvent.situation}
+        </p>
+      `;
+
+
+      document.getElementById("btn-a").textContent =
+        currentEvent.optA;
+
+      document.getElementById("btn-b").textContent =
+        currentEvent.optB;
+
+
+      document
+        .getElementById("controls-decision")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("controls-next")
+        .classList.add("hidden");
+    }
+
+
+    /* =========================================================
+       MAKE CHOICE
+       ========================================================= */
+
+    function makeChoice(option) {
+
+      if (!currentEvent) {
+        return;
+      }
+
+
+      const result =
+        option === "A"
+          ? currentEvent.resA
+          : currentEvent.resB;
+
+
+      state.investors += result.changes.investors;
+
+      state.clients += result.changes.clients;
+
+      state.gov += result.changes.gov;
+
+      state.rival += result.changes.rival;
+
+
+      updateUI();
+
+
+      const screen =
+        document.getElementById("screen-content");
+
+
+      screen.innerHTML = `
+        <p>
+          <strong>CONSEQUÊNCIA DA DECISÃO:</strong>
+        </p>
+
+        <p>
+          ${result.text}
+        </p>
+      `;
+
+
+      document
+        .getElementById("controls-decision")
+        .classList.add("hidden");
+
+
+      if (checkGameOver()) {
+        return;
+      }
+
+
+      document
+        .getElementById("controls-next")
+        .classList.remove("hidden");
+    }
+
+
+    /* =========================================================
+       GAME OVER
+       ========================================================= */
+
+    function checkGameOver() {
+
+      let failReason = "";
+
+
+      if (state.investors <= 0) {
+
+        failReason =
+          "Os Investidores perderam a confiança total e retiraram o capital. Você foi demitido!";
+
+      } else if (state.clients <= 0) {
+
+        failReason =
+          "A base de Clientes abandonou a empresa. Sem receita, você foi demitido!";
+
+      } else if (state.gov <= 0) {
+
+        failReason =
+          "O Governo interditou a empresa por irregularidades gravíssimas. Você foi demitido!";
+
+      } else if (state.rival >= 100) {
+
+        failReason =
+          "A Concorrência dominou completamente o mercado e faliu sua empresa. Você foi demitido!";
+      }
+
+
+      if (failReason) {
+
+        const screen =
+          document.getElementById("screen-content");
+
+
+        screen.innerHTML = `
+          <div
+            class="daily-report"
+            style="border-color: #a84343;"
+          >
+
+            <p style="color: #ff6b6b;">
+              <strong>
+                OVERVIEW DIÁRIO: FALHA DE GESTÃO
+              </strong>
+            </p>
+
+            <p>
+              ${failReason}
+            </p>
+
+            <p>
+              Fim da run. Analise suas escolhas e tente novamente.
+            </p>
+
+          </div>
+        `;
+
+
+        document
+          .getElementById("controls-decision")
+          .classList.add("hidden");
+
+        document
+          .getElementById("controls-next")
+          .classList.add("hidden");
+
+        document
+          .getElementById("controls-restart")
+          .classList.remove("hidden");
+
+
+        return true;
+      }
+
+
+      return false;
+    }
+
+
+    /* =========================================================
+       NEXT STEP
+       ========================================================= */
+
+    function nextStep() {
+
+      if (day < maxDays) {
+
+        day++;
+
+        updateUI();
+
+        loadDay();
+
+        return;
+      }
+
+
+      /* =====================================================
+         FINAL VICTORY
+         ===================================================== */
+
+      const screen =
+        document.getElementById("screen-content");
+
+
+      screen.innerHTML = `
+        <div
+          class="daily-report"
+          style="border-color: #72a373;"
+        >
+
+          <p style="color: #72a373;">
+            <strong>
+              RESULTADO FINAL DA RUN: SUCESSO!
+            </strong>
+          </p>
+
+          <p>
+            Você equilibrou com maestria os pilares da empresa
+            (Investidores, Clientes e Governo) e manteve a
+            Concorrência sob controle.
+          </p>
+
+          <p>
+            Sua gestão foi aprovada e você consolidou sua vaga na cidade!
+          </p>
+
+        </div>
+      `;
+
+
+      document
+        .getElementById("controls-next")
+        .classList.add("hidden");
+
+      document
+        .getElementById("controls-decision")
+        .classList.add("hidden");
+
+      document
+        .getElementById("controls-restart")
+        .classList.remove("hidden");
+    }
+
+
+    /* =========================================================
+       TOUCH / CLICK INPUT
+       =========================================================
+
+       We use pointer events instead of relying exclusively
+       on mouse events.
+
+       This works with:
+       - iPhone
+       - Android
+       - tablets
+       - mouse
+       - trackpads
+       - stylus
+    */
+
+    function handlePointerPress(event) {
+
+      /*
+        Ignore secondary mouse buttons.
+      */
+      if (
+        event.pointerType === "mouse" &&
+        event.button !== 0
+      ) {
+        return;
+      }
+
+
+      const target =
+        event.currentTarget;
+
+
+      /*
+        Small visual feedback.
+      */
+      target.classList.add("pressed");
+
+
+      /*
+        Remove visual state immediately.
+      */
+      setTimeout(() => {
+        target.classList.remove("pressed");
+      }, 100);
+    }
+
+
+    /* =========================================================
+       BUTTON EVENTS
+       ========================================================= */
+
+    document
+      .getElementById("btn-a")
+      .addEventListener("click", () => {
+        makeChoice("A");
+      });
+
+
+    document
+      .getElementById("btn-b")
+      .addEventListener("click", () => {
+        makeChoice("B");
+      });
+
+
+    document
+      .getElementById("btn-next")
+      .addEventListener("click", () => {
+        nextStep();
+      });
+
+
+    document
+      .getElementById("btn-restart")
+      .addEventListener("click", () => {
+        initGame();
+      });
+
+
+    /*
+      Pointer events provide better compatibility with
+      touch screens and stylus input.
+
+      The actual action remains on "click" so we don't
+      accidentally execute a decision twice.
+    */
+
+    document
+      .querySelectorAll(".btn")
+      .forEach((button) => {
+
+        button.addEventListener(
+          "pointerdown",
+          handlePointerPress
+        );
+
+      });
+
+
+    /* =========================================================
+       EXTRA TOUCH SAFETY
+       ========================================================= */
+
+    /*
+      Prevent accidental context menu on long press.
+    */
+    document.addEventListener(
+      "contextmenu",
+      (event) => {
+        if (
+          event.target.closest(".btn")
+        ) {
+          event.preventDefault();
+        }
+      }
+    );
+
+
+    /*
+      Prevent accidental double-tap zoom on buttons.
+    */
+    document
+      .querySelectorAll(".btn")
+      .forEach((button) => {
+
+        button.addEventListener(
+          "touchend",
+          (event) => {
+            event.preventDefault();
+
+            /*
+              Trigger the normal click manually.
+              This keeps behavior consistent on
+              older mobile browsers.
+            */
+            button.click();
+          },
+          {
+            passive: false
+          }
+        );
+
+      });
+
+
+    /* =========================================================
+       START GAME
+       ========================================================= */
+
+    window.addEventListener(
+      "DOMContentLoaded",
+      initGame
+    );
+
+  </script>
+
+</body>
+</html>

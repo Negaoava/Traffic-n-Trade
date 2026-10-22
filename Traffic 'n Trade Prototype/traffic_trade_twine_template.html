@@ -1,0 +1,391 @@
+<tw-storydata name="Traffic & Trade - Prototype" startnode="1" format="Harlowe" format-version="3.3.8" boundaries="100,100,800,800" program-name="Twine" program-version="2.8.1">
+  <style role="stylesheet" id="twine-user-stylesheet" type="text/text">
+    /* Estilo inspirado na paleta acinzentada e retrô do GDD */
+    tw-story {
+      background-color: #1a1c1e;
+      color: #d1d5db;
+      font-family: "Courier New", Courier, monospace;
+      padding: 5% 20%;
+    }
+    tw-link {
+      color: #60a5fa;
+      font-weight: bold;
+    }
+    tw-link:hover {
+      color: #93c5fd;
+    }
+    .hud {
+      border: 2px solid #4b5563;
+      background-color: #27272a;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      color: #f3f4f6;
+      border-bottom: 1px solid #4b5563;
+      padding-bottom: 5px;
+    }
+  </style>
+
+  <tw-passagedata pid="1" name="Start" tags="" position="100,100">
+(set: $investidores to 50)
+(set: $clientes to 50)
+(set: $governo to 50)
+(set: $concorrencia to 50)
+
+(set: $flags to (ds:))
+(set: $cartasVistas to (ds:))
+
+(go-to: "Game Loop")
+  </tw-passagedata>
+
+  <tw-passagedata pid="2" name="HUD" tags="" position="100,250">
+<div class="hud">
+  **[ STATUS DA EMPRESA ]**
+  📈 Investidores: $investidores / 100 | 👥 Clientes: $clientes / 100 
+  🏛️ Governo: $governo / 100 | 🏢 Concorrência: $concorrencia / 100
+</div>
+  </tw-passagedata>
+
+  <tw-passagedata pid="3" name="Check Conditions" tags="" position="100,400">
+(if: $investidores <= 0 or $clientes <= 0 or $governo <= 0 or $concorrencia >= 100)[
+  (go-to: "Game Over")
+](else-if: $investidores >= 100 or $clientes >= 100 or $governo >= 100 or $concorrencia <= 0)[
+  (go-to: "Vitoria")
+](else:)[
+  (go-to: "Game Loop")
+]
+  </tw-passagedata>
+
+  <tw-passagedata pid="4" name="Game Loop" tags="" position="300,100">
+(display: "HUD")
+
+(set: $pool to (a:))
+
+(if: not ($cartasVistas contains "C1"))[(set: $pool to $pool + (a: "Carta_1"))]
+(if: not ($cartasVistas contains "C2"))[(set: $pool to $pool + (a: "Carta_2"))]
+(if: not ($cartasVistas contains "C3"))[(set: $pool to $pool + (a: "Carta_3"))]
+(if: not ($cartasVistas contains "C4"))[(set: $pool to $pool + (a: "Carta_4"))]
+
+(if: $governo < 50 and not ($cartasVistas contains "C5"))[(set: $pool to $pool + (a: "Carta_5"))]
+(if: $investidores < 40 and not ($cartasVistas contains "C6"))[(set: $pool to $pool + (a: "Carta_6"))]
+(if: $clientes < 40 and not ($cartasVistas contains "C7"))[(set: $pool to $pool + (a: "Carta_7"))]
+(if: $concorrencia > 60 and not ($cartasVistas contains "C8"))[(set: $pool to $pool + (a: "Carta_8"))]
+
+(if: $flags contains "investiu_automacao" and not ($cartasVistas contains "C9"))[(set: $pool to $pool + (a: "Carta_9"))]
+(if: $flags contains "recusou_subsidio" and not ($cartasVistas contains "C10"))[(set: $pool to $pool + (a: "Carta_10"))]
+(if: $flags contains "campanha_mkt" and not ($cartasVistas contains "C11"))[(set: $pool to $pool + (a: "Carta_11"))]
+(if: $flags contains "denuncia_acidente" and not ($cartasVistas contains "C12"))[(set: $pool to $pool + (a: "Carta_12"))]
+
+(if: $pool's length == 0)[
+  (set: $cartasVistas to (ds:))
+  (go-to: "Game Loop")
+](else:)[
+  (set: $proximaCarta to (shuffled: ...$pool)'s 1st)
+  (go-to: $proximaCarta)
+]
+  </tw-passagedata>
+
+  <tw-passagedata pid="10" name="Carta_1" tags="" position="500,100">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C1"))
+<h3 class="card-title">SITUAÇÃO: Promoção Agressiva</h3>
+A concorrência fez uma promoção agressiva em um produto principal. O que fazer?
+
+* [[Responder com promoção equivalente (A)->Escolha_1A]]
+* [[Não reagir à ação da concorrência (B)->Escolha_1B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="101" name="Escolha_1A" tags="" position="500,150">
+(set: $clientes to $clientes + 10)
+(set: $investidores to $investidores - 10)
+(set: $concorrencia to $concorrencia + 5)
+Seu produto vendeu mais, mas não conseguiu atender toda a demanda, abrindo brechas para a concorrência.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="102" name="Escolha_1B" tags="" position="500,200">
+(set: $clientes to $clientes - 5)
+(set: $concorrencia to $concorrencia - 10)
+As vendas caíram momentaneamente, mas a concorrência não suportou a demanda e falhou.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="11" name="Carta_2" tags="" position="650,100">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C2"))
+<h3 class="card-title">SITUAÇÃO: Automação de Maquinário</h3>
+Os engenheiros sugerem automatizar a linha de produção para cortar custos de mão de obra.
+
+* [[Aprovar automação imediata->Escolha_2A]]
+* [[Manter equipe humana atual->Escolha_2B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="111" name="Escolha_2A" tags="" position="650,150">
+(set: $investidores to $investidores + 15)
+(set: $governo to $governo - 10)
+(set: $flags to $flags + (ds: "investiu_automacao"))
+Investidores adoraram a margem de lucro, mas o sindicato pressionou o Governo.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="112" name="Escolha_2B" tags="" position="650,200">
+(set: $investidores to $investidores - 10)
+(set: $governo to $governo + 5)
+Sua folha de pagamento continua alta, mas a imagem pública com a cidade melhora.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="12" name="Carta_3" tags="" position="800,100">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C3"))
+<h3 class="card-title">SITUAÇÃO: Inspeção Sanitária e Ambiental</h3>
+Fiscais do governo encontraram irregularidades menores no descarte de resíduos.
+
+* [[Pagar multa e adequar fábrica->Escolha_3A]]
+* [[Tentar recorrer judicialmente->Escolha_3B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="121" name="Escolha_3A" tags="" position="800,150">
+(set: $governo to $governo + 10)
+(set: $investidores to $investidores - 10)
+Você cumpre as exigências. Custa caro, mas limpa sua ficha.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="122" name="Escolha_3B" tags="" position="800,200">
+(set: $governo to $governo - 15)
+(set: $flags to $flags + (ds: "denuncia_acidente"))
+O governo endureceu a fiscalização sobre você.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="13" name="Carta_4" tags="" position="950,100">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C4"))
+<h3 class="card-title">SITUAÇÃO: Campanha de Marketing</h3>
+Sua equipe propõe uma campanha de marketing agressiva nas redes sociais.
+
+* [[Financiar a campanha massiva->Escolha_4A]]
+* [[Manter marketing orgânico básico->Escolha_4B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="131" name="Escolha_4A" tags="" position="950,150">
+(set: $clientes to $clientes + 15)
+(set: $investidores to $investidores - 5)
+(set: $flags to $flags + (ds: "campanha_mkt"))
+Novos clientes chegam em massa à sua marca.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="132" name="Escolha_4B" tags="" position="950,200">
+(set: $concorrencia to $concorrencia + 5)
+Você economiza capital, mas perde presença de mercado.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="14" name="Carta_5" tags="" position="500,350">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C5"))
+<h3 class="card-title">SITUAÇÃO: Pacote de Subsidios Estatais</h3>
+O Governo está oferecendo incentivos fiscais, mas exige contrapartidas sociais severas.
+
+* [[Aceitar os termos do Governo->Escolha_5A]]
+* [[Recusar o subsídio estatal->Escolha_5B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="141" name="Escolha_5A" tags="" position="500,400">
+(set: $governo to $governo + 20)
+(set: $investidores to $investidores - 10)
+A burocracia estatal interfere nas margens de lucro dos investidores.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="142" name="Escolha_5B" tags="" position="500,450">
+(set: $governo to $governo - 10)
+(set: $flags to $flags + (ds: "recusou_subsidio"))
+Sua relação com as autoridades locais esfria drasticamente.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="15" name="Carta_6" tags="" position="650,350">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C6"))
+<h3 class="card-title">SITUAÇÃO: Pressão do Conselho</h3>
+Os investidores ameaçam tirar capital da empresa caso os custos operacionais não caiam 20%.
+
+* [[Cortar controle de qualidade de produto->Escolha_6A]]
+* [[Rejeitar os cortes operacionais->Escolha_6B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="151" name="Escolha_6A" tags="" position="650,400">
+(set: $investidores to $investidores + 20)
+(set: $clientes to $clientes - 20)
+O conselho se acalma, mas os clientes notam a queda na qualidade.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="152" name="Escolha_6B" tags="" position="650,450">
+(set: $investidores to $investidores - 15)
+Você segura o padrão do produto, mas a liquidez da empresa fica no limite.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="16" name="Carta_7" tags="" position="800,350">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C7"))
+<h3 class="card-title">SITUAÇÃO: Crise de Reputação</h3>
+Insatisfação popular alta! Clientes reclamam de mau atendimento e preços abusivos.
+
+* [[Oferecer cupons e recall público->Escolha_7A]]
+* [[Ignorar e focar em publicidade positiva->Escolha_7B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="171" name="Escolha_7A" tags="" position="800,400">
+(set: $clientes to $clientes + 20)
+(set: $investidores to $investidores - 15)
+A satisfação volta, mas o custo financeiro é alto.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="172" name="Escolha_7B" tags="" position="800,450">
+(set: $clientes to $clientes - 10)
+(set: $concorrencia to $concorrencia + 15)
+Clientes abandonam sua marca e migrate para a concorrência.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="17" name="Carta_8" tags="" position="950,350">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C8"))
+<h3 class="card-title">SITUAÇÃO: Domínio Rivals</h3>
+A concorrência dominou mais da metade da cidade e planeja comprar seus fornecedores.
+
+* [[Processar por prática monopolista->Escolha_8A]]
+* [[Guerrear baixando preços ao limite->Escolha_8B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="181" name="Escolha_8A" tags="" position="950,400">
+(set: $governo to $governo + 10)
+(set: $concorrencia to $concorrencia - 15)
+O Governo bloqueia temporariamente as fusões do seu rival.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="182" name="Escolha_8B" tags="" position="950,450">
+(set: $investidores to $investidores - 20)
+(set: $concorrencia to $concorrencia - 10)
+Guerra de preços queima o caixa das duas empresas.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="18" name="Carta_9" tags="" position="500,600">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C9"))
+<h3 class="card-title">SITUAÇÃO: Falha nos Robôs</h3>
+Devido à automação recente, uma falha de sistema parou a linha de montagem por 8 horas.
+
+* [[Contratar suporte técnico emergencial caríssimo->Escolha_9A]]
+* [[Forçar os funcionários a cobrirem o turno manualmente->Escolha_9B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="191" name="Escolha_9A" tags="" position="500,650">
+(set: $investidores to $investidores - 10)
+Problema resolvido rapidamente, mas com prejuízo imediato.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="192" name="Escolha_9B" tags="" position="500,700">
+(set: $governo to $governo - 15)
+(set: $clientes to $clientes - 5)
+Denúncias de jornadas abusivas chegaram aos jornais da cidade.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="19" name="Carta_10" tags="" position="650,600">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C10"))
+<h3 class="card-title">SITUAÇÃO: Auditagem Rigorosa</h3>
+Após recusar a parceria, o fisco municipal iniciou uma auditoria pesada em suas contas.
+
+* [[Subornar o auditor municipal->Escolha_10A]]
+* [[Entregar todos os livros contábeis e colaborar->Escolha_10B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="201" name="Escolha_10A" tags="" position="650,650">
+(set: $investidores to $investidores - 15)
+(set: $governo to $governo - 25)
+O auditor aceitou, mas o escândalo vazou parcialmente.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="202" name="Escolha_10B" tags="" position="650,700">
+(set: $governo to $governo + 10)
+(set: $investidores to $investidores - 5)
+Processo demorado e estressante, mas totalmente legal.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="20" name="Carta_11" tags="" position="800,600">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C11"))
+<h3 class="card-title">SITUAÇÃO: Viralização das Redes</h3>
+A campanha de marketing foi tão bem-sucedida que virou um meme super popular na cidade!
+
+* [[Lançar linha de produtos limitada do meme->Escolha_11A]]
+* [[Encerrar a campanha enquanto está no topo->Escolha_11B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="211" name="Escolha_11A" tags="" position="800,650">
+(set: $clientes to $clientes + 15)
+(set: $investidores to $investidores + 10)
+(set: $concorrencia to $concorrencia - 10)
+Lucro máximo e popularidade estrondosa!
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="212" name="Escolha_11B" tags="" position="800,700">
+(set: $investidores to $investidores + 5)
+Decisão segura. Preserva a imagem da empresa sem arriscar saturação.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="21" name="Carta_12" tags="" position="950,600">
+(display: "HUD")
+(set: $cartasVistas to $cartasVistas + (ds: "C12"))
+<h3 class="card-title">SITUAÇÃO: O "Acidente de Trabalho"</h3>
+Lembra da denúncia de acidente do passado no jornal? A imprensa veio cobrar explicações sobre os processos internos da fábrica!
+
+* [[Assumir culpas passadas e indenizar as famílias->Escolha_12A]]
+* [[Negar envolvimento e culpar a gestão anterior->Escolha_12B]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="221" name="Escolha_12A" tags="" position="950,650">
+(set: $clientes to $clientes + 10)
+(set: $governo to $governo + 10)
+(set: $investidores to $investidores - 20)
+Humanitário, mas custoso ao caixa da empresa.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="222" name="Escolha_12B" tags="" position="950,700">
+(set: $clientes to $clientes - 20)
+(set: $governo to $governo - 10)
+A opinião pública condena a sua postura fria.
+[[Próximo Dia->Check Conditions]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="90" name="Game Over" tags="" position="300,500">
+<h2 style="color: #ef4444;">VOCÊ FOI DEMITIDO!</h2>
+Você falhou em entregar o que era exigido e equilibrar as pressões da cidade.
+
+[[Tentar Novamente (Nova Run)->Start]]
+  </tw-passagedata>
+
+  <tw-passagedata pid="91" name="Vitoria" tags="" position="300,650">
+<h2 style="color: #22c55e;">SUCESSO EMPRESARIAL!</h2>
+Você conseguiu dominar o mercado, manter as instituições sob controle e guiar a empresa ao topo[cite: 25]!
+
+[[Jogar Novamente->Start]]
+  </tw-passagedata>
+</tw-storydata>

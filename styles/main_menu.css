@@ -1,0 +1,104 @@
+:root {
+  --bg: #6a806b;       
+  --btn: #51634f;       
+  --ink: #2f3a33;       
+  --frame: #000;        
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--frame);
+}
+
+body {
+  font-family: "Press Start 2P", monospace;
+  color: var(--ink);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+
+.screen {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12vh 0 0;
+  overflow: hidden;
+}
+
+.title {
+  font-size: clamp(18px, 3.4vw, 40px);
+  font-weight: normal;
+  letter-spacing: 0.02em;
+  text-align: center;
+  white-space: nowrap;
+  animation: title-rotation 1s ease-in-out infinite alternate;
+}
+
+
+.menu {
+    width: min(55%, 704px);
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    margin-bottom: 40px;
+    transform: scale(0.8);
+}
+
+.menu-btn {
+    width: 100%;
+    height: 109px;
+    background: var(--btn);
+    color: var(--ink);
+    border: none;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 2;
+    border-top-width: 0;
+    border-left-width: 0;
+    font-family: inherit;
+    font-size: clamp(18px, 3.4vw, 40px);
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.menu-btn:hover,
+.menu-btn:focus-visible {
+    background: var(--ink);
+    color: var(--bg);
+    outline: none;
+    transform: scale(1.05);
+}
+
+.menu-btn:active {
+    opacity: 0.8;
+
+}
+
+@media (max-width: 600px) {
+    .menu { width: 80%; }
+    .menu-btn { height: 72px; }
+}
+
+@keyframes title-rotation {
+    from {
+        transform: rotate(10deg);
+    }
+    to {
+        transform: rotate(-10deg);
+    }
+}
