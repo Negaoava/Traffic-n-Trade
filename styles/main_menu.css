@@ -15,6 +15,7 @@ html,
 body {
   height: 100%;
   background: var(--frame);
+  transition: opacity;
 }
 
 body {
@@ -39,13 +40,23 @@ body {
   overflow: hidden;
 }
 
+.title-container {
+  animation: title-rotation 1s ease-in-out infinite alternate;
+}
+
 .title {
   font-size: clamp(18px, 3.4vw, 40px);
   font-weight: normal;
   letter-spacing: 0.02em;
   text-align: center;
   white-space: nowrap;
-  animation: title-rotation 1s ease-in-out infinite alternate;
+  transition: transform 0.3s ease-in-out;
+  cursor: default;
+  animation: title-scaling 0.65s ease-in-out infinite alternate;
+}
+
+.title:hover {
+  transform: scale(1.2);
 }
 
 
@@ -66,10 +77,11 @@ body {
     border: none;
     border-radius: 0;
     border-style: solid;
-    border-width: 2;
+    border-width: 4px;
     border-top-width: 0;
     border-left-width: 0;
     font-family: inherit;
+    border-color: #000;
     font-size: clamp(18px, 3.4vw, 40px);
     letter-spacing: 0.02em;
     cursor: pointer;
@@ -86,7 +98,10 @@ body {
 
 .menu-btn:active {
     opacity: 0.8;
-
+    border-left-width: 4px;
+    border-top-width: 4px;
+    border-bottom-width: 0;
+    border-right-width: 0;
 }
 
 @media (max-width: 600px) {
@@ -96,9 +111,36 @@ body {
 
 @keyframes title-rotation {
     from {
-        transform: rotate(10deg);
+        transform: rotate(6deg);
     }
     to {
-        transform: rotate(-10deg);
+        transform: rotate(-6deg);
     }
+}
+
+@keyframes title-scaling {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+#black-overlay {
+  background-color: black;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity;
+  pointer-events: none;
+}
+
+#black-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
 }
