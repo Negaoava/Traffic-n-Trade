@@ -67,6 +67,7 @@ body {
     gap: 19px;
     margin-bottom: 40px;
     transform: scale(0.8);
+    position: relative;
 }
 
 .menu-btn {
@@ -127,7 +128,16 @@ body {
   }
 }
 
-#black-overlay {
+@keyframes options-menu {
+  from {
+    transform: translateY(-200px);
+  }
+  to {
+    transform: translateY(200px);
+  }
+}
+
+.black-overlay {
   background-color: black;
   position: fixed;
   left: 0;
@@ -136,11 +146,31 @@ body {
   height: 100vh;
   z-index: 9999;
   opacity: 0;
-  transition: opacity;
   pointer-events: none;
+  transition: opacity 1s;
 }
 
-#black-overlay.active {
-  opacity: 1;
+.black-overlay-active {
+  background-color: black;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  opacity: 0.5;
   pointer-events: auto;
+}
+
+.options-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: #2f3a33;
+  color: white;
+  padding: 25px;
+  display: none;
 }
