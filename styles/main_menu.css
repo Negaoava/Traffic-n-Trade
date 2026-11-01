@@ -1,8 +1,13 @@
 :root {
-  --bg: #6a806b;       
-  --btn: #51634f;       
-  --ink: #2f3a33;       
-  --frame: #000;        
+  /* Palette taken from the prototype */
+  --bg: #1e291e;          /* CRT screen green */
+  --btn: #60666a;         /* machine-gray button */
+  --ink: #a3cfa4;         /* CRT text */
+  --ink-dim: #72a373;     /* darker CRT green */
+  --frame: #1a1a1a;       /* page background */
+  --panel: #383c3e;       /* panels (options menu) */
+  --bevel-light: #888d91;
+  --bevel-dark: #333638;
 }
 
 * {
@@ -31,7 +36,9 @@ body {
   width: 100%;
   min-height: 100vh;
   background: var(--bg);
+  border: clamp(3px, 1vw, 6px) solid #111;
   border-radius: 10px;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,8 +55,11 @@ body {
   font-size: clamp(18px, 3.4vw, 40px);
   font-weight: normal;
   letter-spacing: 0.02em;
+  line-height: 1.5;
   text-align: center;
   white-space: nowrap;
+  color: var(--ink);
+  text-shadow: 0 0 8px rgba(114, 163, 115, 0.5);
   transition: transform 0.3s ease-in-out;
   cursor: default;
   animation: title-scaling 0.65s ease-in-out infinite alternate;
@@ -75,35 +85,37 @@ body {
     width: 100%;
     height: 109px;
     background: var(--btn);
-    color: var(--ink);
-    border: none;
-    border-radius: 0;
+    color: #fff;
     border-style: solid;
-    border-width: 4px;
-    border-top-width: 0;
-    border-left-width: 0;
+    border-width: 2px 4px 4px 2px;
+    border-color: var(--bevel-light) var(--bevel-dark) var(--bevel-dark) var(--bevel-light);
+    border-radius: 0;
     font-family: inherit;
-    border-color: #000;
     font-size: clamp(18px, 3.4vw, 40px);
     letter-spacing: 0.02em;
+    line-height: 1.6;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.1s ease;
 }
 
 .menu-btn:hover,
 .menu-btn:focus-visible {
-    background: var(--ink);
-    color: var(--bg);
+    background: #70767b;
+    color: #fff;
     outline: none;
     transform: scale(1.05);
 }
 
+.menu-btn:focus-visible {
+    outline: 3px solid var(--ink-dim);
+    outline-offset: 3px;
+}
+
 .menu-btn:active {
-    opacity: 0.8;
-    border-left-width: 4px;
-    border-top-width: 4px;
-    border-bottom-width: 0;
-    border-right-width: 0;
+    background: #4f5458;
+    border-width: 4px 0 0 4px;
+    border-color: var(--bevel-dark);
 }
 
 @media (max-width: 600px) {
@@ -170,8 +182,10 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #2f3a33;
-  color: white;
+  background-color: var(--panel);
+  border: 4px solid #222;
+  color: var(--ink);
+  line-height: 1.6;
   padding: 25px;
   /* change later  */
   pointer-events: none; 
@@ -189,10 +203,11 @@ body {
   position: absolute;
   padding: 10px 20px;
   font-family: "Press Start 2P";
-  color: white;
-  background: red;
+  color: #fff;
+  background: #8b3a3a;
   border-style: solid;
   border-width: 4px;
+  border-color: #522222;
   border-top: none;
   border-left: none;
   right: -10px;
@@ -201,15 +216,15 @@ body {
 }
 
 .close-menu-btn:hover {
-  background-color: rgb(121, 0, 0);
-  color: black;
+  background-color: #9e4343;
+  color: #fff;
 }
 
 .close-menu-btn:active {
   border-right: none;
   border-bottom: none;
-  border-top: solid;
-  border-left: solid;
+  border-top: solid 4px #522222;
+  border-left: solid 4px #522222;
 }
 
 .sound-slider {
@@ -226,4 +241,10 @@ body {
   align-items: center;
   margin-top: 10px;
   margin-bottom: 20px;
+}
+
+.sound-slider input[type="range"],
+.music-slider input[type="range"] {
+  accent-color: var(--ink-dim);
+  margin-top: 12px;
 }
