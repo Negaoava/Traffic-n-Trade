@@ -1,0 +1,335 @@
+{
+  "card_001": {
+    "title": "Acidente no centro de distribuição",
+    "category": "work_and_safety",
+    "text": "Um vídeo de um acidente no centro de distribuição começa a circular. A equipe pede uma resposta antes que a notícia se espalhe.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Publicar um comunicado, custear o atendimento e abrir investigação.",
+        "effects": {
+          "investors": -8,
+          "clients": 8,
+          "government": 5,
+          "competition": 0
+        },
+        "setFlags": ["investigation_open"],
+        "clearFlags": [],
+        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+      },
+      "B": {
+        "text": "Tratar o caso internamente e esperar a repercussão diminuir.",
+        "effects": {
+          "investors": 3,
+          "clients": -9,
+          "government": -6,
+          "competition": 2
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_002": {
+    "title": "Sensores desligados",
+    "category": "work_and_safety",
+    "text": "A área financeira propõe desligar sensores de segurança para reduzir a conta de energia.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Manter os sensores e rever outros custos.",
+        "effects": {
+          "investors": -5,
+          "clients": 2,
+          "government": 4,
+          "competition": 0
+        },
+        "setFlags": ["safety_protected"],
+        "clearFlags": [],
+        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+      },
+      "B": {
+        "text": "Aprovar o corte e aceitar o risco operacional.",
+        "effects": {
+          "investors": 8,
+          "clients": -4,
+          "government": -9,
+          "competition": 0
+        },
+        "setFlags": ["safety_cut"],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_003": {
+    "title": "Greve anunciada",
+    "category": "work_and_safety",
+    "text": "Funcionários anunciam paralisação após meses de reclamações sobre jornadas e equipamentos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Negociar uma pauta emergencial com representantes.",
+        "effects": {
+          "investors": -5,
+          "clients": 5,
+          "government": 3,
+          "competition": -1
+        },
+        "setFlags": ["labor_talks"],
+        "clearFlags": [],
+        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+      },
+      "B": {
+        "text": "Substituir parte da equipe por temporários.",
+        "effects": {
+          "investors": 4,
+          "clients": -7,
+          "government": -6,
+          "competition": 2
+        },
+        "setFlags": ["strike_escalation"],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_004": {
+    "title": "Jornada excessiva",
+    "category": "work_and_safety",
+    "text": "A operação só conseguirá cumprir a meta semanal se parte dos motoristas fizer horas extras frequentes.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Reduzir a meta e contratar apoio temporário.",
+        "effects": {
+          "investors": -6,
+          "clients": 2,
+          "government": 4,
+          "competition": 1
+        },
+        "setFlags": ["staffing_review"],
+        "clearFlags": [],
+        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+      },
+      "B": {
+        "text": "Manter a meta e pagar horas extras.",
+        "effects": {
+          "investors": 5,
+          "clients": -3,
+          "government": -5,
+          "competition": 0
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_005": {
+    "title": "Treinamento obrigatório",
+    "category": "work_and_safety",
+    "text": "Uma auditoria interna recomenda treinamento de segurança para todos os motoristas.",
+    "requirements": {
+      "min": {
+        "government": 40
+      }
+    },
+    "options": {
+      "A": {
+        "text": "Suspender parte da operação para treinar a equipe.",
+        "effects": {
+          "investors": -5,
+          "clients": 3,
+          "government": 6,
+          "competition": 0
+        },
+        "setFlags": ["safety_training"],
+        "clearFlags": [],
+        "feedback": "A decisão reduz a exposição regulatória e melhora a relação institucional."
+      },
+      "B": {
+        "text": "Fazer apenas um treinamento remoto resumido.",
+        "effects": {
+          "investors": 2,
+          "clients": 0,
+          "government": 1,
+          "competition": 1
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_006": {
+    "title": "Equipamento defeituoso",
+    "category": "work_and_safety",
+    "text": "Mecânicos identificam falhas em uma série de veículos ainda escalados para entregas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Retirar os veículos de circulação e consertá-los.",
+        "effects": {
+          "investors": -6,
+          "clients": 3,
+          "government": 5,
+          "competition": 0
+        },
+        "setFlags": ["fleet_inspected"],
+        "clearFlags": [],
+        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+      },
+      "B": {
+        "text": "Usá-los até o fim do turno e reparar depois.",
+        "effects": {
+          "investors": 4,
+          "clients": -5,
+          "government": -7,
+          "competition": 1
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_007": {
+    "title": "Denúncia de assédio",
+    "category": "work_and_safety",
+    "text": "Uma funcionária denuncia assédio por parte de um supervisor conhecido por bater metas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Afastar o supervisor durante uma apuração independente.",
+        "effects": {
+          "investors": -3,
+          "clients": 4,
+          "government": 5,
+          "competition": 0
+        },
+        "setFlags": ["conduct_investigation"],
+        "clearFlags": [],
+        "feedback": "A decisão reduz a exposição regulatória e melhora a relação institucional."
+      },
+      "B": {
+        "text": "Transferir a funcionária e tratar o caso discretamente.",
+        "effects": {
+          "investors": 2,
+          "clients": -6,
+          "government": -7,
+          "competition": 1
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_008": {
+    "title": "Uniformes inadequados",
+    "category": "work_and_safety",
+    "text": "Entregadores relatam que os uniformes não protegem contra chuva e calor.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Comprar novos uniformes e equipamentos de proteção.",
+        "effects": {
+          "investors": -4,
+          "clients": 4,
+          "government": 3,
+          "competition": 0
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+      },
+      "B": {
+        "text": "Adiar a compra até o próximo trimestre.",
+        "effects": {
+          "investors": 3,
+          "clients": -3,
+          "government": -3,
+          "competition": 1
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_009": {
+    "title": "Acidente com terceiro",
+    "category": "work_and_safety",
+    "text": "Um veículo da empresa colide com um automóvel durante uma entrega urgente.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Cooperar com a investigação e cobrir os danos comprovados.",
+        "effects": {
+          "investors": -5,
+          "clients": 5,
+          "government": 4,
+          "competition": 0
+        },
+        "setFlags": ["collision_review"],
+        "clearFlags": [],
+        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+      },
+      "B": {
+        "text": "Contestar imediatamente a responsabilidade da empresa.",
+        "effects": {
+          "investors": 2,
+          "clients": -5,
+          "government": -3,
+          "competition": 1
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  },
+
+  "card_010": {
+    "title": "Canal de denúncias",
+    "category": "work_and_safety",
+    "text": "O setor de compliance propõe um canal confidencial para relatos de irregularidades.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Criar o canal com proteção contra retaliação.",
+        "effects": {
+          "investors": -3,
+          "clients": 2,
+          "government": 6,
+          "competition": 0
+        },
+        "setFlags": ["whistleblower_channel"],
+        "clearFlags": [],
+        "feedback": "A decisão reduz a exposição regulatória e melhora a relação institucional."
+      },
+      "B": {
+        "text": "Usar apenas o e-mail genérico já existente.",
+        "effects": {
+          "investors": 1,
+          "clients": 0,
+          "government": 1,
+          "competition": 0
+        },
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+      }
+    }
+  }
+}
