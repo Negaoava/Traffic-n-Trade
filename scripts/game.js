@@ -4,7 +4,7 @@ const textBox = document.getElementById('text-box');
 const acceptBtn = document.getElementById('accept');
 const denyBtn = document.getElementById('deny');
 const taskLimit = 5
-let tasks = 1;
+let currentTask = 1;
 
 
 const Pillars = {
@@ -22,35 +22,40 @@ function PickCard() {
 }
 let pickedCard = PickCard();
 
-textBox.innerText = pickedCard.text;
-acceptBtn.innerText = pickedCard.options.A.text;
-denyBtn.innerText = pickedCard.options.B.text;
+displayCard(pickedCard);
 
 acceptBtn.addEventListener('click', () => {
-    Pillars.Clientes += pickedCard.options.A.effects.clients;
-    Pillars.Concorrência += pickedCard.options.A.effects.competition;
-    Pillars.Governo += pickedCard.options.A.effects.government;
-    Pillars.Investidores += pickedCard.options.A.effects.investors;
-    
-    console.log(Pillars);
+    changePillars(pickedCard, 'A');
     pickedCard = PickCard();
-  
-    textBox.innerText = pickedCard.text;
-    acceptBtn.innerText = pickedCard.options.A.text;
-    denyBtn.innerText = pickedCard.options.B.text;
+    displayCard(pickedCard);
+    console.log(Pillars);
 });
 
 
 denyBtn.addEventListener('click', () => {
-    Pillars.Clientes += pickedCard.options.B.effects.clients;
-    Pillars.Concorrência += pickedCard.options.B.effects.competition;
-    Pillars.Governo += pickedCard.options.B.effects.government;
-    Pillars.Investidores += pickedCard.options.B.effects.investors;
-
-    console.log(Pillars);
+    changePillars(pickedCard, 'B');
     pickedCard = PickCard();
-    
-    textBox.innerText = pickedCard.text;
-    acceptBtn.innerText = pickedCard.options.A.text;
-    denyBtn.innerText = pickedCard.options.B.text;
+    displayCard(pickedCard);
+    console.log(Pillars);
 }); 
+
+function displayCard(card) {
+    textBox.innerText = card.text;
+    acceptBtn.innerText = card.options.A.text;
+    denyBtn.innerText = card.options.B.text;
+}
+
+function changePillars(card, choice) {
+    if (choice === 'A') {
+        Pillars.Clientes += card.options.A.effects.clients;
+        Pillars.Concorrência += card.options.A.effects.competition;
+        Pillars.Governo += card.options.A.effects.government;
+        Pillars.Investidores += card.options.A.effects.investors;
+    }
+    else {
+        Pillars.Clientes += card.options.B.effects.clients;
+        Pillars.Concorrência += card.options.B.effects.competition;
+        Pillars.Governo += card.options.B.effects.government;
+        Pillars.Investidores += card.options.B.effects.investors;
+    }
+}
