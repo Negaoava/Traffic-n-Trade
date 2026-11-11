@@ -1,334 +1,1981 @@
 {
-  "card_001": {
-    "title": "Acidente no centro de distribuição",
-    "category": "work_and_safety",
-    "text": "Um vídeo de um acidente no centro de distribuição começa a circular. A equipe pede uma resposta antes que a notícia se espalhe.",
+  "card_011": {
+    "title": "Atraso nas entregas",
+    "category": "operations",
+    "text": "Uma falha no planejamento deixa centenas de encomendas atrasadas durante a semana.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Publicar um comunicado, custear o atendimento e abrir investigação.",
-        "effects": {
-          "investors": -8,
-          "clients": 8,
-          "government": 5,
-          "competition": 0
-        },
-        "setFlags": ["investigation_open"],
+        "text": "Contratar transportadoras para reduzir o acúmulo.",
+        "effects": {"investors": -6, "clients": 7, "government": 0, "competition": -2},
+        "setFlags": ["outsourced_delivery"],
         "clearFlags": [],
-        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+        "feedback": "O custo extra reduz os atrasos e recupera parte da confiança dos clientes."
       },
       "B": {
-        "text": "Tratar o caso internamente e esperar a repercussão diminuir.",
-        "effects": {
-          "investors": 3,
-          "clients": -9,
-          "government": -6,
-          "competition": 2
-        },
-        "setFlags": [],
+        "text": "Priorizar apenas os contratos mais lucrativos.",
+        "effects": {"investors": 5, "clients": -8, "government": 0, "competition": 2},
+        "setFlags": ["delivery_backlog"],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "A medida protege a receita imediata, mas amplia a insatisfação dos demais clientes."
       }
     }
   },
-
-  "card_002": {
-    "title": "Sensores desligados",
-    "category": "work_and_safety",
-    "text": "A área financeira propõe desligar sensores de segurança para reduzir a conta de energia.",
+  "card_012": {
+    "title": "Falha no aplicativo",
+    "category": "technology",
+    "text": "Uma atualização provoca erros no aplicativo, impedindo clientes de acompanhar suas entregas.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Manter os sensores e rever outros custos.",
-        "effects": {
-          "investors": -5,
-          "clients": 2,
-          "government": 4,
-          "competition": 0
-        },
-        "setFlags": ["safety_protected"],
+        "text": "Reverter a atualização e investigar o problema.",
+        "effects": {"investors": -4, "clients": 7, "government": 1, "competition": 0},
+        "setFlags": ["app_recovery"],
         "clearFlags": [],
-        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+        "feedback": "A reversão recupera a estabilidade, embora atrase os planos de desenvolvimento."
       },
       "B": {
-        "text": "Aprovar o corte e aceitar o risco operacional.",
-        "effects": {
-          "investors": 8,
-          "clients": -4,
-          "government": -9,
-          "competition": 0
-        },
-        "setFlags": ["safety_cut"],
+        "text": "Manter a atualização e lançar uma correção posteriormente.",
+        "effects": {"investors": 3, "clients": -7, "government": -1, "competition": 1},
+        "setFlags": ["app_instability"],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "A empresa evita interromper o cronograma, mas os usuários continuam enfrentando problemas."
       }
     }
   },
-
-  "card_003": {
-    "title": "Greve anunciada",
-    "category": "work_and_safety",
-    "text": "Funcionários anunciam paralisação após meses de reclamações sobre jornadas e equipamentos.",
+  "card_013": {
+    "title": "Contrato exclusivo",
+    "category": "business",
+    "text": "Uma grande rede varejista oferece um contrato exclusivo em troca de condições comerciais vantajosas.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Negociar uma pauta emergencial com representantes.",
-        "effects": {
-          "investors": -5,
-          "clients": 5,
-          "government": 3,
-          "competition": -1
-        },
-        "setFlags": ["labor_talks"],
+        "text": "Aceitar a exclusividade e concentrar recursos no contrato.",
+        "effects": {"investors": 8, "clients": -4, "government": 0, "competition": -5},
+        "setFlags": ["exclusive_contract"],
         "clearFlags": [],
-        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+        "feedback": "A receita aumenta, mas a dependência de um único parceiro cresce."
       },
       "B": {
-        "text": "Substituir parte da equipe por temporários.",
-        "effects": {
-          "investors": 4,
-          "clients": -7,
-          "government": -6,
-          "competition": 2
-        },
-        "setFlags": ["strike_escalation"],
+        "text": "Recusar a exclusividade e manter a carteira diversificada.",
+        "effects": {"investors": -2, "clients": 4, "government": 0, "competition": 3},
+        "setFlags": ["diversified_clients"],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "A empresa abre mão de ganhos imediatos para preservar sua independência comercial."
       }
     }
   },
-
-  "card_004": {
-    "title": "Jornada excessiva",
-    "category": "work_and_safety",
-    "text": "A operação só conseguirá cumprir a meta semanal se parte dos motoristas fizer horas extras frequentes.",
+  "card_014": {
+    "title": "Expansão precipitada",
+    "category": "expansion",
+    "text": "O conselho propõe abrir operações em três novas cidades simultaneamente.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Reduzir a meta e contratar apoio temporário.",
-        "effects": {
-          "investors": -6,
-          "clients": 2,
-          "government": 4,
-          "competition": 1
-        },
-        "setFlags": ["staffing_review"],
+        "text": "Expandir gradualmente, começando por uma cidade.",
+        "effects": {"investors": -3, "clients": 3, "government": 2, "competition": 1},
+        "setFlags": ["gradual_expansion"],
         "clearFlags": [],
-        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+        "feedback": "O crescimento mais lento permite avaliar os riscos antes de comprometer novos recursos."
       },
       "B": {
-        "text": "Manter a meta e pagar horas extras.",
-        "effects": {
-          "investors": 5,
-          "clients": -3,
-          "government": -5,
-          "competition": 0
-        },
-        "setFlags": [],
+        "text": "Aprovar a expansão simultânea.",
+        "effects": {"investors": 7, "clients": -2, "government": -3, "competition": 5},
+        "setFlags": ["rapid_expansion"],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "A empresa ganha presença rapidamente, mas sua estrutura fica sob pressão."
       }
     }
   },
-
-  "card_005": {
-    "title": "Treinamento obrigatório",
-    "category": "work_and_safety",
-    "text": "Uma auditoria interna recomenda treinamento de segurança para todos os motoristas.",
-    "requirements": {
-      "min": {
-        "government": 40
-      }
-    },
-    "options": {
-      "A": {
-        "text": "Suspender parte da operação para treinar a equipe.",
-        "effects": {
-          "investors": -5,
-          "clients": 3,
-          "government": 6,
-          "competition": 0
-        },
-        "setFlags": ["safety_training"],
-        "clearFlags": [],
-        "feedback": "A decisão reduz a exposição regulatória e melhora a relação institucional."
-      },
-      "B": {
-        "text": "Fazer apenas um treinamento remoto resumido.",
-        "effects": {
-          "investors": 2,
-          "clients": 0,
-          "government": 1,
-          "competition": 1
-        },
-        "setFlags": [],
-        "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
-      }
-    }
-  },
-
-  "card_006": {
-    "title": "Equipamento defeituoso",
-    "category": "work_and_safety",
-    "text": "Mecânicos identificam falhas em uma série de veículos ainda escalados para entregas.",
+  "card_015": {
+    "title": "Centro de distribuição lotado",
+    "category": "operations",
+    "text": "O principal centro de distribuição opera acima da capacidade, causando congestionamento interno.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Retirar os veículos de circulação e consertá-los.",
-        "effects": {
-          "investors": -6,
-          "clients": 3,
-          "government": 5,
-          "competition": 0
-        },
-        "setFlags": ["fleet_inspected"],
+        "text": "Alugar um galpão temporário.",
+        "effects": {"investors": -5, "clients": 5, "government": 1, "competition": 0},
+        "setFlags": ["temporary_warehouse"],
         "clearFlags": [],
-        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+        "feedback": "A capacidade adicional alivia a operação, embora aumente os custos."
       },
       "B": {
-        "text": "Usá-los até o fim do turno e reparar depois.",
-        "effects": {
-          "investors": 4,
-          "clients": -5,
-          "government": -7,
-          "competition": 1
-        },
-        "setFlags": [],
+        "text": "Aumentar o ritmo de trabalho no centro atual.",
+        "effects": {"investors": 4, "clients": -4, "government": -3, "competition": 1},
+        "setFlags": ["warehouse_overload"],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "A solução reduz despesas imediatas, mas mantém os gargalos operacionais."
       }
     }
   },
-
-  "card_007": {
-    "title": "Denúncia de assédio",
-    "category": "work_and_safety",
-    "text": "Uma funcionária denuncia assédio por parte de um supervisor conhecido por bater metas.",
+  "card_016": {
+    "title": "Vazamento de dados",
+    "category": "technology",
+    "text": "A equipe de segurança detecta que informações de clientes podem ter sido acessadas por terceiros.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Afastar o supervisor durante uma apuração independente.",
-        "effects": {
-          "investors": -3,
-          "clients": 4,
-          "government": 5,
-          "competition": 0
-        },
-        "setFlags": ["conduct_investigation"],
+        "text": "Informar os afetados e contratar uma auditoria externa.",
+        "effects": {"investors": -7, "clients": 7, "government": 6, "competition": 0},
+        "setFlags": ["data_breach_response"],
         "clearFlags": [],
-        "feedback": "A decisão reduz a exposição regulatória e melhora a relação institucional."
+        "feedback": "A transparência gera custos, mas demonstra responsabilidade diante do incidente."
       },
       "B": {
-        "text": "Transferir a funcionária e tratar o caso discretamente.",
-        "effects": {
-          "investors": 2,
-          "clients": -6,
-          "government": -7,
-          "competition": 1
-        },
-        "setFlags": [],
+        "text": "Investigar internamente antes de qualquer comunicado.",
+        "effects": {"investors": 3, "clients": -5, "government": -6, "competition": 1},
+        "setFlags": ["data_breach_hidden"],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "O silêncio evita uma crise imediata, mas amplia os riscos caso o vazamento seja confirmado."
       }
     }
   },
-
-  "card_008": {
-    "title": "Uniformes inadequados",
-    "category": "work_and_safety",
-    "text": "Entregadores relatam que os uniformes não protegem contra chuva e calor.",
+  "card_017": {
+    "title": "Nova legislação municipal",
+    "category": "regulation",
+    "text": "Uma prefeitura anuncia novas exigências ambientais para empresas de logística urbana.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Comprar novos uniformes e equipamentos de proteção.",
-        "effects": {
-          "investors": -4,
-          "clients": 4,
-          "government": 3,
-          "competition": 0
-        },
-        "setFlags": [],
+        "text": "Adaptar a operação antecipadamente.",
+        "effects": {"investors": -5, "clients": 2, "government": 7, "competition": 1},
+        "setFlags": ["environmental_compliance"],
         "clearFlags": [],
-        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+        "feedback": "A adaptação custa caro, mas evita dificuldades futuras com a regulamentação."
       },
       "B": {
-        "text": "Adiar a compra até o próximo trimestre.",
-        "effects": {
-          "investors": 3,
-          "clients": -3,
-          "government": -3,
-          "competition": 1
-        },
-        "setFlags": [],
+        "text": "Aguardar a fiscalização antes de investir.",
+        "effects": {"investors": 4, "clients": 0, "government": -7, "competition": 0},
+        "setFlags": ["regulatory_delay"],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "A empresa preserva recursos, mas assume o risco de penalidades."
       }
     }
   },
-
-  "card_009": {
-    "title": "Acidente com terceiro",
-    "category": "work_and_safety",
-    "text": "Um veículo da empresa colide com um automóvel durante uma entrega urgente.",
+  "card_018": {
+    "title": "Concorrente internacional",
+    "category": "competition",
+    "text": "Uma multinacional anuncia sua entrada no mercado brasileiro com preços agressivos.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Cooperar com a investigação e cobrir os danos comprovados.",
-        "effects": {
-          "investors": -5,
-          "clients": 5,
-          "government": 4,
-          "competition": 0
-        },
-        "setFlags": ["collision_review"],
+        "text": "Investir em diferenciação e qualidade de serviço.",
+        "effects": {"investors": -6, "clients": 6, "government": 0, "competition": 5},
+        "setFlags": ["quality_strategy"],
         "clearFlags": [],
-        "feedback": "O conselho aceita o custo imediato, enquanto a medida reduz riscos futuros."
+        "feedback": "A empresa aposta na fidelização em vez de iniciar uma disputa exclusivamente por preços."
       },
       "B": {
-        "text": "Contestar imediatamente a responsabilidade da empresa.",
-        "effects": {
-          "investors": 2,
-          "clients": -5,
-          "government": -3,
-          "competition": 1
-        },
-        "setFlags": [],
+        "text": "Reduzir os preços para competir diretamente.",
+        "effects": {"investors": -3, "clients": 4, "government": 0, "competition": -5},
+        "setFlags": ["price_war"],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "A estratégia atrai clientes, mas reduz as margens e intensifica a disputa."
       }
     }
   },
-
-  "card_010": {
-    "title": "Canal de denúncias",
-    "category": "work_and_safety",
-    "text": "O setor de compliance propõe um canal confidencial para relatos de irregularidades.",
+  "card_019": {
+    "title": "Reclamações recorrentes",
+    "category": "clients",
+    "text": "Clientes relatam repetidamente que o atendimento demora para resolver problemas simples.",
     "requirements": {},
     "options": {
       "A": {
-        "text": "Criar o canal com proteção contra retaliação.",
-        "effects": {
-          "investors": -3,
-          "clients": 2,
-          "government": 6,
-          "competition": 0
-        },
-        "setFlags": ["whistleblower_channel"],
+        "text": "Ampliar a equipe de suporte e revisar os processos.",
+        "effects": {"investors": -5, "clients": 7, "government": 0, "competition": 1},
+        "setFlags": ["support_reform"],
         "clearFlags": [],
-        "feedback": "A decisão reduz a exposição regulatória e melhora a relação institucional."
+        "feedback": "O investimento melhora o atendimento e reduz a insatisfação acumulada."
       },
       "B": {
-        "text": "Usar apenas o e-mail genérico já existente.",
-        "effects": {
-          "investors": 1,
-          "clients": 0,
-          "government": 1,
-          "competition": 0
-        },
+        "text": "Automatizar as respostas para reduzir custos.",
+        "effects": {"investors": 5, "clients": -4, "government": 0, "competition": 0},
+        "setFlags": ["automated_support"],
+        "clearFlags": [],
+        "feedback": "A automação reduz despesas, mas não resolve os casos mais complexos."
+      }
+    }
+  },
+  "card_020": {
+    "title": "Subsídio para veículos elétricos",
+    "category": "environment",
+    "text": "O governo oferece incentivos para empresas que substituírem parte de suas frotas por veículos elétricos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Aproveitar o incentivo e iniciar a substituição.",
+        "effects": {"investors": -4, "clients": 4, "government": 6, "competition": 3},
+        "setFlags": ["electric_fleet"],
+        "clearFlags": [],
+        "feedback": "O investimento inicial é alto, mas a empresa ganha vantagens ambientais e institucionais."
+      },
+      "B": {
+        "text": "Manter a frota atual até que os custos diminuam.",
+        "effects": {"investors": 3, "clients": -1, "government": -3, "competition": -1},
+        "setFlags": ["conventional_fleet"],
+        "clearFlags": [],
+        "feedback": "A empresa evita despesas imediatas, mas perde a oportunidade de modernização."
+      }
+    }
+  },
+  "card_021": {
+    "title": "Demanda inesperada",
+    "category": "operations",
+    "text": "Uma campanha promocional de um cliente gera um volume de pedidos muito acima do previsto.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Negociar um novo prazo para parte das entregas.",
+        "effects": {"investors": -2, "clients": 5, "government": 0, "competition": 0},
+        "setFlags": ["demand_negotiation"],
+        "clearFlags": [],
+        "feedback": "O alinhamento evita promessas impossíveis e preserva a relação comercial."
+      },
+      "B": {
+        "text": "Aceitar todos os pedidos sem alterar o planejamento.",
+        "effects": {"investors": 4, "clients": -6, "government": -1, "competition": 2},
+        "setFlags": ["overpromised_deliveries"],
+        "clearFlags": [],
+        "feedback": "A empresa garante o contrato, mas compromete a capacidade de cumprir os prazos."
+      }
+    }
+  },
+  "card_022": {
+    "title": "Roubo de mercadorias",
+    "category": "security",
+    "text": "Uma sequência de roubos em determinada região começa a gerar prejuízos para a operação.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Reforçar o monitoramento e alterar as rotas.",
+        "effects": {"investors": -5, "clients": 4, "government": 3, "competition": 0},
+        "setFlags": ["route_security"],
+        "clearFlags": [],
+        "feedback": "A prevenção reduz a exposição das entregas, embora eleve os custos operacionais."
+      },
+      "B": {
+        "text": "Manter as rotas e absorver as perdas.",
+        "effects": {"investors": -4, "clients": -4, "government": -2, "competition": 0},
+        "setFlags": ["theft_losses"],
+        "clearFlags": [],
+        "feedback": "A empresa evita mudanças estruturais, mas continua vulnerável aos roubos."
+      }
+    }
+  },
+  "card_023": {
+    "title": "Proposta de fusão",
+    "category": "business",
+    "text": "Uma empresa regional de logística propõe uma fusão que ampliaria consideravelmente a presença da UrbanLink.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Iniciar negociações para uma fusão gradual.",
+        "effects": {"investors": -3, "clients": 4, "government": 2, "competition": 5},
+        "setFlags": ["merger_negotiations"],
+        "clearFlags": [],
+        "feedback": "A aproximação abre oportunidades de crescimento, mas exige integração cuidadosa."
+      },
+      "B": {
+        "text": "Recusar a proposta e preservar a estrutura atual.",
+        "effects": {"investors": 2, "clients": 0, "government": 0, "competition": -2},
+        "setFlags": ["merger_rejected"],
+        "clearFlags": [],
+        "feedback": "A empresa evita os riscos de integração, mas perde uma oportunidade de expansão."
+      }
+    }
+  },
+  "card_024": {
+    "title": "Auditoria surpresa",
+    "category": "regulation",
+    "text": "Uma fiscalização solicita documentos sobre a operação de vários centros de distribuição.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Cooperar integralmente e corrigir irregularidades identificadas.",
+        "effects": {"investors": -3, "clients": 1, "government": 7, "competition": 0},
+        "setFlags": ["audit_cooperation"],
+        "clearFlags": ["regulatory_delay"],
+        "feedback": "A cooperação facilita a fiscalização e demonstra compromisso com as normas."
+      },
+      "B": {
+        "text": "Contestar o escopo da fiscalização e adiar a entrega.",
+        "effects": {"investors": 2, "clients": 0, "government": -7, "competition": 0},
+        "setFlags": ["audit_dispute"],
+        "clearFlags": [],
+        "feedback": "A contestação pode ganhar tempo, mas prejudica a relação com os órgãos públicos."
+      }
+    }
+  },
+  "card_025": {
+    "title": "Programa de fidelidade",
+    "category": "clients",
+    "text": "O setor comercial propõe recompensas para clientes que utilizarem a plataforma regularmente.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Lançar o programa com benefícios progressivos.",
+        "effects": {"investors": -4, "clients": 7, "government": 0, "competition": 3},
+        "setFlags": ["loyalty_program"],
+        "clearFlags": [],
+        "feedback": "Os benefícios estimulam a permanência dos clientes, mas exigem investimento contínuo."
+      },
+      "B": {
+        "text": "Oferecer descontos apenas para novos contratos.",
+        "effects": {"investors": -1, "clients": 2, "government": 0, "competition": 1},
         "setFlags": [],
         "clearFlags": [],
-        "feedback": "A alternativa preserva algumas vantagens imediatas, mas transfere parte do custo ou do risco para outro pilar."
+        "feedback": "A campanha atrai novos parceiros, mas pouco contribui para fidelizar os atuais."
+      }
+    }
+  },
+  "card_026": {
+    "title": "Falência de fornecedor",
+    "category": "supply_chain",
+    "text": "Um fornecedor essencial anuncia que encerrará suas atividades em poucas semanas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Buscar fornecedores alternativos imediatamente.",
+        "effects": {"investors": -4, "clients": 3, "government": 0, "competition": 1},
+        "setFlags": ["supplier_diversification"],
+        "clearFlags": [],
+        "feedback": "A diversificação reduz a dependência e protege a continuidade da operação."
+      },
+      "B": {
+        "text": "Comprar o estoque restante e esperar uma solução.",
+        "effects": {"investors": -3, "clients": 1, "government": 0, "competition": 0},
+        "setFlags": ["supplier_shortage"],
+        "clearFlags": [],
+        "feedback": "O estoque oferece uma solução temporária, mas não resolve a dependência."
+      }
+    }
+  },
+  "card_027": {
+    "title": "Dados para publicidade",
+    "category": "privacy",
+    "text": "Uma agência oferece uma quantia elevada em troca de acesso a dados de comportamento dos usuários.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Recusar a proposta e preservar a privacidade dos usuários.",
+        "effects": {"investors": -2, "clients": 5, "government": 4, "competition": 0},
+        "setFlags": ["privacy_protected"],
+        "clearFlags": [],
+        "feedback": "A empresa abre mão de receita, mas fortalece sua política de privacidade."
+      },
+      "B": {
+        "text": "Compartilhar dados anonimizados mediante contrato.",
+        "effects": {"investors": 6, "clients": -3, "government": -2, "competition": 1},
+        "setFlags": ["data_monetization"],
+        "clearFlags": [],
+        "feedback": "A parceria gera receita, mas exige cuidado para não comprometer a confiança dos usuários."
+      }
+    }
+  },
+  "card_028": {
+    "title": "Centro comunitário",
+    "category": "social_responsibility",
+    "text": "Moradores de uma região atendida pela empresa solicitam apoio para reformar um centro comunitário.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Financiar parte da reforma e envolver funcionários.",
+        "effects": {"investors": -3, "clients": 3, "government": 3, "competition": 1},
+        "setFlags": ["community_support"],
+        "clearFlags": [],
+        "feedback": "A iniciativa fortalece os vínculos locais e melhora a imagem institucional."
+      },
+      "B": {
+        "text": "Recusar o pedido e priorizar investimentos operacionais.",
+        "effects": {"investors": 2, "clients": -2, "government": -1, "competition": 0},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa concentra seus recursos na operação, mas perde uma oportunidade de aproximação comunitária."
+      }
+    }
+  },
+  "card_029": {
+    "title": "Aplicativo concorrente",
+    "category": "competition",
+    "text": "Uma startup lança uma plataforma com funcionalidades semelhantes às do UrbanLink Flow.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Acelerar o desenvolvimento de novas funcionalidades.",
+        "effects": {"investors": -5, "clients": 4, "government": 0, "competition": 5},
+        "setFlags": ["product_innovation"],
+        "clearFlags": [],
+        "feedback": "A inovação ajuda a diferenciar a plataforma, embora aumente a pressão sobre o orçamento."
+      },
+      "B": {
+        "text": "Reduzir os preços para impedir a migração de clientes.",
+        "effects": {"investors": -3, "clients": 3, "government": 0, "competition": -4},
+        "setFlags": ["competitive_discount"],
+        "clearFlags": [],
+        "feedback": "A redução de preços dificulta a entrada do concorrente, mas diminui a rentabilidade."
+      }
+    }
+  },
+  "card_030": {
+    "title": "Acúmulo de reclamações ambientais",
+    "category": "environment",
+    "text": "Moradores denunciam o excesso de ruído e a emissão de poluentes próximos a um centro de distribuição.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Instalar equipamentos de controle e rever os horários.",
+        "effects": {"investors": -5, "clients": 2, "government": 6, "competition": 0},
+        "setFlags": ["noise_control"],
+        "clearFlags": [],
+        "feedback": "As medidas reduzem o impacto local e melhoram a relação com a comunidade."
+      },
+      "B": {
+        "text": "Alegar que a operação está dentro dos limites atuais.",
+        "effects": {"investors": 2, "clients": -3, "government": -5, "competition": 0},
+        "setFlags": ["environmental_complaints"],
+        "clearFlags": [],
+        "feedback": "A empresa evita gastos imediatos, mas ignora a insatisfação dos moradores."
+      }
+    }
+  },
+  "card_031": {
+    "title": "Investidor impaciente",
+    "category": "investors",
+    "text": "Um investidor importante exige resultados trimestrais maiores e ameaça retirar seu aporte.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Apresentar um plano de crescimento sustentável.",
+        "effects": {"investors": 3, "clients": 2, "government": 0, "competition": 1},
+        "setFlags": ["sustainable_growth"],
+        "clearFlags": [],
+        "feedback": "O plano oferece previsibilidade sem comprometer toda a estratégia de longo prazo."
+      },
+      "B": {
+        "text": "Cortar despesas de vários departamentos imediatamente.",
+        "effects": {"investors": 6, "clients": -5, "government": -2, "competition": -1},
+        "setFlags": ["department_cuts"],
+        "clearFlags": [],
+        "feedback": "O corte melhora os indicadores financeiros, mas enfraquece setores importantes."
+      }
+    }
+  },
+  "card_032": {
+    "title": "Atraso salarial",
+    "category": "work_and_safety",
+    "text": "Problemas no fluxo de caixa ameaçam atrasar o pagamento dos funcionários.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Priorizar a folha de pagamento e renegociar outras dívidas.",
+        "effects": {"investors": -5, "clients": 2, "government": 4, "competition": 0},
+        "setFlags": ["payroll_protected"],
+        "clearFlags": [],
+        "feedback": "A decisão preserva a confiança da equipe, embora pressione as finanças."
+      },
+      "B": {
+        "text": "Adiar os pagamentos até a entrada de novas receitas.",
+        "effects": {"investors": 3, "clients": -4, "government": -6, "competition": 0},
+        "setFlags": ["salary_delay"],
+        "clearFlags": [],
+        "feedback": "A empresa ganha fôlego temporário, mas compromete a confiança dos funcionários e o cumprimento de obrigações."
+      }
+    }
+  },
+  "card_033": {
+    "title": "Parceria com universidade",
+    "category": "innovation",
+    "text": "Uma universidade pública propõe desenvolver pesquisas sobre otimização de rotas em parceria com a UrbanLink.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Financiar um projeto conjunto de pesquisa.",
+        "effects": {"investors": -3, "clients": 3, "government": 4, "competition": 4},
+        "setFlags": ["university_partnership"],
+        "clearFlags": [],
+        "feedback": "A parceria aproxima a empresa da pesquisa científica e abre espaço para inovação."
+      },
+      "B": {
+        "text": "Aguardar resultados de outras pesquisas antes de investir.",
+        "effects": {"investors": 2, "clients": 0, "government": 0, "competition": -1},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa evita riscos de pesquisa, mas deixa passar uma oportunidade de desenvolvimento."
+      }
+    }
+  },
+  "card_034": {
+    "title": "Falha na previsão de demanda",
+    "category": "technology",
+    "text": "O sistema de previsão subestima o volume de pedidos em períodos de alta movimentação.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Recalibrar o modelo e contratar especialistas.",
+        "effects": {"investors": -4, "clients": 5, "government": 0, "competition": 3},
+        "setFlags": ["demand_model_review"],
+        "clearFlags": [],
+        "feedback": "O investimento melhora a precisão do planejamento e a capacidade de resposta."
+      },
+      "B": {
+        "text": "Aumentar manualmente as estimativas em períodos de pico.",
+        "effects": {"investors": 2, "clients": 1, "government": 0, "competition": -1},
+        "setFlags": ["manual_forecasting"],
+        "clearFlags": [],
+        "feedback": "A solução é barata e rápida, mas não corrige a falha estrutural do modelo."
+      }
+    }
+  },
+  "card_035": {
+    "title": "Taxa de congestionamento",
+    "category": "regulation",
+    "text": "Uma capital anuncia uma taxa para veículos comerciais que circulam em áreas de grande congestionamento.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Adaptar as rotas e concentrar entregas em horários alternativos.",
+        "effects": {"investors": -4, "clients": 3, "government": 5, "competition": 2},
+        "setFlags": ["off_peak_deliveries"],
+        "clearFlags": [],
+        "feedback": "A mudança reduz custos regulatórios e contribui para uma circulação mais eficiente."
+      },
+      "B": {
+        "text": "Pagar a taxa e manter a operação inalterada.",
+        "effects": {"investors": -3, "clients": 1, "government": 1, "competition": -1},
+        "setFlags": ["congestion_fee"],
+        "clearFlags": [],
+        "feedback": "A empresa mantém a conveniência operacional, mas assume uma despesa recorrente."
+      }
+    }
+  },
+  "card_036": {
+    "title": "Fraude em contratos",
+    "category": "security",
+    "text": "Uma investigação aponta que um funcionário pode ter falsificado documentos para aprovar contratos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Suspender as aprovações e abrir uma investigação independente.",
+        "effects": {"investors": -4, "clients": 1, "government": 6, "competition": 0},
+        "setFlags": ["contract_investigation"],
+        "clearFlags": [],
+        "feedback": "A apuração protege a integridade dos processos, mesmo causando atrasos."
+      },
+      "B": {
+        "text": "Afastar discretamente o funcionário e manter os contratos.",
+        "effects": {"investors": 3, "clients": 0, "government": -6, "competition": 0},
+        "setFlags": ["contract_fraud_unresolved"],
+        "clearFlags": [],
+        "feedback": "A solução evita uma interrupção imediata, mas deixa possíveis irregularidades sem esclarecimento."
+      }
+    }
+  },
+  "card_037": {
+    "title": "Reclamação de pequenos comerciantes",
+    "category": "clients",
+    "text": "Pequenos comerciantes afirmam que as tarifas da UrbanLink são incompatíveis com seus negócios.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Criar um plano específico para pequenos estabelecimentos.",
+        "effects": {"investors": -3, "clients": 6, "government": 1, "competition": 2},
+        "setFlags": ["small_business_plan"],
+        "clearFlags": [],
+        "feedback": "A nova modalidade amplia o acesso ao serviço e fortalece a carteira de clientes."
+      },
+      "B": {
+        "text": "Manter as tarifas e focar em contratos maiores.",
+        "effects": {"investors": 4, "clients": -5, "government": 0, "competition": 1},
+        "setFlags": ["large_clients_focus"],
+        "clearFlags": [],
+        "feedback": "A empresa concentra recursos em contratos rentáveis, mas reduz sua diversidade de clientes."
+      }
+    }
+  },
+  "card_038": {
+    "title": "Transparência nos indicadores",
+    "category": "governance",
+    "text": "Uma organização civil solicita dados sobre atrasos, emissões e condições de trabalho da empresa.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Publicar um relatório com indicadores verificáveis.",
+        "effects": {"investors": -2, "clients": 4, "government": 5, "competition": 0},
+        "setFlags": ["public_transparency"],
+        "clearFlags": [],
+        "feedback": "A divulgação fortalece a prestação de contas e a credibilidade institucional."
+      },
+      "B": {
+        "text": "Divulgar apenas os resultados considerados positivos.",
+        "effects": {"investors": 3, "clients": -3, "government": -3, "competition": 1},
+        "setFlags": ["selective_disclosure"],
+        "clearFlags": [],
+        "feedback": "A comunicação favorece a imagem no curto prazo, mas compromete a transparência."
+      }
+    }
+  },
+  "card_039": {
+    "title": "Inteligência artificial nas rotas",
+    "category": "innovation",
+    "text": "Uma empresa de tecnologia oferece um sistema de inteligência artificial capaz de otimizar as rotas de entrega.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Testar o sistema em uma região antes de expandir.",
+        "effects": {"investors": -3, "clients": 3, "government": 1, "competition": 4},
+        "setFlags": ["ai_pilot"],
+        "clearFlags": [],
+        "feedback": "O projeto-piloto permite avaliar os ganhos sem comprometer toda a operação."
+      },
+      "B": {
+        "text": "Substituir imediatamente o sistema atual.",
+        "effects": {"investors": -6, "clients": -2, "government": -1, "competition": 6},
+        "setFlags": ["ai_full_deployment"],
+        "clearFlags": [],
+        "feedback": "A modernização pode gerar vantagens competitivas, mas a transição traz riscos consideráveis."
+      }
+    }
+  },
+  "card_040": {
+    "title": "Disputa por espaço urbano",
+    "category": "government",
+    "text": "Uma associação de moradores protesta contra o uso frequente de calçadas por entregadores aguardando pedidos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Criar pontos de espera autorizados em parceria com a prefeitura.",
+        "effects": {"investors": -3, "clients": 3, "government": 5, "competition": 1},
+        "setFlags": ["authorized_waiting_points"],
+        "clearFlags": [],
+        "feedback": "A solução organiza a operação e reduz os conflitos com os moradores."
+      },
+      "B": {
+        "text": "Orientar os entregadores a evitar locais de maior visibilidade.",
+        "effects": {"investors": 2, "clients": -2, "government": -5, "competition": 0},
+        "setFlags": ["informal_waiting"],
+        "clearFlags": [],
+        "feedback": "A medida reduz a pressão imediata, mas não resolve o problema de ocupação do espaço."
+      }
+    }
+  },
+  "card_041": {
+    "title": "Redução de emissões",
+    "category": "environment",
+    "text": "Um relatório aponta que a frota da empresa está entre as principais fontes de emissões em suas regiões de atuação.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Estabelecer metas de redução e renovar gradualmente a frota.",
+        "effects": {"investors": -5, "clients": 4, "government": 5, "competition": 2},
+        "setFlags": ["emission_reduction_plan"],
+        "clearFlags": [],
+        "feedback": "O plano exige recursos, mas estabelece uma direção concreta para reduzir impactos."
+      },
+      "B": {
+        "text": "Compensar emissões sem alterar a operação.",
+        "effects": {"investors": -1, "clients": 1, "government": 0, "competition": 0},
+        "setFlags": ["carbon_offsets"],
+        "clearFlags": [],
+        "feedback": "A compensação oferece uma resposta rápida, mas mantém as fontes de emissão."
+      }
+    }
+  },
+  "card_042": {
+    "title": "Funcionários sem representação",
+    "category": "work_and_safety",
+    "text": "Funcionários solicitam a criação de um espaço permanente para discutir condições de trabalho.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Criar um conselho interno com representantes eleitos.",
+        "effects": {"investors": -2, "clients": 3, "government": 4, "competition": 0},
+        "setFlags": ["employee_council"],
+        "clearFlags": [],
+        "feedback": "O diálogo institucionalizado melhora a comunicação entre equipe e gestão."
+      },
+      "B": {
+        "text": "Manter reuniões individuais com os gestores.",
+        "effects": {"investors": 1, "clients": 0, "government": -2, "competition": 0},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A estrutura permanece simples, mas as demandas coletivas continuam sem representação."
+      }
+    }
+  },
+  "card_043": {
+    "title": "Licitação pública",
+    "category": "government",
+    "text": "Uma prefeitura abre uma licitação para contratar serviços de logística e distribuição.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Participar com uma proposta competitiva e transparente.",
+        "effects": {"investors": -2, "clients": 3, "government": 5, "competition": 4},
+        "setFlags": ["public_bid"],
+        "clearFlags": [],
+        "feedback": "A participação abre uma oportunidade de expansão e aproxima a empresa do setor público."
+      },
+      "B": {
+        "text": "Evitar contratos públicos e concentrar-se no setor privado.",
+        "effects": {"investors": 2, "clients": 0, "government": -1, "competition": -1},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa evita a complexidade das licitações, mas limita suas possibilidades de crescimento."
+      }
+    }
+  },
+  "card_044": {
+    "title": "Exposição de informações internas",
+    "category": "security",
+    "text": "Documentos estratégicos da empresa aparecem em um fórum público na internet.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Investigar o acesso e reforçar os controles internos.",
+        "effects": {"investors": -4, "clients": 1, "government": 3, "competition": 3},
+        "setFlags": ["internal_security_review"],
+        "clearFlags": [],
+        "feedback": "A resposta reduz a vulnerabilidade e ajuda a proteger informações estratégicas."
+      },
+      "B": {
+        "text": "Ignorar a publicação e evitar chamar atenção.",
+        "effects": {"investors": 1, "clients": -1, "government": -2, "competition": -4},
+        "setFlags": ["information_exposure"],
+        "clearFlags": [],
+        "feedback": "A empresa evita uma reação pública, mas deixa informações sensíveis expostas."
+      }
+    }
+  },
+  "card_045": {
+    "title": "Entrega em área periférica",
+    "category": "clients",
+    "text": "Moradores de bairros periféricos denunciam que algumas regiões são atendidas com menos frequência.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Criar rotas regulares para as regiões menos atendidas.",
+        "effects": {"investors": -4, "clients": 6, "government": 3, "competition": 1},
+        "setFlags": ["peripheral_routes"],
+        "clearFlags": [],
+        "feedback": "A ampliação do atendimento melhora a cobertura e reduz desigualdades de acesso."
+      },
+      "B": {
+        "text": "Manter a operação concentrada nas regiões mais rentáveis.",
+        "effects": {"investors": 5, "clients": -6, "government": -3, "competition": 1},
+        "setFlags": ["profitable_areas_only"],
+        "clearFlags": [],
+        "feedback": "A concentração aumenta a eficiência financeira, mas exclui regiões com menor retorno."
+      }
+    }
+  },
+  "card_046": {
+    "title": "Crise de abastecimento",
+    "category": "supply_chain",
+    "text": "A escassez de combustível ameaça interromper parte das entregas programadas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Negociar abastecimento prioritário e reorganizar as rotas.",
+        "effects": {"investors": -3, "clients": 4, "government": 1, "competition": 1},
+        "setFlags": ["fuel_contingency"],
+        "clearFlags": [],
+        "feedback": "O plano de contingência preserva os serviços essenciais, apesar dos custos adicionais."
+      },
+      "B": {
+        "text": "Reduzir temporariamente a quantidade de entregas.",
+        "effects": {"investors": 2, "clients": -5, "government": 0, "competition": -1},
+        "setFlags": ["reduced_deliveries"],
+        "clearFlags": [],
+        "feedback": "A redução evita gastos maiores, mas prejudica a capacidade de atendimento."
+      }
+    }
+  },
+  "card_047": {
+    "title": "Aquisição de startup",
+    "category": "business",
+    "text": "Uma startup especializada em rastreamento inteligente está disponível para aquisição.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Adquirir a empresa e integrar sua tecnologia.",
+        "effects": {"investors": -7, "clients": 4, "government": 0, "competition": 6},
+        "setFlags": ["startup_acquisition"],
+        "clearFlags": [],
+        "feedback": "A aquisição amplia a capacidade tecnológica, mas exige um investimento significativo."
+      },
+      "B": {
+        "text": "Negociar apenas uma licença de uso da tecnologia.",
+        "effects": {"investors": -2, "clients": 2, "government": 0, "competition": 2},
+        "setFlags": ["technology_license"],
+        "clearFlags": [],
+        "feedback": "A licença oferece acesso à inovação sem assumir os custos de uma aquisição."
+      }
+    }
+  },
+  "card_048": {
+    "title": "Mudança na diretoria",
+    "category": "governance",
+    "text": "Investidores pressionam pela substituição de diretores após resultados abaixo das expectativas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Reavaliar a gestão com critérios independentes.",
+        "effects": {"investors": 3, "clients": 2, "government": 2, "competition": 0},
+        "setFlags": ["management_review"],
+        "clearFlags": [],
+        "feedback": "A avaliação permite mudanças fundamentadas sem comprometer a estabilidade institucional."
+      },
+      "B": {
+        "text": "Substituir os diretores imediatamente.",
+        "effects": {"investors": 5, "clients": -3, "government": -1, "competition": 1},
+        "setFlags": ["management_replacement"],
+        "clearFlags": [],
+        "feedback": "A decisão agrada aos investidores, mas gera incerteza durante a transição."
+      }
+    }
+  },
+  "card_049": {
+    "title": "Erro na cobrança",
+    "category": "clients",
+    "text": "Uma falha no sistema provoca cobranças duplicadas em centenas de contratos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Reembolsar os afetados e corrigir o sistema.",
+        "effects": {"investors": -5, "clients": 7, "government": 3, "competition": 0},
+        "setFlags": ["billing_recovery"],
+        "clearFlags": [],
+        "feedback": "A correção e os reembolsos demonstram responsabilidade diante dos clientes."
+      },
+      "B": {
+        "text": "Estornar apenas os casos que forem formalmente reclamados.",
+        "effects": {"investors": 3, "clients": -6, "government": -3, "competition": 0},
+        "setFlags": ["billing_complaints"],
+        "clearFlags": [],
+        "feedback": "A empresa limita os custos, mas transfere aos clientes o trabalho de identificar os erros."
+      }
+    }
+  },
+  "card_050": {
+    "title": "Acordo com cooperativa",
+    "category": "business",
+    "text": "Uma cooperativa de entregadores propõe uma parceria para ampliar a cobertura da UrbanLink.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Firmar um acordo com remuneração e regras claras.",
+        "effects": {"investors": -3, "clients": 5, "government": 4, "competition": 2},
+        "setFlags": ["cooperative_partnership"],
+        "clearFlags": [],
+        "feedback": "A parceria amplia a capacidade operacional e estabelece condições mais previsíveis."
+      },
+      "B": {
+        "text": "Contratar entregadores individualmente conforme a demanda.",
+        "effects": {"investors": 4, "clients": -2, "government": -3, "competition": 1},
+        "setFlags": ["flexible_delivery_labor"],
+        "clearFlags": [],
+        "feedback": "O modelo reduz compromissos fixos, mas oferece menos estabilidade aos trabalhadores."
+      }
+    }
+  },
+  "card_051": {
+    "title": "Interrupção do servidor",
+    "category": "technology",
+    "text": "Uma falha no servidor central deixa o UrbanLink Flow indisponível por várias horas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Ativar servidores de contingência e revisar a infraestrutura.",
+        "effects": {"investors": -5, "clients": 6, "government": 1, "competition": 2},
+        "setFlags": ["server_redundancy"],
+        "clearFlags": [],
+        "feedback": "A redundância reduz a chance de novas interrupções, mas eleva os custos tecnológicos."
+      },
+      "B": {
+        "text": "Restaurar o servidor atual e adiar melhorias.",
+        "effects": {"investors": 2, "clients": -4, "government": 0, "competition": -2},
+        "setFlags": ["server_vulnerability"],
+        "clearFlags": [],
+        "feedback": "A restauração resolve o problema imediato, mas mantém a infraestrutura vulnerável."
+      }
+    }
+  },
+  "card_052": {
+    "title": "Pressão por dividendos",
+    "category": "investors",
+    "text": "Acionistas exigem uma distribuição maior de lucros, mesmo com projetos de expansão em andamento.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Manter parte dos lucros para financiar os projetos.",
+        "effects": {"investors": -4, "clients": 2, "government": 0, "competition": 3},
+        "setFlags": ["profits_reinvested"],
+        "clearFlags": [],
+        "feedback": "A decisão desagrada parte dos acionistas, mas preserva recursos para o crescimento."
+      },
+      "B": {
+        "text": "Aumentar a distribuição de dividendos.",
+        "effects": {"investors": 6, "clients": -2, "government": 0, "competition": -2},
+        "setFlags": ["high_dividends"],
+        "clearFlags": [],
+        "feedback": "Os acionistas recebem mais no presente, mas a empresa perde capacidade de investimento."
+      }
+    }
+  },
+  "card_053": {
+    "title": "Greve no transporte público",
+    "category": "operations",
+    "text": "Uma greve no transporte público dificulta o deslocamento de funcionários até os centros de distribuição.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Organizar transporte emergencial para os funcionários.",
+        "effects": {"investors": -4, "clients": 4, "government": 1, "competition": 0},
+        "setFlags": ["employee_transport"],
+        "clearFlags": [],
+        "feedback": "O apoio mantém parte da operação funcionando, apesar do custo extraordinário."
+      },
+      "B": {
+        "text": "Reduzir o funcionamento dos centros afetados.",
+        "effects": {"investors": 2, "clients": -5, "government": 0, "competition": -1},
+        "setFlags": ["reduced_center_hours"],
+        "clearFlags": [],
+        "feedback": "A redução evita gastos emergenciais, mas compromete os prazos de entrega."
+      }
+    }
+  },
+  "card_054": {
+    "title": "Patrocínio esportivo",
+    "category": "marketing",
+    "text": "Uma equipe esportiva local oferece visibilidade à UrbanLink em troca de patrocínio.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Patrocinar a equipe e apoiar projetos comunitários.",
+        "effects": {"investors": -3, "clients": 3, "government": 1, "competition": 2},
+        "setFlags": ["local_sponsorship"],
+        "clearFlags": [],
+        "feedback": "A iniciativa amplia a visibilidade e aproxima a marca da comunidade."
+      },
+      "B": {
+        "text": "Recusar o patrocínio e investir em publicidade digital.",
+        "effects": {"investors": -1, "clients": 1, "government": 0, "competition": 1},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa prioriza canais mensuráveis, mas perde uma oportunidade de presença local."
+      }
+    }
+  },
+  "card_055": {
+    "title": "Mercado informal",
+    "category": "competition",
+    "text": "Pequenos operadores informais começam a conquistar clientes oferecendo serviços por preços muito inferiores.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Oferecer planos básicos com preços mais acessíveis.",
+        "effects": {"investors": -3, "clients": 4, "government": 1, "competition": 4},
+        "setFlags": ["basic_service_plan"],
+        "clearFlags": [],
+        "feedback": "A nova modalidade amplia o alcance sem abandonar os padrões da empresa."
+      },
+      "B": {
+        "text": "Intensificar a fiscalização sobre operadores irregulares.",
+        "effects": {"investors": -1, "clients": 0, "government": 4, "competition": -3},
+        "setFlags": ["informal_market_report"],
+        "clearFlags": [],
+        "feedback": "A medida pode reduzir a concorrência irregular, mas não resolve a diferença de preços."
+      }
+    }
+  },
+  "card_056": {
+    "title": "Capacitação tecnológica",
+    "category": "work_and_safety",
+    "text": "Funcionários demonstram dificuldades para utilizar as novas ferramentas digitais da empresa.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Oferecer cursos e acompanhamento presencial.",
+        "effects": {"investors": -4, "clients": 4, "government": 2, "competition": 2},
+        "setFlags": ["digital_training"],
+        "clearFlags": [],
+        "feedback": "A capacitação melhora a adaptação e reduz erros no uso das ferramentas."
+      },
+      "B": {
+        "text": "Disponibilizar apenas manuais e vídeos explicativos.",
+        "effects": {"investors": 1, "clients": -2, "government": 0, "competition": 0},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A solução custa menos, mas oferece suporte limitado aos funcionários."
+      }
+    }
+  },
+  "card_057": {
+    "title": "Contrato com prazo impossível",
+    "category": "clients",
+    "text": "Um cliente exige prazos de entrega que a equipe operacional considera inviáveis.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Renegociar os prazos com base na capacidade real.",
+        "effects": {"investors": -2, "clients": 4, "government": 0, "competition": 0},
+        "setFlags": ["realistic_contracts"],
+        "clearFlags": [],
+        "feedback": "A negociação evita compromissos insustentáveis e melhora a previsibilidade."
+      },
+      "B": {
+        "text": "Aceitar os prazos para não perder o contrato.",
+        "effects": {"investors": 4, "clients": -5, "government": -1, "competition": 2},
+        "setFlags": ["unrealistic_deadlines"],
+        "clearFlags": [],
+        "feedback": "O contrato é preservado, mas a operação passa a depender de metas difíceis de cumprir."
+      }
+    }
+  },
+  "card_058": {
+    "title": "Centro de inovação",
+    "category": "innovation",
+    "text": "Uma proposta sugere criar um laboratório interno dedicado a soluções para mobilidade urbana.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Financiar o laboratório com metas de pesquisa.",
+        "effects": {"investors": -5, "clients": 2, "government": 3, "competition": 5},
+        "setFlags": ["innovation_lab"],
+        "clearFlags": [],
+        "feedback": "O laboratório fortalece a capacidade de inovação, embora seus resultados levem tempo."
+      },
+      "B": {
+        "text": "Contratar soluções prontas de fornecedores.",
+        "effects": {"investors": -1, "clients": 2, "government": 0, "competition": 1},
+        "setFlags": ["external_innovation"],
+        "clearFlags": [],
+        "feedback": "A terceirização acelera a implementação, mas limita o desenvolvimento de conhecimento próprio."
+      }
+    }
+  },
+  "card_059": {
+    "title": "Disputa judicial",
+    "category": "legal",
+    "text": "Um antigo parceiro entra na Justiça alegando quebra de contrato pela UrbanLink.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Buscar um acordo e revisar os contratos envolvidos.",
+        "effects": {"investors": -4, "clients": 1, "government": 3, "competition": 0},
+        "setFlags": ["legal_settlement"],
+        "clearFlags": [],
+        "feedback": "O acordo limita a exposição jurídica e permite corrigir falhas contratuais."
+      },
+      "B": {
+        "text": "Levar a disputa até a decisão judicial.",
+        "effects": {"investors": -3, "clients": 0, "government": -1, "competition": 1},
+        "setFlags": ["legal_dispute"],
+        "clearFlags": [],
+        "feedback": "A empresa defende sua posição, mas assume custos e incertezas prolongados."
+      }
+    }
+  },
+  "card_060": {
+    "title": "Entregas em dias de chuva",
+    "category": "operations",
+    "text": "O período de chuvas intensas aumenta os riscos e os atrasos nas entregas urbanas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Adaptar os horários e fornecer equipamentos adequados.",
+        "effects": {"investors": -4, "clients": 4, "government": 2, "competition": 1},
+        "setFlags": ["rain_protocol"],
+        "clearFlags": [],
+        "feedback": "O protocolo reduz riscos e melhora a capacidade de operação em condições adversas."
+      },
+      "B": {
+        "text": "Manter as metas e flexibilizar os prazos apenas quando necessário.",
+        "effects": {"investors": 3, "clients": -4, "government": -3, "competition": 0},
+        "setFlags": ["weather_delays"],
+        "clearFlags": [],
+        "feedback": "A empresa preserva o planejamento, mas expõe trabalhadores e clientes a maiores incertezas."
+      }
+    }
+  },
+  "card_061": {
+    "title": "Programa de estágio",
+    "category": "work_and_safety",
+    "text": "Uma proposta de estágio pretende aproximar estudantes de tecnologia e logística da empresa.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Criar vagas remuneradas com supervisão profissional.",
+        "effects": {"investors": -3, "clients": 2, "government": 2, "competition": 3},
+        "setFlags": ["internship_program"],
+        "clearFlags": [],
+        "feedback": "O programa desenvolve talentos e aproxima a empresa de novos profissionais."
+      },
+      "B": {
+        "text": "Contratar estagiários apenas para tarefas administrativas.",
+        "effects": {"investors": 2, "clients": 0, "government": -1, "competition": 0},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa reduz custos de apoio, mas limita o valor formativo do programa."
+      }
+    }
+  },
+  "card_062": {
+    "title": "Mudança no preço do combustível",
+    "category": "finance",
+    "text": "Um aumento repentino no preço do combustível ameaça elevar os custos de transporte.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Renegociar contratos e otimizar o consumo da frota.",
+        "effects": {"investors": -3, "clients": 3, "government": 0, "competition": 2},
+        "setFlags": ["fuel_efficiency"],
+        "clearFlags": [],
+        "feedback": "A eficiência operacional reduz parte do impacto sem repassar imediatamente os custos."
+      },
+      "B": {
+        "text": "Repassar o aumento integralmente aos clientes.",
+        "effects": {"investors": 5, "clients": -5, "government": 0, "competition": -2},
+        "setFlags": ["fuel_surcharge"],
+        "clearFlags": [],
+        "feedback": "A margem é preservada, mas o reajuste pode estimular clientes a procurar alternativas."
+      }
+    }
+  },
+  "card_063": {
+    "title": "Protesto de moradores",
+    "category": "government",
+    "text": "Moradores bloqueiam a entrada de um centro de distribuição devido ao aumento do trânsito na região.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Abrir diálogo e negociar mudanças na operação.",
+        "effects": {"investors": -3, "clients": 2, "government": 5, "competition": 0},
+        "setFlags": ["community_dialogue"],
+        "clearFlags": [],
+        "feedback": "A negociação reduz tensões e cria espaço para soluções compartilhadas."
+      },
+      "B": {
+        "text": "Solicitar intervenção para liberar o acesso.",
+        "effects": {"investors": 2, "clients": -2, "government": -4, "competition": 0},
+        "setFlags": ["protest_confrontation"],
+        "clearFlags": [],
+        "feedback": "A operação pode ser retomada, mas o conflito com a comunidade se intensifica."
+      }
+    }
+  },
+  "card_064": {
+    "title": "Relatório financeiro inconsistente",
+    "category": "governance",
+    "text": "Uma revisão encontra divergências entre os números divulgados aos investidores e os registros internos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Suspender a divulgação e realizar uma auditoria completa.",
+        "effects": {"investors": -5, "clients": 1, "government": 6, "competition": 0},
+        "setFlags": ["financial_audit"],
+        "clearFlags": [],
+        "feedback": "A auditoria pode revelar problemas, mas protege a credibilidade dos registros."
+      },
+      "B": {
+        "text": "Corrigir apenas as divergências consideradas relevantes.",
+        "effects": {"investors": 2, "clients": 0, "government": -6, "competition": 0},
+        "setFlags": ["financial_inconsistency"],
+        "clearFlags": [],
+        "feedback": "A correção limitada evita atrasos, mas deixa dúvidas sobre a confiabilidade dos dados."
+      }
+    }
+  },
+  "card_065": {
+    "title": "Novo modal de transporte",
+    "category": "expansion",
+    "text": "Uma equipe sugere integrar bicicletas de carga à rede de entregas em regiões centrais.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Testar bicicletas em áreas com restrições de circulação.",
+        "effects": {"investors": -3, "clients": 3, "government": 4, "competition": 3},
+        "setFlags": ["cargo_bikes"],
+        "clearFlags": [],
+        "feedback": "O teste diversifica a operação e pode reduzir custos e impactos ambientais."
+      },
+      "B": {
+        "text": "Manter exclusivamente os veículos já utilizados.",
+        "effects": {"investors": 2, "clients": 0, "government": -1, "competition": -2},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa evita mudanças logísticas, mas deixa de explorar uma alternativa urbana."
+      }
+    }
+  },
+  "card_066": {
+    "title": "Pedido de exclusividade de dados",
+    "category": "technology",
+    "text": "Um grande cliente exige acesso exclusivo a informações de rotas e desempenho geradas pela plataforma.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Negociar acesso limitado e compartilhamento controlado.",
+        "effects": {"investors": 2, "clients": 3, "government": 2, "competition": 1},
+        "setFlags": ["controlled_data_sharing"],
+        "clearFlags": [],
+        "feedback": "O acordo atende parte da demanda sem entregar o controle integral das informações."
+      },
+      "B": {
+        "text": "Conceder exclusividade em troca de um contrato maior.",
+        "effects": {"investors": 6, "clients": -2, "government": -1, "competition": -5},
+        "setFlags": ["exclusive_data_access"],
+        "clearFlags": [],
+        "feedback": "A receita cresce, mas a empresa reduz sua liberdade de utilizar dados estratégicos."
+      }
+    }
+  },
+  "card_067": {
+    "title": "Aumento das tarifas municipais",
+    "category": "regulation",
+    "text": "A prefeitura anuncia um aumento nas taxas de licenciamento para centros logísticos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Participar da consulta pública e apresentar alternativas.",
+        "effects": {"investors": -1, "clients": 1, "government": 4, "competition": 1},
+        "setFlags": ["licensing_consultation"],
+        "clearFlags": [],
+        "feedback": "A participação cria espaço para negociar regras mais equilibradas."
+      },
+      "B": {
+        "text": "Absorver o aumento e manter o planejamento.",
+        "effects": {"investors": -4, "clients": 0, "government": 1, "competition": -1},
+        "setFlags": ["higher_licensing_costs"],
+        "clearFlags": [],
+        "feedback": "A operação permanece estável, mas as despesas fixas aumentam."
+      }
+    }
+  },
+  "card_068": {
+    "title": "Campanha de desinformação",
+    "category": "marketing",
+    "text": "Publicações falsas acusam a UrbanLink de abandonar encomendas em bairros periféricos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Apresentar dados verificáveis e responder publicamente.",
+        "effects": {"investors": -2, "clients": 5, "government": 2, "competition": 1},
+        "setFlags": ["public_fact_check"],
+        "clearFlags": [],
+        "feedback": "A resposta fundamentada ajuda a conter a desinformação e recuperar a confiança."
+      },
+      "B": {
+        "text": "Evitar responder para não ampliar a repercussão.",
+        "effects": {"investors": 1, "clients": -4, "government": -1, "competition": -1},
+        "setFlags": ["unanswered_rumors"],
+        "clearFlags": [],
+        "feedback": "O silêncio reduz o esforço de comunicação, mas permite que as acusações circulem."
+      }
+    }
+  },
+  "card_069": {
+    "title": "Seguro operacional",
+    "category": "finance",
+    "text": "Uma seguradora oferece cobertura ampliada contra acidentes, roubos e danos à carga.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Contratar a cobertura ampliada.",
+        "effects": {"investors": -3, "clients": 3, "government": 2, "competition": 0},
+        "setFlags": ["expanded_insurance"],
+        "clearFlags": [],
+        "feedback": "A cobertura reduz a exposição financeira a incidentes inesperados."
+      },
+      "B": {
+        "text": "Manter apenas a cobertura obrigatória.",
+        "effects": {"investors": 2, "clients": -1, "government": 0, "competition": 0},
+        "setFlags": ["basic_insurance"],
+        "clearFlags": [],
+        "feedback": "A economia reduz despesas recorrentes, mas deixa riscos adicionais sem cobertura."
+      }
+    }
+  },
+  "card_070": {
+    "title": "Expansão para cidades menores",
+    "category": "expansion",
+    "text": "Uma análise aponta oportunidades em cidades menores, onde a concorrência ainda é limitada.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Iniciar uma operação-piloto em duas cidades.",
+        "effects": {"investors": -3, "clients": 4, "government": 2, "competition": 4},
+        "setFlags": ["small_city_expansion"],
+        "clearFlags": [],
+        "feedback": "A expansão gradual permite testar mercados com menor exposição financeira."
+      },
+      "B": {
+        "text": "Concentrar recursos nas capitais já atendidas.",
+        "effects": {"investors": 2, "clients": 1, "government": 0, "competition": -1},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A concentração simplifica a gestão, mas limita a conquista de novos mercados."
+      }
+    }
+  },
+  "card_071": {
+    "title": "Inspeção de veículos",
+    "category": "work_and_safety",
+    "text": "Uma inspeção identifica que parte da frota não passa por manutenção preventiva há meses.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Realizar manutenção preventiva em toda a frota.",
+        "effects": {"investors": -5, "clients": 3, "government": 5, "competition": 0},
+        "setFlags": ["preventive_maintenance"],
+        "clearFlags": [],
+        "feedback": "A manutenção reduz riscos e aumenta a confiabilidade dos veículos."
+      },
+      "B": {
+        "text": "Reparar somente os veículos com defeitos aparentes.",
+        "effects": {"investors": 3, "clients": -2, "government": -5, "competition": 0},
+        "setFlags": ["reactive_maintenance"],
+        "clearFlags": [],
+        "feedback": "A abordagem reduz gastos imediatos, mas mantém falhas que ainda não se manifestaram."
+      }
+    }
+  },
+  "card_072": {
+    "title": "Acordo de compartilhamento logístico",
+    "category": "business",
+    "text": "Uma concorrente regional propõe compartilhar determinados centros de distribuição para reduzir custos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Estabelecer uma parceria com limites operacionais definidos.",
+        "effects": {"investors": 3, "clients": 2, "government": 1, "competition": 4},
+        "setFlags": ["shared_logistics"],
+        "clearFlags": [],
+        "feedback": "O compartilhamento reduz despesas e cria uma relação de cooperação entre concorrentes."
+      },
+      "B": {
+        "text": "Recusar e manter a infraestrutura independente.",
+        "effects": {"investors": -1, "clients": 0, "government": 0, "competition": -2},
+        "setFlags": ["independent_infrastructure"],
+        "clearFlags": [],
+        "feedback": "A empresa preserva autonomia, mas perde possíveis ganhos de eficiência."
+      }
+    }
+  },
+  "card_073": {
+    "title": "Revisão de contratos antigos",
+    "category": "business",
+    "text": "Uma análise identifica contratos antigos com tarifas abaixo dos custos atuais de operação.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Renegociar os contratos com transparência.",
+        "effects": {"investors": 5, "clients": -2, "government": 0, "competition": 1},
+        "setFlags": ["contract_renegotiation"],
+        "clearFlags": [],
+        "feedback": "A revisão melhora a sustentabilidade financeira, mas pode gerar resistência de alguns clientes."
+      },
+      "B": {
+        "text": "Manter as condições para preservar os parceiros.",
+        "effects": {"investors": -4, "clients": 4, "government": 0, "competition": 0},
+        "setFlags": ["legacy_contracts"],
+        "clearFlags": [],
+        "feedback": "A estabilidade comercial é preservada, mas a rentabilidade dos contratos continua baixa."
+      }
+    }
+  },
+  "card_074": {
+    "title": "Sistema de avaliação dos entregadores",
+    "category": "work_and_safety",
+    "text": "A diretoria propõe avaliar entregadores exclusivamente pelo número de pedidos concluídos por turno.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Incluir segurança e qualidade nos critérios de avaliação.",
+        "effects": {"investors": -2, "clients": 4, "government": 4, "competition": 1},
+        "setFlags": ["balanced_worker_metrics"],
+        "clearFlags": [],
+        "feedback": "A avaliação mais ampla evita incentivar comportamentos perigosos."
+      },
+      "B": {
+        "text": "Adotar metas de produtividade mais rígidas.",
+        "effects": {"investors": 5, "clients": -3, "government": -5, "competition": 2},
+        "setFlags": ["productivity_pressure"],
+        "clearFlags": [],
+        "feedback": "A produtividade pode aumentar, mas os incentivos ignoram fatores importantes de segurança."
+      }
+    }
+  },
+  "card_075": {
+    "title": "Crise de reputação",
+    "category": "marketing",
+    "text": "Uma reportagem reúne denúncias de clientes e funcionários sobre problemas recorrentes na empresa.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Reconhecer os problemas e divulgar um plano de correção.",
+        "effects": {"investors": -5, "clients": 6, "government": 4, "competition": 1},
+        "setFlags": ["reputation_recovery"],
+        "clearFlags": [],
+        "feedback": "A empresa assume responsabilidades e estabelece compromissos públicos de melhoria."
+      },
+      "B": {
+        "text": "Contratar uma campanha para reforçar a imagem da marca.",
+        "effects": {"investors": -2, "clients": -4, "government": -2, "competition": 0},
+        "setFlags": ["image_campaign"],
+        "clearFlags": [],
+        "feedback": "A publicidade amplia a presença da marca, mas não resolve as causas das denúncias."
+      }
+    }
+  },
+  "card_076": {
+    "title": "Acesso a crédito",
+    "category": "finance",
+    "text": "Um banco oferece uma linha de crédito para financiar a modernização dos centros de distribuição.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Contratar o crédito e investir na modernização.",
+        "effects": {"investors": -2, "clients": 4, "government": 1, "competition": 4},
+        "setFlags": ["infrastructure_credit"],
+        "clearFlags": [],
+        "feedback": "O financiamento acelera os investimentos, mas cria novas obrigações financeiras."
+      },
+      "B": {
+        "text": "Adiar o projeto e financiar melhorias com recursos próprios.",
+        "effects": {"investors": 1, "clients": 0, "government": 0, "competition": -1},
+        "setFlags": ["self_funded_improvements"],
+        "clearFlags": [],
+        "feedback": "A empresa evita endividamento, mas reduz o ritmo de modernização."
+      }
+    }
+  },
+  "card_077": {
+    "title": "Acordo com prefeitura",
+    "category": "government",
+    "text": "A prefeitura propõe compartilhar dados de trânsito para melhorar o planejamento logístico da cidade.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Participar com protocolos de segurança e privacidade.",
+        "effects": {"investors": -2, "clients": 3, "government": 6, "competition": 3},
+        "setFlags": ["city_data_partnership"],
+        "clearFlags": [],
+        "feedback": "A cooperação melhora o planejamento urbano e fortalece a relação institucional."
+      },
+      "B": {
+        "text": "Recusar o compartilhamento e proteger os dados internamente.",
+        "effects": {"investors": 1, "clients": 0, "government": -3, "competition": -1},
+        "setFlags": ["city_data_refused"],
+        "clearFlags": [],
+        "feedback": "A empresa preserva maior controle sobre seus dados, mas perde uma oportunidade de cooperação."
+      }
+    }
+  },
+  "card_078": {
+    "title": "Descarte irregular",
+    "category": "environment",
+    "text": "Resíduos de embalagens utilizados nas operações são encontrados em um terreno próximo a um centro logístico.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Investigar a origem e contratar descarte certificado.",
+        "effects": {"investors": -4, "clients": 2, "government": 6, "competition": 0},
+        "setFlags": ["waste_audit"],
+        "clearFlags": [],
+        "feedback": "A investigação permite corrigir o descarte e prevenir novos incidentes."
+      },
+      "B": {
+        "text": "Atribuir a responsabilidade ao prestador de serviço.",
+        "effects": {"investors": 2, "clients": -2, "government": -6, "competition": 0},
+        "setFlags": ["waste_responsibility_dispute"],
+        "clearFlags": [],
+        "feedback": "A empresa evita assumir custos imediatos, mas não resolve a questão ambiental."
+      }
+    }
+  },
+  "card_079": {
+    "title": "Serviço de entregas expressas",
+    "category": "clients",
+    "text": "O setor comercial sugere lançar uma modalidade de entrega expressa com tarifas superiores.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Lançar o serviço em regiões com capacidade disponível.",
+        "effects": {"investors": 4, "clients": 3, "government": 0, "competition": 3},
+        "setFlags": ["express_delivery"],
+        "clearFlags": [],
+        "feedback": "A modalidade cria uma nova fonte de receita sem sobrecarregar toda a operação."
+      },
+      "B": {
+        "text": "Oferecer entregas expressas em toda a área atendida.",
+        "effects": {"investors": 2, "clients": -3, "government": -1, "competition": 2},
+        "setFlags": ["express_overextension"],
+        "clearFlags": [],
+        "feedback": "A ampla oferta atrai atenção, mas pode gerar atrasos e comprometer a qualidade."
+      }
+    }
+  },
+  "card_080": {
+    "title": "Aquisição de novos equipamentos",
+    "category": "operations",
+    "text": "O setor operacional solicita equipamentos de triagem automatizada para acelerar a separação de encomendas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Comprar os equipamentos e treinar a equipe.",
+        "effects": {"investors": -6, "clients": 5, "government": 1, "competition": 4},
+        "setFlags": ["automated_sorting"],
+        "clearFlags": [],
+        "feedback": "A automação aumenta a capacidade de processamento, mas exige investimento e adaptação."
+      },
+      "B": {
+        "text": "Manter a triagem manual e reorganizar os turnos.",
+        "effects": {"investors": 2, "clients": 1, "government": 0, "competition": -1},
+        "setFlags": ["manual_sorting"],
+        "clearFlags": [],
+        "feedback": "A reorganização evita gastos, mas mantém os limites de produtividade."
+      }
+    }
+  },
+  "card_081": {
+    "title": "Crítica de investidores",
+    "category": "investors",
+    "text": "Um relatório independente questiona a capacidade da UrbanLink de sustentar seu crescimento.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Apresentar projeções revisadas e indicadores operacionais.",
+        "effects": {"investors": 4, "clients": 1, "government": 1, "competition": 1},
+        "setFlags": ["revised_projections"],
+        "clearFlags": [],
+        "feedback": "Os dados oferecem uma visão mais realista e ajudam a recuperar a confiança."
+      },
+      "B": {
+        "text": "Anunciar metas ambiciosas para tranquilizar o mercado.",
+        "effects": {"investors": 3, "clients": -2, "government": 0, "competition": 2},
+        "setFlags": ["aggressive_targets"],
+        "clearFlags": [],
+        "feedback": "O anúncio gera otimismo imediato, mas aumenta a pressão para cumprir promessas."
+      }
+    }
+  },
+  "card_082": {
+    "title": "Atendimento acessível",
+    "category": "clients",
+    "text": "Uma associação de pessoas com deficiência aponta dificuldades de acessibilidade no aplicativo.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Revisar a interface com especialistas e usuários.",
+        "effects": {"investors": -3, "clients": 6, "government": 4, "competition": 2},
+        "setFlags": ["app_accessibility"],
+        "clearFlags": [],
+        "feedback": "A revisão amplia a acessibilidade e melhora a experiência de diferentes usuários."
+      },
+      "B": {
+        "text": "Manter a interface e oferecer suporte por telefone.",
+        "effects": {"investors": 1, "clients": -3, "government": -2, "competition": 0},
+        "setFlags": ["accessibility_workaround"],
+        "clearFlags": [],
+        "feedback": "O suporte alternativo atende alguns casos, mas não elimina as barreiras digitais."
+      }
+    }
+  },
+  "card_083": {
+    "title": "Mudança na demanda sazonal",
+    "category": "operations",
+    "text": "O período de festas se aproxima e as projeções indicam um aumento expressivo nas entregas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Preparar capacidade adicional com antecedência.",
+        "effects": {"investors": -4, "clients": 5, "government": 1, "competition": 2},
+        "setFlags": ["seasonal_preparation"],
+        "clearFlags": [],
+        "feedback": "O planejamento antecipado reduz o risco de sobrecarga durante o período de pico."
+      },
+      "B": {
+        "text": "Aguardar o aumento real dos pedidos para reagir.",
+        "effects": {"investors": 2, "clients": -3, "government": 0, "competition": -1},
+        "setFlags": ["reactive_seasonal_planning"],
+        "clearFlags": [],
+        "feedback": "A empresa evita gastos antecipados, mas pode não ter tempo suficiente para responder à demanda."
+      }
+    }
+  },
+  "card_084": {
+    "title": "Denúncia de corrupção",
+    "category": "governance",
+    "text": "Uma denúncia indica que um intermediário ofereceu vantagens indevidas para facilitar uma licença.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Afastar o intermediário e comunicar os órgãos competentes.",
+        "effects": {"investors": -5, "clients": 2, "government": 7, "competition": 0},
+        "setFlags": ["anti_corruption_investigation"],
+        "clearFlags": [],
+        "feedback": "A empresa assume os custos da apuração e demonstra compromisso com a integridade."
+      },
+      "B": {
+        "text": "Encerrar o contrato sem investigar a denúncia.",
+        "effects": {"investors": 2, "clients": 0, "government": -5, "competition": 0},
+        "setFlags": ["corruption_unresolved"],
+        "clearFlags": [],
+        "feedback": "O vínculo é encerrado, mas a origem da possível irregularidade permanece desconhecida."
+      }
+    }
+  },
+  "card_085": {
+    "title": "Nova política de preços",
+    "category": "business",
+    "text": "O setor comercial sugere cobrar tarifas variáveis de acordo com a distância e o horário das entregas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Testar preços variáveis com critérios transparentes.",
+        "effects": {"investors": 4, "clients": 1, "government": 1, "competition": 2},
+        "setFlags": ["dynamic_pricing"],
+        "clearFlags": [],
+        "feedback": "A precificação pode melhorar a eficiência, desde que os critérios sejam compreensíveis."
+      },
+      "B": {
+        "text": "Aplicar tarifas mais altas nos períodos de maior demanda.",
+        "effects": {"investors": 6, "clients": -5, "government": -2, "competition": 1},
+        "setFlags": ["peak_price_increase"],
+        "clearFlags": [],
+        "feedback": "A receita aumenta nos períodos críticos, mas os reajustes podem gerar insatisfação."
+      }
+    }
+  },
+  "card_086": {
+    "title": "Atraso na manutenção da plataforma",
+    "category": "technology",
+    "text": "A equipe técnica informa que a plataforma precisa de uma manutenção estrutural que exigirá algumas horas de indisponibilidade.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Agendar a manutenção e avisar os clientes.",
+        "effects": {"investors": -3, "clients": 4, "government": 1, "competition": 1},
+        "setFlags": ["scheduled_maintenance"],
+        "clearFlags": [],
+        "feedback": "A interrupção planejada permite corrigir problemas antes que provoquem falhas maiores."
+      },
+      "B": {
+        "text": "Adiar a manutenção para evitar interrupções.",
+        "effects": {"investors": 2, "clients": -2, "government": -1, "competition": -2},
+        "setFlags": ["maintenance_deferred"],
+        "clearFlags": [],
+        "feedback": "A operação continua normalmente, mas a dívida técnica aumenta."
+      }
+    }
+  },
+  "card_087": {
+    "title": "Conflito entre departamentos",
+    "category": "governance",
+    "text": "Os setores financeiro e operacional discordam sobre a distribuição de recursos para o próximo trimestre.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Estabelecer metas conjuntas e rever o orçamento.",
+        "effects": {"investors": -1, "clients": 3, "government": 1, "competition": 1},
+        "setFlags": ["department_alignment"],
+        "clearFlags": [],
+        "feedback": "O alinhamento reduz disputas internas e aproxima os setores dos objetivos comuns."
+      },
+      "B": {
+        "text": "Permitir que cada departamento administre seus próprios recursos.",
+        "effects": {"investors": 2, "clients": -2, "government": 0, "competition": -1},
+        "setFlags": ["department_autonomy"],
+        "clearFlags": [],
+        "feedback": "A autonomia acelera decisões locais, mas pode aprofundar a falta de coordenação."
+      }
+    }
+  },
+  "card_088": {
+    "title": "Proposta de investimento estrangeiro",
+    "category": "investors",
+    "text": "Um fundo estrangeiro oferece capital para financiar a expansão nacional da UrbanLink.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Aceitar o investimento com metas de longo prazo.",
+        "effects": {"investors": 6, "clients": 2, "government": 1, "competition": 4},
+        "setFlags": ["foreign_investment"],
+        "clearFlags": [],
+        "feedback": "O capital amplia as possibilidades de crescimento, mas exige compromissos estratégicos."
+      },
+      "B": {
+        "text": "Recusar o aporte e manter o controle acionário atual.",
+        "effects": {"investors": -2, "clients": 0, "government": 0, "competition": -1},
+        "setFlags": ["foreign_investment_rejected"],
+        "clearFlags": [],
+        "feedback": "A empresa preserva sua independência, mas limita os recursos disponíveis para expansão."
+      }
+    }
+  },
+  "card_089": {
+    "title": "Falha na rastreabilidade",
+    "category": "technology",
+    "text": "Clientes relatam que algumas encomendas aparecem como entregues antes de chegarem ao destino.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Auditar os registros e corrigir os mecanismos de confirmação.",
+        "effects": {"investors": -3, "clients": 6, "government": 3, "competition": 1},
+        "setFlags": ["tracking_audit"],
+        "clearFlags": [],
+        "feedback": "A auditoria melhora a confiabilidade das informações e reduz conflitos com clientes."
+      },
+      "B": {
+        "text": "Orientar o suporte a resolver as reclamações individualmente.",
+        "effects": {"investors": 2, "clients": -4, "government": -1, "competition": 0},
+        "setFlags": ["tracking_manual_support"],
+        "clearFlags": [],
+        "feedback": "A resposta individual reduz o impacto imediato, mas mantém a falha no sistema."
+      }
+    }
+  },
+  "card_090": {
+    "title": "Parceria com comércio local",
+    "category": "business",
+    "text": "Uma associação comercial propõe utilizar estabelecimentos locais como pontos de retirada de encomendas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Criar uma rede de pontos de retirada remunerados.",
+        "effects": {"investors": -2, "clients": 5, "government": 2, "competition": 3},
+        "setFlags": ["pickup_network"],
+        "clearFlags": [],
+        "feedback": "A rede amplia a conveniência dos clientes e fortalece os pequenos comerciantes."
+      },
+      "B": {
+        "text": "Manter todas as entregas diretamente nos endereços.",
+        "effects": {"investors": 1, "clients": 1, "government": 0, "competition": -1},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "O modelo preserva a estrutura atual, mas deixa de aproveitar uma alternativa logística."
+      }
+    }
+  },
+  "card_091": {
+    "title": "Reclamação sobre tarifas abusivas",
+    "category": "regulation",
+    "text": "Um órgão de defesa do consumidor questiona a clareza das tarifas cobradas em determinados contratos.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Revisar os contratos e apresentar a composição dos preços.",
+        "effects": {"investors": -3, "clients": 5, "government": 5, "competition": 1},
+        "setFlags": ["pricing_transparency"],
+        "clearFlags": [],
+        "feedback": "A revisão aumenta a transparência e reduz o risco de conflitos regulatórios."
+      },
+      "B": {
+        "text": "Defender a política atual e contestar o questionamento.",
+        "effects": {"investors": 2, "clients": -3, "government": -4, "competition": 0},
+        "setFlags": ["pricing_dispute"],
+        "clearFlags": [],
+        "feedback": "A empresa preserva sua política comercial, mas amplia o conflito institucional."
+      }
+    }
+  },
+  "card_092": {
+    "title": "Roubo de credenciais",
+    "category": "security",
+    "text": "A equipe identifica tentativas de acesso a contas administrativas utilizando credenciais comprometidas.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Redefinir acessos e implementar autenticação reforçada.",
+        "effects": {"investors": -3, "clients": 3, "government": 4, "competition": 1},
+        "setFlags": ["account_security"],
+        "clearFlags": [],
+        "feedback": "Os controles adicionais dificultam novos acessos indevidos."
+      },
+      "B": {
+        "text": "Alterar apenas as senhas das contas afetadas.",
+        "effects": {"investors": 1, "clients": -1, "government": -2, "competition": 0},
+        "setFlags": ["limited_credential_response"],
+        "clearFlags": [],
+        "feedback": "A medida resolve os casos identificados, mas não fortalece toda a estrutura de segurança."
+      }
+    }
+  },
+  "card_093": {
+    "title": "Apoio à mobilidade urbana",
+    "category": "social_responsibility",
+    "text": "Uma organização propõe que a UrbanLink financie estudos sobre mobilidade e distribuição urbana sustentável.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Apoiar os estudos e compartilhar resultados com a prefeitura.",
+        "effects": {"investors": -2, "clients": 2, "government": 5, "competition": 3},
+        "setFlags": ["mobility_research"],
+        "clearFlags": [],
+        "feedback": "A iniciativa fortalece a colaboração e contribui para o planejamento urbano."
+      },
+      "B": {
+        "text": "Investir exclusivamente em melhorias internas.",
+        "effects": {"investors": 2, "clients": 1, "government": 0, "competition": 1},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa prioriza seus próprios processos, mas perde uma oportunidade de cooperação externa."
+      }
+    }
+  },
+  "card_094": {
+    "title": "Falha na cadeia de fornecedores",
+    "category": "supply_chain",
+    "text": "Uma interrupção logística impede a chegada de peças necessárias à manutenção da frota.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Manter estoques estratégicos de peças essenciais.",
+        "effects": {"investors": -4, "clients": 3, "government": 1, "competition": 2},
+        "setFlags": ["strategic_inventory"],
+        "clearFlags": [],
+        "feedback": "O estoque preventivo aumenta os custos, mas reduz a dependência de entregas externas."
+      },
+      "B": {
+        "text": "Comprar peças somente quando houver necessidade.",
+        "effects": {"investors": 3, "clients": -3, "government": 0, "competition": -1},
+        "setFlags": ["just_in_time_inventory"],
+        "clearFlags": [],
+        "feedback": "O modelo reduz capital parado, mas deixa a operação mais vulnerável a interrupções."
+      }
+    }
+  },
+  "card_095": {
+    "title": "Revisão da política de remuneração",
+    "category": "work_and_safety",
+    "text": "Representantes dos entregadores solicitam uma revisão da remuneração por entrega.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Negociar uma remuneração mínima e critérios transparentes.",
+        "effects": {"investors": -5, "clients": 3, "government": 5, "competition": 1},
+        "setFlags": ["delivery_pay_reform"],
+        "clearFlags": [],
+        "feedback": "A mudança melhora a previsibilidade dos ganhos, mas eleva os custos operacionais."
+      },
+      "B": {
+        "text": "Manter o pagamento variável baseado na demanda.",
+        "effects": {"investors": 4, "clients": -2, "government": -4, "competition": 1},
+        "setFlags": ["variable_delivery_pay"],
+        "clearFlags": [],
+        "feedback": "O modelo mantém flexibilidade financeira, mas pode aprofundar a insatisfação dos entregadores."
+      }
+    }
+  },
+  "card_096": {
+    "title": "Concorrente em recuperação",
+    "category": "competition",
+    "text": "Uma concorrente enfrenta dificuldades financeiras e oferece parte de sua carteira de clientes à UrbanLink.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Adquirir os contratos após avaliar sua viabilidade.",
+        "effects": {"investors": -4, "clients": 5, "government": 0, "competition": 5},
+        "setFlags": ["client_portfolio_acquisition"],
+        "clearFlags": [],
+        "feedback": "A aquisição amplia a carteira de clientes, mas exige cuidado na integração dos contratos."
+      },
+      "B": {
+        "text": "Recusar a oferta e evitar compromissos adicionais.",
+        "effects": {"investors": 1, "clients": 0, "government": 0, "competition": -2},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa evita riscos de integração, mas deixa uma oportunidade competitiva passar."
+      }
+    }
+  },
+  "card_097": {
+    "title": "Plano de contingência urbana",
+    "category": "operations",
+    "text": "Uma previsão de fortes alagamentos ameaça interromper as entregas em diversas regiões.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Preparar rotas alternativas e suspender áreas de risco.",
+        "effects": {"investors": -4, "clients": 5, "government": 3, "competition": 1},
+        "setFlags": ["urban_emergency_plan"],
+        "clearFlags": [],
+        "feedback": "O planejamento protege trabalhadores e cargas, mesmo com redução temporária da capacidade."
+      },
+      "B": {
+        "text": "Manter as entregas e reagir conforme as condições.",
+        "effects": {"investors": 3, "clients": -5, "government": -4, "competition": 0},
+        "setFlags": ["flood_disruption"],
+        "clearFlags": [],
+        "feedback": "A empresa evita interrupções antecipadas, mas fica exposta a riscos imprevisíveis."
+      }
+    }
+  },
+  "card_098": {
+    "title": "Certificação de qualidade",
+    "category": "governance",
+    "text": "Uma entidade certificadora oferece um processo de avaliação dos padrões de qualidade da UrbanLink.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Iniciar o processo e adequar os procedimentos.",
+        "effects": {"investors": -3, "clients": 4, "government": 4, "competition": 3},
+        "setFlags": ["quality_certification"],
+        "clearFlags": [],
+        "feedback": "A certificação exige adequações, mas oferece reconhecimento externo aos processos."
+      },
+      "B": {
+        "text": "Adiar a certificação e manter os controles internos.",
+        "effects": {"investors": 2, "clients": 0, "government": 0, "competition": -1},
+        "setFlags": [],
+        "clearFlags": [],
+        "feedback": "A empresa evita os custos do processo, mas deixa de obter uma validação independente."
+      }
+    }
+  },
+  "card_099": {
+    "title": "Plano de sucessão",
+    "category": "governance",
+    "text": "A saída inesperada de um diretor levanta dúvidas sobre a continuidade da gestão.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Nomear um substituto interino e iniciar um processo de seleção.",
+        "effects": {"investors": 3, "clients": 2, "government": 2, "competition": 1},
+        "setFlags": ["succession_plan"],
+        "clearFlags": [],
+        "feedback": "A transição organizada preserva a continuidade e reduz a incerteza institucional."
+      },
+      "B": {
+        "text": "Dividir as responsabilidades entre os diretores restantes.",
+        "effects": {"investors": -1, "clients": -2, "government": 0, "competition": -1},
+        "setFlags": ["shared_management"],
+        "clearFlags": [],
+        "feedback": "A solução evita uma contratação imediata, mas aumenta a sobrecarga da diretoria."
+      }
+    }
+  },
+  "card_100": {
+    "title": "O futuro da UrbanLink Flow",
+    "category": "strategy",
+    "text": "O conselho solicita uma decisão sobre o futuro da plataforma: consolidar sua posição atual ou transformá-la em uma infraestrutura aberta de logística urbana.",
+    "requirements": {},
+    "options": {
+      "A": {
+        "text": "Ampliar a integração com empresas e órgãos públicos.",
+        "effects": {"investors": -4, "clients": 5, "government": 5, "competition": 6},
+        "setFlags": ["open_logistics_platform"],
+        "clearFlags": [],
+        "feedback": "A plataforma assume um papel mais amplo no ecossistema urbano, exigindo cooperação e investimentos de longo prazo."
+      },
+      "B": {
+        "text": "Concentrar a plataforma nos serviços próprios da empresa.",
+        "effects": {"investors": 5, "clients": 2, "government": -1, "competition": -3},
+        "setFlags": ["closed_logistics_platform"],
+        "clearFlags": [],
+        "feedback": "A empresa preserva maior controle sobre sua tecnologia e operação, mas limita seu potencial de integração."
       }
     }
   }
