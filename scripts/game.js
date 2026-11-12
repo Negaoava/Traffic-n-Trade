@@ -1,4 +1,8 @@
+
 import cards from "./cards.json" with {type: "json"};
+import { buttonClickSFX, buttonHoverSFX } from "./main_menu.js";
+
+console.log("GAME.JS LOADED");
 
 const CHOICES_PER_DAY = 15;
 const MIN_VALUE = 0;
@@ -137,10 +141,21 @@ function createOverlay(titleText) {
 
 function createButton(label, onClick) {
     const button = document.createElement("button");
-    button.className = "option-btn";
+    button.className = "option-btn btn";
     button.type = "button";
     button.innerText = label;
-    button.addEventListener("click", onClick);
+
+    button.addEventListener("click", () => {
+        buttonClickSFX.currentTime = 0;
+        buttonClickSFX.play();
+        onClick();
+    });
+
+    button.addEventListener("mouseenter", () => {
+        buttonHoverSFX.currentTime = 0;
+        buttonHoverSFX.play();
+    });
+
     return button;
 }
 
@@ -327,8 +342,11 @@ function handleChoice(choice) {
     updateHud();
 }
 
+console.log("oi");
+
 acceptBtn.addEventListener("click", () => handleChoice("A"));
 denyBtn.addEventListener("click", () => handleChoice("B"));
+
 pauseBtn.addEventListener("click", () => {
     if (!overlayOpen) {
         showPauseMenu();
