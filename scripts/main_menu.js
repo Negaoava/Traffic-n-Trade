@@ -1,3 +1,4 @@
+import { navigateWithTransition } from "./transition.js";
 
 export const buttonHoverSFX = new Audio('../sfx/button_hover.mp3');
 export const buttonClickSFX = new Audio('../sfx/button_click.mp3');
@@ -8,7 +9,6 @@ const optionsBtn = document.querySelector('.options-btn');
 const closeOptionsBtn = document.querySelector('.close-menu-btn');
 const optionsMenu = document.querySelector('.options-menu');
 const blackOverlay = document.querySelector('.black-overlay');
-const startBtn = document.querySelector('.start-btn');
 
 buttonHoverSFX.volume = 0.8;
 buttonClickSFX.volume = 0.8;
@@ -33,11 +33,31 @@ if (closeOptionsBtn && blackOverlay && optionsMenu) {
 buttons.forEach(button => {
     button.addEventListener('mouseenter', () => {
         buttonHoverSFX.currentTime = 0;
-        buttonHoverSFX.play();
+        buttonHoverSFX.play().catch(() => {});
     });
 
     button.addEventListener('click', () => {
         buttonClickSFX.currentTime = 0;
-        buttonClickSFX.play();
+        buttonClickSFX.play().catch(() => {});
     });
 });
+
+// Links go through the CRT zoom transition
+document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateWithTransition(link.getAttribute('href'));
+    });
+});
+
+// VCR-style counter in the corner
+const clock = document.getElementById('osd-clock');
+if (clock) {
+    const start = Date.now();
+    setInterval(() => {
+        const s = Math.floor((Date.now() - start) / 1000);
+        clock.textContent = [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60]
+            .map(n => String(n).padStart(2, '0'))
+            .join(':');
+    }, 1000);
+}

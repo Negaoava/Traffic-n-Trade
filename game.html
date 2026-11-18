@@ -4,21 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traffic 'n Trade</title>
-    <link rel="stylesheet" href="styles/game.css">
+
+    <!-- plays the "zoom out" when arriving from another page; keep it inline and first -->
+    <script>if (sessionStorage.getItem("tt-crt-transition")) document.documentElement.classList.add("crt-entering");</script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/crt.css">
+    <link rel="stylesheet" href="styles/game.css">
 </head>
 <body>
-    <div class="gameScreen-template-container">
-        <div class="text-template-container">
-            <p class="text-template" id="text-box">hahah</p>
-        </div>
-        <button class="option-btn btn" id="accept">Sim</button>
-        <button class="option-btn btn" id="deny">Não</button>
+    <main class="screen office-screen" id="game-screen">
+        <p class="hud" id="hud"></p>
         <button id="pause-btn" class="btn" type="button">||</button>
-    </div>
-     
+
+        <!-- Everything inside .scene zooms/dims when the paper comes to the center -->
+        <div class="scene" id="scene">
+            <div class="wall">
+                <div class="window"></div>
+                <div class="window w2"></div>
+                <div class="clock"></div>
+                <div class="plant"></div>
+            </div>
+
+            <div class="npc" id="npc">
+                <div class="speech" id="speech">
+                    <span class="speech-name" id="speech-name"></span>
+                    <p class="speech-text" id="speech-text"></p>
+                </div>
+                <div class="npc-sprite">
+                    <div class="npc-head"><div class="npc-hair"></div></div>
+                    <div class="npc-torso">
+                        <div class="npc-tie"></div>
+                        <div class="npc-arm left"></div>
+                        <div class="npc-arm right"></div>
+                    </div>
+                    <div class="npc-legs"><span></span><span></span></div>
+                </div>
+            </div>
+
+            <div class="desk">
+                <div class="lamp"></div>
+                <div class="mug"></div>
+                <div class="nameplate">GERENTE</div>
+            </div>
+        </div>
+
+        <!-- The paper: sits on the desk, then moves to the center -->
+        <div class="paper" id="paper">
+            <div class="paper-content">
+                <h2 class="paper-title" id="paper-title"></h2>
+                <p class="paper-text" id="paper-text"></p>
+                <div class="paper-options">
+                    <button class="paper-option" id="opt-A" type="button" disabled>
+                        <span class="opt-key">A</span>
+                        <span class="opt-text" id="opt-A-text"></span>
+                    </button>
+                    <button class="paper-option" id="opt-B" type="button" disabled>
+                        <span class="opt-key">B</span>
+                        <span class="opt-text" id="opt-B-text"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <script src="scripts/game.js" type="module"></script>
 </body>
 </html>

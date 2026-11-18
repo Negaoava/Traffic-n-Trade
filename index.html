@@ -5,19 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Traffic &amp; Trade</title>
 
+  <script>if (sessionStorage.getItem("tt-crt-transition")) document.documentElement.classList.add("crt-entering");</script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="styles/crt.css">
   <link rel="stylesheet" href="styles/main_menu.css">
 </head>
 <body>
   <main class="screen">
+    <div class="osd osd-top-left">&#9654; PLAY</div>
+    <div class="osd osd-top-right">CH 03</div>
+    <div class="osd osd-bottom-left"><span id="osd-clock">00:00:00</span></div>
+    <div class="osd osd-bottom-right">&copy; T&amp;T CORP.</div>
+
     <div class="title-container">
       <h1 class="title">TRAFFIC 'N TRADE</h1>
     </div>
 
-    <!-- Main Menu  -->
     <nav class="menu">
       <a href="game.html">
         <button class="menu-btn btn" type="button">START</button>
@@ -25,7 +32,6 @@
       <button class="menu-btn options-btn btn" type="button">OPTIONS</button>
       <button class="menu-btn btn" type="button">CREDITS</button>
 
-      <!-- Options Menu  -->
       <div class="options-menu">
         <div style="position: relative; padding-bottom: 50px;">
           <p style="text-align: center;">Options</p>
@@ -43,7 +49,6 @@
         </div>
       </div>
     </nav>
-
   </main>
 
   <div class="black-overlay"></div>

@@ -1,8 +1,6 @@
-
 import cards from "./cards.json" with {type: "json"};
 import { buttonClickSFX, buttonHoverSFX } from "./main_menu.js";
-
-console.log("GAME.JS LOADED");
+import { navigateWithTransition } from "./transition.js";
 
 const CHOICES_PER_DAY = 15;
 const MIN_VALUE = 0;
@@ -39,28 +37,150 @@ const START_PILLARS = {
     Concorrência: 40
 };
 
-const textBox = document.getElementById("text-box");
-const acceptBtn = document.getElementById("accept");
-const denyBtn = document.getElementById("deny");
+/* ---------------- NPCs ----------------
+   Each card picks an NPC. Optional fields you can add to any card in cards.json:
+     "npc": "fiscal"                  -> forces a specific NPC (keys below)
+     "flavor": "Chefe, preciso..."    -> custom line the NPC says before handing the paper
+   Without them, the NPC is picked by card.category (if it matches a pillar name)
+   or randomly, and says one of its own lines. */
+const NPCS = {
+    financeira: {
+        name: "Sra. Almeida", role: "Financeira",
+        look: { skin: "#c3e0c4", hair: "#162016", hairH: 5, suit: "#4a5a4e", tie: "#a3cfa4" },
+        lines: ["Com licença, chefe. Os números não estão bonitos hoje.", "Preciso de uma assinatura sua. Rápido, por favor."]
+    },
+    fiscal: {
+        name: "Sr. Barros", role: "Fiscal do governo",
+        look: { skin: "#a9cdaa", hair: "#2a3a2a", hairH: 3, suit: "#2f3a33", tie: "#8b3a3a" },
+        lines: ["Bom dia. Tenho algumas perguntas sobre a sua empresa.", "Isto é só uma visita de rotina. Por enquanto."]
+    },
+    investidor: {
+        name: "Dr. Valente", role: "Investidor",
+        look: { skin: "#d2e8d3", hair: "#6f7f70", hairH: 4, suit: "#3a4a60", tie: "#c9d8a0" },
+        lines: ["Estou de olho no meu dinheiro, sabe como é.", "Tenho uma proposta. Você vai querer ouvir."]
+    },
+    cliente: {
+        name: "Dona Marta", role: "Cliente antiga",
+        look: { skin: "#b6d6b7", hair: "#8a9a8b", hairH: 6, suit: "#5a4a50", tie: "#a3cfa4" },
+        lines: ["Eu venho aqui há anos, e olha só o que aconteceu!", "Será que o senhor pode resolver isso pra mim?"]
+    },
+    atendente: {
+        name: "Caio", role: "Atendimento",
+        look: { skin: "#8fb890", hair: "#162016", hairH: 5, suit: "#4a6a5a", tie: "#72a373" },
+        lines: ["Chefe, o telefone não para de tocar!", "Tem uma situação na recepção. Posso explicar?"]
+    },
+    assessor: {
+        name: "Dra. Lúcia", role: "Assessora jurídica",
+        look: { skin: "#c3e0c4", hair: "#3a2a2a", hairH: 6, suit: "#2a2f35", tie: "#e0e0e0" },
+        lines: ["Antes de decidir, leia isto com atenção.", "Juridicamente, estamos pisando em ovos."]
+    },
+    estagiario: {
+        name: "Téo", role: "Estagiário",
+        look: { skin: "#a3cfa4", hair: "#4a3a1a", hairH: 4, suit: "#6a7a5a", tie: "#c96a6a" },
+        lines: ["Ahn... acho que ninguém mais quis trazer isso pro senhor.", "Desculpa interromper! É meio urgente, eu acho."]
+    }
+};
+
+const NPC_BY_CATEGORY = {
+    Governo: ["fiscal", "assessor"],
+    Investidores: ["financeira", "investidor"],
+    Clientes: ["cliente", "atendente"],
+    Concorrência: ["assessor", "estagiario"]
+};
+
+/* ---------------- Elements ---------------- */
+const screen = document.getElementById("game-screen");
+const hud = document.getElementById("hud");
 const pauseBtn = document.getElementById("pause-btn");
-const gameScreen = document.querySelector(".gameScreen-template-container");
+const scene = document.getElementById("scene");
+const npc = document.getElementById("npc");
+const speech = document.getElementById("speech");
+const speechName = document.getElementById("speech-name");
+const speechText = document.getElementById("speech-text");
+const paper = document.getElementById("paper");
+const paperTitle = document.getElementById("paper-title");
+const paperText = document.getElementById("paper-text");
+const optionBtns = { A: document.getElementById("opt-A"), B: document.getElementById("opt-B") };
+const optTexts = { A: document.getElementById("opt-A-text"), B: document.getElementById("opt-B-text") };
 
-const hud = document.createElement("p");
-hud.className = "hud";
-gameScreen.prepend(hud);
-
+/* ---------------- State ---------------- */
 let pillars;
 let dayStartPillars;
 let day;
 let choicesMade;
 let pickedCard;
 let lastCardId = null;
+let lastNpcKey = null;
 let overlayOpen = false;
+let paperReady = false;
+let skipTyping = null;
 
+/* ---------------- Helpers ---------------- */
 function clamp(value) {
     return Math.max(MIN_VALUE, Math.min(MAX_VALUE, value));
 }
 
+function randomItem(list) {
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+function playSfx(audio) {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+}
+
+// sleeps, and also waits while a pause/options overlay is open
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms)).then(async () => {
+        while (overlayOpen) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+    });
+}
+
+function waitAnimation(el, fallbackMs = 3000) {
+    return new Promise(resolve => {
+        const done = () => {
+            el.removeEventListener("animationend", onEnd);
+            clearTimeout(timer);
+            resolve();
+        };
+        const onEnd = (e) => {
+            if (e.target === el) done();
+        };
+        const timer = setTimeout(done, fallbackMs);
+        el.addEventListener("animationend", onEnd);
+    });
+}
+
+function typeText(el, text, speed = 28) {
+    return new Promise(resolve => {
+        let i = 0;
+        el.textContent = "";
+        const timer = setInterval(() => {
+            i++;
+            el.textContent = text.slice(0, i);
+            if (i >= text.length) finish();
+        }, speed);
+
+        function finish() {
+            clearInterval(timer);
+            el.textContent = text;
+            skipTyping = null;
+            resolve();
+        }
+
+        skipTyping = finish;
+    });
+}
+
+function refreshOptions() {
+    const disabled = !paperReady || overlayOpen;
+    optionBtns.A.disabled = disabled;
+    optionBtns.B.disabled = disabled;
+}
+
+/* ---------------- Game rules ---------------- */
 function pickCard() {
     const ids = Object.keys(cards);
     let id;
@@ -71,19 +191,21 @@ function pickCard() {
     return cards[id];
 }
 
-function displayCard(card) {
-    textBox.innerText = card.text;
-    acceptBtn.innerText = card.options.A.text;
-    denyBtn.innerText = card.options.B.text;
+function pickNpc(card) {
+    const all = Object.keys(NPCS);
+    let key;
+    if (card.npc && NPCS[card.npc]) {
+        key = card.npc;
+    } else {
+        const pool = (NPC_BY_CATEGORY[card.category] || all).filter(k => k !== lastNpcKey);
+        key = randomItem(pool.length ? pool : all);
+    }
+    lastNpcKey = key;
+    return NPCS[key];
 }
 
 function updateHud() {
     hud.innerText = `Dia ${day} - Escolha ${Math.min(choicesMade + 1, CHOICES_PER_DAY)}/${CHOICES_PER_DAY}`;
-}
-
-function setButtonsDisabled(disabled) {
-    acceptBtn.disabled = disabled;
-    denyBtn.disabled = disabled;
 }
 
 function applyEffects(card, choice) {
@@ -112,16 +234,162 @@ function checkGameOver() {
     return null;
 }
 
+/* ---------------- NPC ---------------- */
+async function npcEnter(data) {
+    const fromRight = Math.random() < 0.5;
+    npc.style.setProperty("--from", fromRight ? "60vw" : "-60vw");
+    npc.style.setProperty("--to", fromRight ? "-60vw" : "60vw");
+
+    npc.style.setProperty("--skin", data.look.skin);
+    npc.style.setProperty("--hair", data.look.hair);
+    npc.style.setProperty("--hair-h", data.look.hairH);
+    npc.style.setProperty("--suit", data.look.suit);
+    npc.style.setProperty("--tie", data.look.tie);
+
+    npc.className = "npc walking-in";
+    await waitAnimation(npc, 2200);
+    npc.className = "npc standing";
+}
+
+async function npcLeave() {
+    npc.className = "npc walking-out";
+    await waitAnimation(npc, 1600);
+    npc.className = "npc";
+}
+
+/* ---------------- Paper ---------------- */
+function fillPaper(card) {
+    paperTitle.textContent = card.title || "Memorando";
+    paperText.textContent = card.text;
+    optTexts.A.textContent = card.options.A.text;
+    optTexts.B.textContent = card.options.B.text;
+    optionBtns.A.classList.remove("chosen", "crossed");
+    optionBtns.B.classList.remove("chosen", "crossed");
+}
+
+function openPaper() {
+    paper.classList.add("active");
+    scene.classList.add("zoomed");
+}
+
+function closePaper() {
+    paper.classList.remove("active");
+    scene.classList.remove("zoomed");
+}
+
+/* ---------------- Turn flow ---------------- */
+async function nextCard() {
+    paperReady = false;
+    refreshOptions();
+
+    pickedCard = pickCard();
+    const data = pickNpc(pickedCard);
+    updateHud();
+
+    await npcEnter(data);
+
+    speechName.textContent = `${data.name} · ${data.role}`;
+    speechText.textContent = "";
+    speech.classList.add("visible");
+    await typeText(speechText, pickedCard.flavor || randomItem(data.lines));
+    await sleep(800);
+    speech.classList.remove("visible");
+
+    fillPaper(pickedCard);
+    openPaper();
+    await sleep(1000);
+
+    paperReady = true;
+    refreshOptions();
+}
+
+async function handleChoice(choice) {
+    if (overlayOpen || !paperReady) return;
+
+    paperReady = false;
+    refreshOptions();
+
+    const other = choice === "A" ? "B" : "A";
+    optionBtns[choice].classList.add("chosen");
+
+    applyEffects(pickedCard, choice);
+    choicesMade++;
+
+    await sleep(450);
+    optionBtns[other].classList.add("crossed");
+    await sleep(1100);
+
+    closePaper();
+    await sleep(900);
+    await npcLeave();
+
+    advance();
+}
+
+function advance() {
+    const reason = checkGameOver();
+    if (reason) {
+        showGameOver(reason);
+        return;
+    }
+
+    if (choicesMade >= CHOICES_PER_DAY) {
+        endDay();
+        return;
+    }
+
+    nextCard();
+}
+
+function endDay() {
+    const pressure = applyCompetitionPressure();
+    const reason = checkGameOver();
+    if (reason) {
+        showGameOver(reason);
+        return;
+    }
+    showDaySummary(pressure);
+}
+
+function resetScene() {
+    paperReady = false;
+    closePaper();
+    speech.classList.remove("visible");
+    npc.className = "npc";
+    refreshOptions();
+}
+
+function startNextDay() {
+    day++;
+    choicesMade = 0;
+    dayStartPillars = { ...pillars };
+    closeOverlay();
+    resetScene();
+    nextCard();
+}
+
+function startGame() {
+    pillars = { ...START_PILLARS };
+    dayStartPillars = { ...START_PILLARS };
+    day = 1;
+    choicesMade = 0;
+    closeOverlay();
+    resetScene();
+    nextCard();
+}
+
+/* ---------------- Overlays ---------------- */
 function closeOverlay() {
     const existing = document.querySelector(".overlay");
     if (existing) existing.remove();
     overlayOpen = false;
+    refreshOptions();
 }
 
 function createOverlay(titleText) {
     closeOverlay();
     overlayOpen = true;
-    setButtonsDisabled(true);
+    refreshOptions();
 
     const overlay = document.createElement("div");
     overlay.className = "overlay";
@@ -135,7 +403,7 @@ function createOverlay(titleText) {
 
     panel.appendChild(title);
     overlay.appendChild(panel);
-    gameScreen.appendChild(overlay);
+    screen.appendChild(overlay);
     return panel;
 }
 
@@ -146,15 +414,11 @@ function createButton(label, onClick) {
     button.innerText = label;
 
     button.addEventListener("click", () => {
-        buttonClickSFX.currentTime = 0;
-        buttonClickSFX.play();
+        playSfx(buttonClickSFX);
         onClick();
     });
 
-    button.addEventListener("mouseenter", () => {
-        buttonHoverSFX.currentTime = 0;
-        buttonHoverSFX.play();
-    });
+    button.addEventListener("mouseenter", () => playSfx(buttonHoverSFX));
 
     return button;
 }
@@ -162,17 +426,9 @@ function createButton(label, onClick) {
 function showPauseMenu() {
     const panel = createOverlay("PAUSED");
 
-    panel.appendChild(createButton("RESUME", () => {
-        closeOverlay();
-        setButtonsDisabled(false);
-    }));
-
+    panel.appendChild(createButton("RESUME", closeOverlay));
     panel.appendChild(createButton("OPTIONS", showOptions));
-
-    panel.appendChild(createButton("MAIN MENU", () => {
-        window.location.href = "index.html";
-    }));
-
+    panel.appendChild(createButton("MAIN MENU", () => navigateWithTransition("index.html")));
     panel.appendChild(createButton("QUIT", quitGame));
 }
 
@@ -208,7 +464,6 @@ function showOptions() {
     musicContainer.append(musicLabel, musicSlider);
 
     panel.append(soundContainer, musicContainer);
-
     panel.appendChild(createButton("BACK", showPauseMenu));
 }
 
@@ -287,65 +542,24 @@ function showGameOver(reason) {
     panel.appendChild(createButton("Jogar de novo", startGame));
 }
 
-function endDay() {
-    const pressure = applyCompetitionPressure();
-    const reason = checkGameOver();
-    if (reason) {
-        showGameOver(reason);
-        return;
-    }
-    showDaySummary(pressure);
+/* ---------------- Events ---------------- */
+for (const key of ["A", "B"]) {
+    optionBtns[key].addEventListener("click", () => {
+        if (optionBtns[key].disabled) return;
+        playSfx(buttonClickSFX);
+        handleChoice(key);
+    });
+
+    optionBtns[key].addEventListener("mouseenter", () => {
+        if (!optionBtns[key].disabled) playSfx(buttonHoverSFX);
+    });
 }
 
-function startNextDay() {
-    day++;
-    choicesMade = 0;
-    dayStartPillars = { ...pillars };
-    closeOverlay();
-    setButtonsDisabled(false);
-    pickedCard = pickCard();
-    displayCard(pickedCard);
-    updateHud();
-}
-
-function startGame() {
-    pillars = { ...START_PILLARS };
-    dayStartPillars = { ...START_PILLARS };
-    day = 1;
-    choicesMade = 0;
-    closeOverlay();
-    setButtonsDisabled(false);
-    pickedCard = pickCard();
-    displayCard(pickedCard);
-    updateHud();
-}
-
-function handleChoice(choice) {
-    if (overlayOpen) return;
-
-    applyEffects(pickedCard, choice);
-    choicesMade++;
-
-    const reason = checkGameOver();
-    if (reason) {
-        showGameOver(reason);
-        return;
-    }
-
-    if (choicesMade >= CHOICES_PER_DAY) {
-        endDay();
-        return;
-    }
-
-    pickedCard = pickCard();
-    displayCard(pickedCard);
-    updateHud();
-}
-
-console.log("oi");
-
-acceptBtn.addEventListener("click", () => handleChoice("A"));
-denyBtn.addEventListener("click", () => handleChoice("B"));
+// click the scene or press Space/Enter to skip the NPC's typing
+scene.addEventListener("click", () => skipTyping && skipTyping());
+document.addEventListener("keydown", (e) => {
+    if ((e.key === " " || e.key === "Enter") && skipTyping) skipTyping();
+});
 
 pauseBtn.addEventListener("click", () => {
     if (!overlayOpen) {
