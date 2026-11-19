@@ -1,0 +1,367 @@
+{
+  "sp_welcome": {
+    "title": "Boas-vindas ao cargo", "category": "strategy", "npc": "presidente",
+    "flavor": "Bem-vindo à UrbanLink Flow. A diretoria quer saber que tipo de gestor o senhor será.",
+    "text": "No seu primeiro dia, a diretoria pede uma declaração de intenções para a semana: qual será a sua prioridade?",
+    "requirements": { "day": 1 }, "schedule": { "day": 1, "at": 1 },
+    "options": {
+      "A": { "text": "Prometer crescimento rápido e resultados visíveis.", "effects": { "investors": 4, "clients": -1, "government": -1, "competition": 2 }, "setFlags": ["aggressive_promise"] },
+      "B": { "text": "Prometer estabilidade e cumprimento das regras.", "effects": { "investors": -2, "clients": 2, "government": 2 }, "setFlags": ["stability_promise"] }
+    }
+  },
+
+  "sp_press_leak": {
+    "title": "Repórter na recepção", "category": "privacy", "npc": "jornalista",
+    "flavor": "Tenho documentos mostrando um vazamento de dados que a empresa nunca comunicou.",
+    "text": "Uma repórter descobriu o vazamento que você tentou esconder e exige um posicionamento antes de publicar.",
+    "requirements": { "flags": ["data_breach_hidden"], "delay": 3 },
+    "options": {
+      "A": { "text": "Admitir o vazamento e dar uma entrevista.", "effects": { "investors": -6, "clients": 2, "government": 6 }, "setFlags": ["data_breach_admitted"], "clearFlags": ["data_breach_hidden"] },
+      "B": { "text": "Negar tudo e acionar os advogados.", "effects": { "investors": 2, "clients": -4, "government": -6 }, "setFlags": ["press_war"], "clearFlags": ["data_breach_hidden"], "risk": { "chance": 0.45, "effects": { "clients": -5, "investors": -5 }, "feedback": "A matéria saiu mesmo assim, com a sua negativa em destaque." } }
+    }
+  },
+  "sp_strike": {
+    "title": "Entregadores cruzam os braços", "category": "work_and_safety", "npc": "entregador",
+    "flavor": "Chefe, a turma cansou de esperar o pagamento. Ninguém vai sair hoje.",
+    "text": "Cansados dos atrasos salariais, os entregadores paralisam as atividades no pior momento possível.",
+    "requirements": { "flags": ["salary_delay"], "delay": 3 },
+    "options": {
+      "A": { "text": "Pagar tudo com juros e abrir negociação.", "effects": { "investors": -7, "clients": 3, "government": 5 }, "clearFlags": ["salary_delay"] },
+      "B": { "text": "Contratar temporários para furar a greve.", "effects": { "investors": 4, "clients": -5, "government": -7 }, "setFlags": ["strike_breaking"], "clearFlags": ["salary_delay"] }
+    }
+  },
+  "sp_platform_down": {
+    "title": "Plataforma fora do ar", "category": "technology",
+    "text": "A manutenção adiada cobrou a conta: o sistema caiu em plena hora de pico.",
+    "requirements": { "flags": ["maintenance_deferred"], "delay": 3 },
+    "options": {
+      "A": { "text": "Parar tudo e consertar de vez.", "effects": { "investors": -6, "clients": 3, "government": 1 }, "setFlags": ["platform_rebuilt"], "clearFlags": ["maintenance_deferred"] },
+      "B": { "text": "Improvisar remendos com a equipe de plantão.", "effects": { "investors": 2, "clients": -5, "government": -1 }, "clearFlags": ["maintenance_deferred"], "risk": { "chance": 0.4, "effects": { "clients": -5, "investors": -3 }, "feedback": "O remendo falhou de novo na pior hora." } }
+    }
+  },
+  "sp_fleet_accident": {
+    "title": "Acidente com veículo da frota", "category": "work_and_safety",
+    "text": "Um veículo sem revisão perdeu o freio e bateu num poste. O motorista passa bem, mas a imprensa já chegou.",
+    "requirements": { "flags": ["reactive_maintenance"], "delay": 3 },
+    "options": {
+      "A": { "text": "Assumir a falha, indenizar e revisar toda a frota.", "effects": { "investors": -7, "clients": 3, "government": 6 }, "setFlags": ["fleet_audit"], "clearFlags": ["reactive_maintenance"] },
+      "B": { "text": "Culpar o motorista e abafar o caso.", "effects": { "investors": 2, "clients": -4, "government": -8 }, "setFlags": ["blame_driver"], "clearFlags": ["reactive_maintenance"] }
+    }
+  },
+  "sp_price_war_bill": {
+    "title": "A conta da guerra de preços", "category": "competition", "npc": "financeira",
+    "text": "A guerra de preços corroeu as margens. Cada entrega agora dá prejuízo.",
+    "requirements": { "flags": ["price_war"], "delay": 3 },
+    "options": {
+      "A": { "text": "Recuar nos descontos e aceitar perder clientes.", "effects": { "investors": 5, "clients": -6, "competition": 3 }, "clearFlags": ["price_war"] },
+      "B": { "text": "Aguentar o prejuízo para sufocar o rival.", "effects": { "investors": -8, "clients": 4, "competition": -6 }, "clearFlags": ["price_war"] }
+    }
+  },
+  "sp_police_raid": {
+    "title": "Operação na sede", "category": "governance", "npc": "fiscal",
+    "flavor": "Tenho um mandado. A denúncia que ficou sem resposta virou inquérito.",
+    "text": "Agentes chegam à empresa com um mandado de busca: a denúncia de corrupção ignorada agora é investigação oficial.",
+    "requirements": { "flags": ["corruption_unresolved"], "delay": 3 },
+    "options": {
+      "A": { "text": "Colaborar e entregar os documentos internos.", "effects": { "investors": -6, "clients": -1, "government": 7 }, "setFlags": ["cooperated_probe"], "clearFlags": ["corruption_unresolved"] },
+      "B": { "text": "Contratar um advogado famoso e resistir.", "effects": { "investors": -3, "government": -7 }, "setFlags": ["obstruction"], "clearFlags": ["corruption_unresolved"], "risk": { "chance": 0.5, "effects": { "government": -6, "investors": -4 }, "feedback": "O juiz entendeu a resistência como obstrução." } }
+    }
+  },
+  "sp_fraud_returns": {
+    "title": "A fraude volta à tona", "category": "security", "npc": "assessor",
+    "text": "O fornecedor fraudador foi preso e delatou a empresa. O contrato suspeito está nos jornais.",
+    "requirements": { "flags": ["contract_fraud_unresolved"], "delay": 3 },
+    "options": {
+      "A": { "text": "Demitir os responsáveis e reparar os prejudicados.", "effects": { "investors": -5, "clients": 4, "government": 5 }, "clearFlags": ["contract_fraud_unresolved"] },
+      "B": { "text": "Fechar um acordo confidencial para abafar.", "effects": { "investors": 2, "clients": -3, "government": -6 }, "setFlags": ["hush_deal"], "clearFlags": ["contract_fraud_unresolved"] }
+    }
+  },
+  "sp_board_questions": {
+    "title": "Conselho cobra explicações", "category": "investors", "npc": "investidor",
+    "flavor": "Os números do relatório não batem. Quero explicações. Agora.",
+    "text": "O conselho percebeu as inconsistências no relatório financeiro e exige uma explicação.",
+    "requirements": { "flags": ["financial_inconsistency"], "delay": 3 },
+    "options": {
+      "A": { "text": "Apresentar os números reais, mesmo ruins.", "effects": { "investors": -7, "clients": 1, "government": 4 }, "clearFlags": ["financial_inconsistency"] },
+      "B": { "text": "Maquiar mais um trimestre.", "effects": { "investors": 6, "government": -8 }, "setFlags": ["creative_accounting"], "clearFlags": ["financial_inconsistency"], "risk": { "chance": 0.45, "effects": { "investors": -12, "government": -8 }, "feedback": "A auditoria externa descobriu a maquiagem." } }
+    }
+  },
+  "sp_data_sale_exposed": {
+    "title": "Cliente descobre a venda de dados", "category": "privacy", "npc": "cliente",
+    "flavor": "Recebi ofertas de empresas que eu nunca procurei. O senhor vendeu meus dados?",
+    "text": "Uma cliente descobriu que seus dados foram repassados a anunciantes e ameaça processar a empresa.",
+    "requirements": { "flags": ["data_monetization"], "delay": 3 },
+    "options": {
+      "A": { "text": "Criar opção de saída e devolver parte da receita.", "effects": { "investors": -5, "clients": 6, "government": 4 }, "setFlags": ["opt_out_program"], "clearFlags": ["data_monetization"] },
+      "B": { "text": "Alegar que estava nos termos de uso.", "effects": { "investors": 3, "clients": -6, "government": -4 }, "clearFlags": ["data_monetization"] }
+    }
+  },
+  "sp_hack": {
+    "title": "Ataque ao sistema", "category": "security", "npc": "assessor",
+    "text": "Atacantes exploraram a falha que ficou aberta e sequestraram parte dos sistemas da empresa.",
+    "requirements": { "flags": ["server_vulnerability"], "delay": 3 },
+    "options": {
+      "A": { "text": "Contratar especialistas externos e blindar tudo.", "effects": { "investors": -6, "clients": 4, "government": 3 }, "setFlags": ["security_overhaul"], "clearFlags": ["server_vulnerability"] },
+      "B": { "text": "Negociar o pagamento do resgate.", "effects": { "investors": -4, "clients": -4, "government": -7 }, "clearFlags": ["server_vulnerability"], "risk": { "chance": 0.5, "effects": { "investors": -6, "government": -4 }, "feedback": "Os atacantes voltaram exigindo ainda mais." } }
+    }
+  },
+  "sp_fines": {
+    "title": "Promessas viram multas", "category": "clients", "npc": "atendente",
+    "flavor": "Chefe, os clientes querem multa pelos prazos que a gente prometeu e não cumpriu!",
+    "text": "Prazos impossíveis viraram multas contratuais e clientes furiosos.",
+    "requirements": { "anyFlags": ["express_overextension", "overpromised_deliveries", "unrealistic_deadlines"], "delay": 4 },
+    "options": {
+      "A": { "text": "Pagar as multas e recalibrar os prazos.", "effects": { "investors": -6, "clients": 6, "government": 2 } },
+      "B": { "text": "Renegociar contrato por contrato.", "effects": { "investors": 3, "clients": -4, "government": -1 }, "risk": { "chance": 0.35, "effects": { "clients": -5 }, "feedback": "Dois grandes clientes não aceitaram e foram embora." } }
+    }
+  },
+  "sp_warehouse_accident": {
+    "title": "Acidente no galpão", "category": "work_and_safety", "npc": "entregador",
+    "flavor": "Chefe, um colega se machucou lá no galpão. O ritmo estava pesado demais.",
+    "text": "O ritmo acelerado do centro de distribuição causou um acidente com um funcionário.",
+    "requirements": { "flags": ["warehouse_overload"], "delay": 3 },
+    "options": {
+      "A": { "text": "Interditar o galpão e indenizar o funcionário.", "effects": { "investors": -8, "clients": 2, "government": 6 }, "clearFlags": ["warehouse_overload"] },
+      "B": { "text": "Manter a operação e culpar o operador.", "effects": { "investors": 3, "clients": -4, "government": -9 }, "clearFlags": ["warehouse_overload"] }
+    }
+  },
+  "sp_trust_seal": {
+    "title": "Selo de confiança", "category": "privacy", "npc": "assessor",
+    "flavor": "Boas notícias: a forma como o senhor tratou o vazamento virou case de mercado.",
+    "text": "Uma entidade de proteção de dados quer conceder um selo de confiança à empresa, e o marketing já quer explorar isso.",
+    "requirements": { "flags": ["data_breach_response"], "delay": 4 },
+    "options": {
+      "A": { "text": "Divulgar o selo em uma grande campanha.", "effects": { "investors": -2, "clients": 6, "government": 2 } },
+      "B": { "text": "Usar a boa reputação para reajustar os fretes.", "effects": { "investors": 7, "clients": -2 } }
+    }
+  },
+  "sp_ai_route": {
+    "title": "A IA propõe um atalho", "category": "innovation", "npc": "estagiario",
+    "flavor": "Ahn... a IA sugeriu uma rota bem diferente. Posso mostrar?",
+    "text": "O sistema de IA quer cortar caminho por áreas que a equipe considera arriscadas, prometendo economizar 30% do tempo.",
+    "requirements": { "anyFlags": ["ai_pilot", "ai_full_deployment"], "delay": 3 },
+    "options": {
+      "A": { "text": "Confiar na IA e adotar a rota.", "effects": { "investors": 6, "clients": 2, "government": -2 }, "risk": { "chance": 0.4, "effects": { "clients": -6, "government": -4 }, "feedback": "A rota passou por uma zona alagada e as entregas ficaram presas." } },
+      "B": { "text": "Exigir revisão humana de cada rota.", "effects": { "investors": -3, "clients": 2, "government": 2 } }
+    }
+  },
+  "sp_exclusive_squeeze": {
+    "title": "O varejista aperta o cerco", "category": "business", "npc": "investidor",
+    "text": "A rede varejista exclusiva percebeu que a empresa depende dela e quer cortar a sua margem.",
+    "requirements": { "flags": ["exclusive_contract"], "delay": 3 },
+    "options": {
+      "A": { "text": "Aceitar o corte para manter o contrato.", "effects": { "investors": -4, "clients": 1, "competition": -2 } },
+      "B": { "text": "Buscar novos clientes às pressas.", "effects": { "investors": -5, "clients": 4, "competition": 3 } }
+    }
+  },
+
+  "sp_h_costumes": {
+    "title": "Desfile de fantasias", "category": "social_responsibility", "npc": "mascarado", "weight": 5,
+    "flavor": "Buuu! Brincadeira, chefe. O RH liberou fantasias hoje.",
+    "text": "Os funcionários querem desfilar fantasiados pelo centro de distribuição e postar tudo nas redes.",
+    "requirements": { "day": 4 },
+    "options": {
+      "A": { "text": "Liberar o desfile.", "effects": { "investors": -1, "clients": 4 }, "risk": { "chance": 0.3, "effects": { "investors": -4, "government": -3 }, "feedback": "Um monstro de papelão bloqueou a saída dos caminhões." } },
+      "B": { "text": "Proibir por segurança.", "effects": { "investors": 1, "clients": -2, "government": 2 } }
+    }
+  },
+  "sp_h_trick": {
+    "title": "Doces ou travessuras", "category": "government", "npc": "mascarado", "weight": 5,
+    "flavor": "Doces ou travessuras?! Ah, e o meu pai é fiscal da prefeitura, viu?",
+    "text": "Uma criança fantasiada de fantasma pede doces na recepção. O pai dela é fiscal da prefeitura.",
+    "requirements": { "day": 4 },
+    "options": {
+      "A": { "text": "Dar doces e brindes da empresa.", "effects": { "investors": -1, "clients": 1, "government": 3 }, "risk": { "chance": 0.35, "effects": { "government": -9 }, "feedback": "O pai interpretou os brindes como tentativa de suborno." } },
+      "B": { "text": "Dispensar educadamente: aqui não é lugar de brincadeira.", "effects": { "investors": 1, "clients": -1, "government": -3 } }
+    }
+  },
+  "sp_h_noises": {
+    "title": "Vultos no galpão", "category": "operations", "npc": "atendente", "weight": 5,
+    "flavor": "Chefe, o pessoal do turno da noite jura que viu um vulto no galpão.",
+    "text": "Operadores se recusam a fazer o turno da noite por causa de supostos vultos no galpão principal.",
+    "requirements": { "day": 4 },
+    "options": {
+      "A": { "text": "Pagar adicional noturno e fazer uma vistoria.", "effects": { "investors": -5, "clients": 1, "government": 3 } },
+      "B": { "text": "Chamar de superstição e manter a escala.", "effects": { "investors": 3, "clients": -2, "government": -3 }, "risk": { "chance": 0.3, "effects": { "investors": -5, "clients": -3 }, "feedback": "Havia mesmo um invasor: parte do estoque sumiu." } }
+    }
+  },
+  "sp_h_campaign": {
+    "title": "Entregas de arrepiar", "category": "marketing", "npc": "estagiario", "weight": 5,
+    "flavor": "Tenho uma ideia assustadoramente boa para a campanha!",
+    "text": "O marketing propõe uma campanha de terror: 'Seu pedido chega mais rápido que um fantasma'.",
+    "requirements": { "day": 4 },
+    "options": {
+      "A": { "text": "Aprovar a campanha ousada.", "effects": { "investors": -3, "clients": 6, "competition": 2 }, "risk": { "chance": 0.3, "effects": { "clients": -8 }, "feedback": "A campanha foi vista como de mau gosto e viralizou pelo motivo errado." } },
+      "B": { "text": "Optar por uma campanha doce e segura.", "effects": { "investors": 1, "clients": 2 } }
+    }
+  },
+  "sp_h_contract": {
+    "title": "Contrato de capa preta", "category": "business", "npc": "mascarado",
+    "flavor": "Vim fazer negócio. A proposta... é irrecusável.",
+    "text": "Um empresário sombrio oferece um contrato milionário com cláusulas escritas em letras minúsculas.",
+    "requirements": { "day": 4 }, "schedule": { "day": 4, "at": 8 },
+    "options": {
+      "A": { "text": "Assinar na hora, a oferta é boa demais.", "effects": { "investors": 9, "clients": -2, "government": -3, "competition": -3 }, "risk": { "chance": 0.5, "effects": { "investors": -14, "government": -6 }, "feedback": "A letra miúda escondia multas pesadas: o contrato era uma armadilha." } },
+      "B": { "text": "Levar ao jurídico e pedir mais prazo.", "effects": { "investors": -2, "government": 2 } }
+    }
+  },
+
+  "sp_r_flood": {
+    "title": "Ruas alagadas", "category": "operations", "npc": "atendente",
+    "text": "As ruas da zona sul estão alagadas e dezenas de motos seguem em rota.",
+    "requirements": { "day": 3 }, "schedule": { "day": 3, "at": 3 },
+    "options": {
+      "A": { "text": "Suspender as entregas até a água baixar.", "effects": { "investors": -4, "clients": -2, "government": 4 } },
+      "B": { "text": "Manter as entregas e arriscar.", "effects": { "investors": 3, "clients": 2, "government": -5 }, "risk": { "chance": 0.35, "effects": { "investors": -6, "clients": -3 }, "feedback": "Um entregador sofreu um acidente na enxurrada." } }
+    }
+  },
+  "sp_r_stock": {
+    "title": "Goteiras no depósito", "category": "supply_chain", "weight": 5,
+    "text": "A chuva molhou parte do estoque de um cliente importante.",
+    "requirements": { "day": 3 },
+    "options": {
+      "A": { "text": "Descartar o lote e acionar o seguro.", "effects": { "investors": -4, "clients": 2, "government": 2 } },
+      "B": { "text": "Entregar assim mesmo, com desconto.", "effects": { "investors": 3, "clients": -4, "government": -3 } }
+    }
+  },
+  "sp_r_shelter": {
+    "title": "Entregadores pedem abrigo", "category": "work_and_safety", "npc": "entregador", "weight": 5,
+    "flavor": "Chefe, tá caindo o mundo lá fora. Dá pra esperar no galpão?",
+    "text": "Entregadores encharcados pedem para esperar a chuva passar dentro do galpão.",
+    "requirements": { "day": 3 },
+    "options": {
+      "A": { "text": "Abrir o galpão como ponto de apoio.", "effects": { "investors": -3, "clients": 1, "government": 4 } },
+      "B": { "text": "Manter a regra: ninguém entra.", "effects": { "investors": 2, "clients": -1, "government": -3 } }
+    }
+  },
+  "sp_r_civil": {
+    "title": "Defesa Civil pede apoio", "category": "government", "npc": "fiscal", "weight": 5,
+    "text": "A Defesa Civil pede caminhões da empresa para resgatar famílias ilhadas.",
+    "requirements": { "day": 3 },
+    "options": {
+      "A": { "text": "Ceder caminhões para a emergência.", "effects": { "investors": -5, "clients": -2, "government": 7 } },
+      "B": { "text": "Priorizar as entregas dos clientes.", "effects": { "investors": 2, "clients": 3, "government": -5 } }
+    }
+  },
+
+  "sp_b_servers": {
+    "title": "Servidores no limite", "category": "technology", "npc": "estagiario",
+    "flavor": "O tráfego é oito vezes o normal e o aplicativo está engasgando!",
+    "text": "A Black Friday derrubou a velocidade do aplicativo. Cada minuto lento custa pedidos.",
+    "requirements": { "day": 5 }, "schedule": { "day": 5, "at": 5 },
+    "options": {
+      "A": { "text": "Contratar capacidade extra de emergência.", "effects": { "investors": -6, "clients": 5, "government": 1 } },
+      "B": { "text": "Limitar a quantidade de pedidos por hora.", "effects": { "investors": 2, "clients": -6 } }
+    }
+  },
+  "sp_b_coupon": {
+    "title": "Cupom que vazou", "category": "marketing", "weight": 5,
+    "text": "Um cupom de 90% de desconto vazou nas redes e já foi compartilhado milhares de vezes.",
+    "requirements": { "day": 5 },
+    "options": {
+      "A": { "text": "Honrar o cupom.", "effects": { "investors": -8, "clients": 8, "competition": 2 } },
+      "B": { "text": "Cancelar os pedidos feitos com ele.", "effects": { "investors": 3, "clients": -9 }, "risk": { "chance": 0.4, "effects": { "government": -6 }, "feedback": "O Procon abriu um processo contra a empresa." } }
+    }
+  },
+  "sp_b_rival": {
+    "title": "Rival copia a promoção", "category": "competition", "npc": "assessor", "weight": 5,
+    "text": "O principal concorrente copiou sua promoção e já oferece frete grátis.",
+    "requirements": { "day": 5 },
+    "options": {
+      "A": { "text": "Cobrir a oferta do rival.", "effects": { "investors": -6, "clients": 5, "competition": -5 } },
+      "B": { "text": "Manter os preços e confiar na marca.", "effects": { "investors": 2, "clients": -4, "competition": 4 } }
+    }
+  },
+  "sp_b_influencer": {
+    "title": "Influenciador exige entrega grátis", "category": "marketing", "npc": "atendente", "weight": 5,
+    "flavor": "Chefe, um influenciador com 2 milhões de seguidores está esperando na linha.",
+    "text": "Um influenciador famoso ameaça expor um atraso a menos que a entrega dele seja gratuita e prioritária.",
+    "requirements": { "day": 5 },
+    "options": {
+      "A": { "text": "Atender para ganhar exposição.", "effects": { "investors": -2, "clients": 4 }, "risk": { "chance": 0.3, "effects": { "clients": -5 }, "feedback": "Outros clientes exigiram o mesmo e a história virou polêmica." } },
+      "B": { "text": "Recusar publicamente.", "effects": { "investors": 1, "clients": -3, "competition": 1 } }
+    }
+  },
+  "sp_b_overtime": {
+    "title": "Horas extras forçadas", "category": "work_and_safety", "npc": "entregador", "weight": 5,
+    "text": "Os pedidos dobraram e a escala não dá conta. A pressão para estender o turno cresce.",
+    "requirements": { "day": 5 },
+    "options": {
+      "A": { "text": "Pagar bônus e dobrar os turnos.", "effects": { "investors": -5, "clients": 4, "government": 1 } },
+      "B": { "text": "Exigir horas extras sem bônus.", "effects": { "investors": 4, "clients": -2, "government": -6 }, "setFlags": ["overtime_pressure"] }
+    }
+  },
+
+  "sp_m_anon": {
+    "title": "Mensagem anônima", "category": "security", "npc": "anonimo",
+    "flavor": "...",
+    "text": "Às 00h10, um remetente desconhecido envia planilhas internas da concorrente.",
+    "requirements": { "day": 6 }, "schedule": { "day": 6, "at": 5 },
+    "options": {
+      "A": { "text": "Usar as informações.", "effects": { "investors": 7, "government": -5, "competition": -6 }, "risk": { "chance": 0.4, "effects": { "government": -8, "investors": -5 }, "feedback": "Os arquivos eram falsos: uma armadilha para incriminar a empresa." } },
+      "B": { "text": "Apagar tudo e avisar o jurídico.", "effects": { "investors": -2, "government": 3, "competition": 2 } }
+    }
+  },
+  "sp_m_tired": {
+    "title": "Equipe exausta", "category": "work_and_safety", "npc": "entregador", "weight": 5,
+    "text": "A equipe do plantão está exausta e um erro grave pode acontecer a qualquer momento.",
+    "requirements": { "day": 6 },
+    "options": {
+      "A": { "text": "Mandar metade da equipe para casa.", "effects": { "investors": -4, "clients": -3, "government": 3 } },
+      "B": { "text": "Pagar café e seguir.", "effects": { "investors": 2, "clients": 2, "government": -4 }, "risk": { "chance": 0.3, "effects": { "investors": -6, "clients": -3 }, "feedback": "Um erro de roteirização gerou um prejuízo enorme." } }
+    }
+  },
+  "sp_m_auditor": {
+    "title": "Auditor insone", "category": "regulation", "npc": "fiscal", "weight": 5,
+    "flavor": "Desculpe a hora. Auditores não dormem.",
+    "text": "Um auditor aparece de madrugada, sem aviso, e pede acesso imediato aos arquivos.",
+    "requirements": { "day": 6 },
+    "options": {
+      "A": { "text": "Receber e abrir todos os arquivos.", "effects": { "investors": -3, "government": 5 } },
+      "B": { "text": "Pedir que volte no horário comercial.", "effects": { "investors": 1, "government": -4 } }
+    }
+  },
+  "sp_m_board": {
+    "title": "Ligação do conselho", "category": "investors", "npc": "presidente", "weight": 5,
+    "flavor": "Sei que é tarde, mas precisamos de uma decisão antes do amanhecer.",
+    "text": "O conselho exige uma resposta sobre cortes de custos antes do nascer do sol.",
+    "requirements": { "day": 6 },
+    "options": {
+      "A": { "text": "Aprovar um corte de 10% nas despesas.", "effects": { "investors": 6, "clients": -4, "government": -2 } },
+      "B": { "text": "Resistir e propor um plano de crescimento.", "effects": { "investors": -4, "clients": 3, "government": 1 } }
+    }
+  },
+
+  "sp_f_dossier": {
+    "title": "Audiência: o dossiê", "category": "governance", "npc": "presidente", "priority": 3,
+    "flavor": "Senhor gestor, temos em mãos tudo aquilo que o senhor tentou esconder.",
+    "text": "Na audiência final, o conselho apresenta um dossiê com as decisões duvidosas da semana e pede a sua posição.",
+    "requirements": { "day": 7, "anyFlags": ["data_breach_hidden", "corruption_unresolved", "contract_fraud_unresolved", "salary_delay", "financial_inconsistency", "selective_disclosure", "creative_accounting", "press_war", "hush_deal", "obstruction", "blame_driver", "strike_breaking"] },
+    "schedule": { "day": 7, "at": 15 },
+    "options": {
+      "A": { "text": "Assumir os erros e propor reparação.", "effects": { "investors": -8, "clients": 4, "government": 9 } },
+      "B": { "text": "Negar tudo até o fim.", "effects": { "investors": 6, "clients": -5, "government": -9 }, "risk": { "chance": 0.5, "effects": { "investors": -8, "clients": -6, "government": -6 }, "feedback": "Provas documentais derrubaram a sua defesa em público." } }
+    }
+  },
+  "sp_f_praise": {
+    "title": "Audiência: o reconhecimento", "category": "governance", "npc": "presidente", "priority": 2,
+    "flavor": "O senhor surpreendeu a todos nesta semana. Temos uma proposta.",
+    "text": "Na audiência final, o conselho reconhece suas práticas de transparência e propõe um acordo exclusivo com a prefeitura, com condições.",
+    "requirements": { "day": 7, "anyFlags": ["data_breach_response", "anti_corruption_investigation", "public_transparency", "financial_audit", "payroll_protected", "audit_cooperation", "community_dialogue", "employee_council", "pricing_transparency", "privacy_protected", "data_breach_admitted", "security_overhaul", "fleet_audit"] },
+    "schedule": { "day": 7, "at": 15 },
+    "options": {
+      "A": { "text": "Aceitar o reconhecimento e o acordo exclusivo.", "effects": { "investors": 5, "clients": 2, "government": 3, "competition": 3 }, "risk": { "chance": 0.3, "effects": { "investors": -5, "competition": 5 }, "feedback": "A exclusividade irritou os concorrentes, que reagiram com força." } },
+      "B": { "text": "Aceitar apenas o reconhecimento.", "effects": { "investors": -1, "clients": 2, "government": 3 } }
+    }
+  },
+  "sp_f_default": {
+    "title": "Audiência: o rumo da empresa", "category": "governance", "npc": "presidente", "priority": 1,
+    "flavor": "Chegamos ao fim da semana. Diga ao conselho para onde a empresa vai.",
+    "text": "Na audiência final, o conselho pede que você defenda o rumo da UrbanLink Flow para os próximos anos.",
+    "requirements": { "day": 7 }, "schedule": { "day": 7, "at": 15 },
+    "options": {
+      "A": { "text": "Defender um crescimento agressivo.", "effects": { "investors": 7, "clients": -3, "government": -3, "competition": 3 } },
+      "B": { "text": "Defender estabilidade e prudência.", "effects": { "investors": -3, "clients": 3, "government": 3, "competition": -2 } }
+    }
+  }
+}

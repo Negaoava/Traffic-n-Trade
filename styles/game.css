@@ -737,3 +737,475 @@
     transform: translateY(0);
   }
 }
+
+/* =====================================================================
+   WEEK THEMES / CAMERA / EXTRAS  -  append to the end of game.css
+   ===================================================================== */
+
+/* ---------- Mouse camera (+ punch / shake) ----------
+   --cam-x / --cam-y are set from scripts/fx.js. The far wall moves less than the
+   desk and paper, which gives the parallax. */
+.camera {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  scale: 1.08; /* overscan so the edges never show while the camera moves */
+  translate: var(--cam-x, 0px) var(--cam-y, 0px);
+}
+
+.camera .wall  { translate: calc(var(--cam-x, 0px) * -0.55) calc(var(--cam-y, 0px) * -0.55); }
+.camera .desk  { translate: calc(var(--cam-x, 0px) * 0.3) calc(var(--cam-y, 0px) * 0.3); }
+.camera .paper { translate: calc(var(--cam-x, 0px) * 0.45) calc(var(--cam-y, 0px) * 0.45); }
+
+/* ---------- Theme colors (default = the office you already have) ---------- */
+.office-screen {
+  --wall-a: #223022; --wall-b: #1f2c1f; --wall-low: #172017; --trim: #2f422f;
+  --sky-top: #0f1a10; --sky-bottom: #1d2e1e; --sky-a: #2c452d; --sky-b: #355535;
+  --frame: #3b4f3b; --glow: rgba(163, 207, 164, 0.12);
+  --desk-top: #3b4a3b; --desk-mid: #2a352a; --desk-low: #1d261d; --desk-edge: #566a56;
+  --lamp: #a3cfa4; --lamp-glow: rgba(163, 207, 164, 0.4);
+  --tint: transparent; --ray: rgba(255, 240, 170, 0.14); --bulb: #e8903a;
+}
+
+.office-screen[data-theme="morning"] {
+  --wall-a: #2e3b2a; --wall-b: #2a3626; --wall-low: #1f2a1c; --trim: #4a5a3a;
+  --sky-top: #2b4a3a; --sky-bottom: #7a9a58; --sky-a: #3c5a3a; --sky-b: #4d6e45;
+  --frame: #4a5f3c; --glow: rgba(255, 236, 160, 0.3);
+  --desk-top: #4a5a40; --desk-mid: #36442f; --desk-low: #26301f; --desk-edge: #6a8058;
+  --tint: rgba(255, 236, 160, 0.07);
+}
+
+.office-screen[data-theme="rain"] {
+  --wall-a: #1e2830; --wall-b: #1b242b; --wall-low: #141b22; --trim: #2a3a47;
+  --sky-top: #0c1218; --sky-bottom: #1b2a36; --sky-a: #1f3040; --sky-b: #26394a;
+  --frame: #31465a; --glow: rgba(120, 170, 220, 0.18);
+  --desk-top: #333f4a; --desk-mid: #262f38; --desk-low: #1a2128; --desk-edge: #4a5c6c;
+  --lamp: #bcd8f0; --lamp-glow: rgba(190, 220, 255, 0.35);
+  --tint: rgba(10, 30, 60, 0.22);
+}
+
+.office-screen[data-theme="halloween"] {
+  --wall-a: #2a1f33; --wall-b: #261c2e; --wall-low: #1b1423; --trim: #4b2f5e;
+  --sky-top: #1a0f26; --sky-bottom: #3a1e46; --sky-a: #2a1838; --sky-b: #351f45;
+  --frame: #5a3a6e; --glow: rgba(255, 140, 40, 0.18);
+  --desk-top: #3c2a44; --desk-mid: #2c1f34; --desk-low: #1d1424; --desk-edge: #6a4580;
+  --lamp: #e8903a; --lamp-glow: rgba(255, 150, 50, 0.5);
+  --tint: rgba(80, 20, 90, 0.16); --bulb: #e8903a;
+}
+
+.office-screen[data-theme="blackfriday"] {
+  --wall-a: #2b1f1f; --wall-b: #271b1b; --wall-low: #1c1313; --trim: #5a2a2a;
+  --sky-top: #14090a; --sky-bottom: #3a1515; --sky-a: #3a1c1c; --sky-b: #4a2424;
+  --frame: #7a3030; --glow: rgba(255, 60, 60, 0.22);
+  --desk-top: #4a2f2f; --desk-mid: #352222; --desk-low: #241616; --desk-edge: #7a4545;
+  --lamp: #ff8a7a; --lamp-glow: rgba(255, 90, 90, 0.4);
+  --tint: rgba(140, 10, 10, 0.12); --bulb: #ff4a4a;
+}
+
+.office-screen[data-theme="midnight"] {
+  --wall-a: #121a24; --wall-b: #101821; --wall-low: #0b1118; --trim: #1c2a3a;
+  --sky-top: #05080d; --sky-bottom: #0f1a2a; --sky-a: #142030; --sky-b: #1a2a3d;
+  --frame: #24364a; --glow: rgba(150, 190, 255, 0.1);
+  --desk-top: #1f2a36; --desk-mid: #17202a; --desk-low: #10171f; --desk-edge: #30445a;
+  --lamp: #ffe9a8; --lamp-glow: rgba(255, 230, 160, 0.6);
+  /* darkness everywhere except a pool of light around the desk lamp */
+  --tint: radial-gradient(ellipse at 12% 80%, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.72) 55%);
+}
+
+.office-screen[data-theme="finale"] {
+  --wall-a: #332224; --wall-b: #2e1f21; --wall-low: #231618; --trim: #5a3a38;
+  --sky-top: #3a1a1a; --sky-bottom: #b5532f; --sky-a: #4a2420; --sky-b: #5d2d25;
+  --frame: #6a4038; --glow: rgba(255, 150, 80, 0.28);
+  --desk-top: #43302f; --desk-mid: #332322; --desk-low: #241717; --desk-edge: #7a5048;
+  --lamp: #ffb27a; --lamp-glow: rgba(255, 170, 100, 0.4);
+  --tint: rgba(150, 50, 20, 0.14); --ray: rgba(255, 150, 80, 0.16);
+}
+
+/* ---------- Existing rules, now reading the theme colors ---------- */
+.wall {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--wall-a) 0 calc(var(--u) * 14),
+    var(--wall-b) calc(var(--u) * 14) calc(var(--u) * 28)
+  );
+}
+
+.wall::after {
+  background: var(--wall-low);
+  border-top-color: var(--trim);
+}
+
+.window {
+  border-color: var(--frame);
+  background: linear-gradient(var(--sky-top), var(--sky-bottom));
+  box-shadow: 0 0 calc(var(--u) * 6) var(--glow);
+}
+
+.window::before {
+  z-index: 1;
+  background:
+    linear-gradient(var(--sky-a), var(--sky-a)) 4% 100% / 16% 50% no-repeat,
+    linear-gradient(var(--sky-b), var(--sky-b)) 26% 100% / 18% 75% no-repeat,
+    linear-gradient(var(--sky-a), var(--sky-a)) 50% 100% / 14% 40% no-repeat,
+    linear-gradient(var(--sky-b), var(--sky-b)) 72% 100% / 20% 65% no-repeat,
+    linear-gradient(var(--sky-a), var(--sky-a)) 98% 100% / 12% 45% no-repeat;
+}
+
+.window::after {
+  z-index: 2;
+  background:
+    linear-gradient(var(--frame), var(--frame)) 50% 0 / calc(var(--u) * 1.2) 100% no-repeat,
+    linear-gradient(var(--frame), var(--frame)) 0 50% / 100% calc(var(--u) * 1.2) no-repeat;
+}
+
+.desk {
+  background: linear-gradient(
+    var(--desk-top) 0 calc(var(--u) * 2),
+    var(--desk-mid) calc(var(--u) * 2) 30%,
+    var(--desk-low) 30%
+  );
+  border-top-color: var(--desk-edge);
+}
+
+.lamp::before {
+  background: var(--lamp);
+  box-shadow: 0 calc(var(--u) * 6) calc(var(--u) * 16) var(--lamp-glow);
+}
+
+/* the wall clock starts at each day's time (set from game.js) */
+.clock::before { animation-delay: var(--clock-m, 0s); }
+.clock::after  { animation-delay: var(--clock-h, 0s); }
+
+/* color tint over the whole scene */
+.scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: var(--tint);
+}
+
+.office-screen[data-theme="blackfriday"] .scene::after { animation: bf-pulse 1.6s ease-in-out infinite alternate; }
+@keyframes bf-pulse { from { opacity: 0.55; } to { opacity: 1; } }
+
+/* ---------- Sky objects and stars in the window ---------- */
+.sky-obj {
+  position: absolute;
+  z-index: 0;
+  display: none;
+  width: calc(var(--u) * 7);
+  height: calc(var(--u) * 7);
+  border-radius: 50%;
+}
+
+.office-screen[data-theme="morning"] .sky-obj   { display: block; left: 62%; top: 48%; background: #ffe9a0; box-shadow: 0 0 calc(var(--u) * 6) rgba(255, 233, 160, 0.8); }
+.office-screen[data-theme="halloween"] .sky-obj { display: block; left: 58%; top: 12%; background: #ffb04a; box-shadow: 0 0 calc(var(--u) * 5) rgba(255, 176, 74, 0.7); }
+.office-screen[data-theme="midnight"] .sky-obj  { display: block; left: 64%; top: 14%; background: #dfe8f5; box-shadow: 0 0 calc(var(--u) * 5) rgba(223, 232, 245, 0.5); }
+.office-screen[data-theme="finale"] .sky-obj    { display: block; left: 54%; top: 44%; width: calc(var(--u) * 9); height: calc(var(--u) * 9); background: #ff7a3c; box-shadow: 0 0 calc(var(--u) * 8) rgba(255, 122, 60, 0.8); }
+
+.office-screen[data-theme="midnight"] .window,
+.office-screen[data-theme="halloween"] .window {
+  background:
+    radial-gradient(circle at 18% 22%, #cfe0ff 0 1px, transparent 2px),
+    radial-gradient(circle at 72% 14%, #cfe0ff 0 1px, transparent 2px),
+    radial-gradient(circle at 44% 38%, #cfe0ff 0 1px, transparent 2px),
+    linear-gradient(var(--sky-top), var(--sky-bottom));
+}
+
+/* ---------- Decorations (hidden unless the theme asks for them) ---------- */
+.decor {
+  position: absolute;
+  display: none;
+  pointer-events: none;
+}
+
+/* morning + finale: light shafts from the windows */
+.office-screen[data-theme="morning"] .sunrays,
+.office-screen[data-theme="finale"] .sunrays {
+  display: block;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0 8%,
+    var(--ray) 8% 20%,
+    transparent 20% 24%,
+    var(--ray) 24% 34%,
+    transparent 34%
+  );
+}
+
+/* halloween + black friday: string of lights */
+.office-screen[data-theme="halloween"] .garland,
+.office-screen[data-theme="blackfriday"] .garland {
+  display: block;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(var(--u) * 3);
+  background: radial-gradient(circle at 50% 60%, var(--bulb) 0 25%, transparent 28%) 0 0 / calc(var(--u) * 7) 100% repeat-x;
+  animation: bulbs 1.4s steps(1) infinite;
+}
+
+@keyframes bulbs { 50% { opacity: 0.55; } }
+
+/* halloween: cobwebs and bats */
+.office-screen[data-theme="halloween"] .cobweb {
+  display: block;
+  top: 0;
+  width: calc(var(--u) * 22);
+  height: calc(var(--u) * 22);
+  background:
+    repeating-conic-gradient(from 90deg at 0 0, rgba(223, 232, 220, 0.45) 0 1.2deg, transparent 1.2deg 18deg),
+    repeating-radial-gradient(circle at 0 0, transparent 0 calc(var(--u) * 4), rgba(223, 232, 220, 0.4) calc(var(--u) * 4) calc(var(--u) * 4.4));
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.cobweb.l { left: 0; }
+.cobweb.r { right: 0; transform: scaleX(-1); }
+
+.office-screen[data-theme="halloween"] .bats {
+  display: block;
+  inset: 0;
+  overflow: hidden;
+}
+
+.bats span {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 2.4);
+  background: #0d0a12;
+  clip-path: polygon(0 20%, 20% 0, 35% 40%, 50% 15%, 65% 40%, 80% 0, 100% 20%, 80% 100%, 50% 60%, 20% 100%);
+  animation: bat-fly 9s linear infinite, bat-flap 0.3s steps(2) infinite;
+}
+
+.bats span:nth-child(2) { top: 18%; animation-duration: 12s, 0.35s; animation-delay: -4s, 0s; }
+.bats span:nth-child(3) { top: 5%;  animation-duration: 15s, 0.28s; animation-delay: -9s, 0s; }
+
+@keyframes bat-fly  { from { translate: -10vw 0; } to { translate: 110vw 4vh; } }
+@keyframes bat-flap { 50% { scale: 1 0.45; } }
+
+/* black friday: sale banner */
+.office-screen[data-theme="blackfriday"] .banner {
+  display: block;
+  left: 50%;
+  top: calc(8% + var(--u) * 17);
+  padding: calc(var(--u) * 1.4) calc(var(--u) * 3);
+  background: #8b1f1f;
+  border: calc(var(--u) * 0.6) solid #ff6a5a;
+  color: #fff;
+  font-size: calc(var(--u) * 2.4);
+  white-space: nowrap;
+  transform: translateX(-50%) rotate(-2deg);
+}
+
+/* halloween: pumpkin on the desk and costumes (witch hat) on the visitors */
+.pumpkin {
+  position: absolute;
+  display: none;
+  right: 14%;
+  top: calc(var(--u) * -7);
+  width: calc(var(--u) * 8);
+  height: calc(var(--u) * 7);
+  background: #e8903a;
+  border-radius: 45% 45% 40% 40%;
+  box-shadow:
+    inset calc(var(--u) * -1.5) 0 0 #c46a1a,
+    inset calc(var(--u) * 1.5) 0 0 #f0a850,
+    0 0 calc(var(--u) * 6) rgba(232, 144, 58, 0.5);
+}
+
+.pumpkin::before { /* stem */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(var(--u) * -1.6);
+  width: calc(var(--u) * 1.6);
+  height: calc(var(--u) * 2);
+  margin-left: calc(var(--u) * -0.8);
+  background: #4a6a2a;
+}
+
+.pumpkin::after { /* face */
+  content: "";
+  position: absolute;
+  left: calc(var(--u) * 1.6);
+  top: calc(var(--u) * 2.2);
+  width: calc(var(--u) * 1.4);
+  height: calc(var(--u) * 1.4);
+  background: #2a1408;
+  box-shadow: calc(var(--u) * 3) 0 #2a1408, calc(var(--u) * 1.4) calc(var(--u) * 2.2) 0 calc(var(--u) * 0.3) #2a1408;
+}
+
+.office-screen[data-theme="halloween"] .pumpkin { display: block; }
+
+.npc-hat {
+  position: absolute;
+  display: none;
+  left: calc(var(--u) * -2);
+  top: calc(var(--u) * -9);
+  width: calc(var(--u) * 18);
+  height: calc(var(--u) * 10);
+  background: linear-gradient(#e8903a, #e8903a) 0 78% / 100% 12% no-repeat, #3a1f4a;
+  clip-path: polygon(50% 0, 62% 35%, 100% 75%, 100% 100%, 0 100%, 0 75%, 38% 35%);
+}
+
+.office-screen[data-theme="halloween"] .npc-hat { display: block; }
+
+/* midnight: the visitor is half in the dark */
+.office-screen[data-theme="midnight"] .npc { filter: brightness(0.7); }
+
+/* rain on the whole scene + (slow, faint) lightning */
+.rain {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: none;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.office-screen[data-theme="rain"] .rain { display: block; }
+
+.rain::before,
+.rain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+}
+
+.rain::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><g stroke='rgb(190,225,235)' stroke-opacity='.45' stroke-width='1.5' stroke-linecap='round'><path d='M20 10l-3 28M60 70l-3 28M95 30l-3 28M130 120l-3 28M170 60l-3 28M35 140l-3 28M80 165l-3 28M150 160l-3 28M110 95l-3 28M188 130l-3 28'/></g></svg>");
+  background-size: 200px 200px;
+  animation: rain-fall 0.7s linear infinite;
+}
+
+.rain::after {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><g stroke='rgb(190,225,235)' stroke-opacity='.3' stroke-width='1' stroke-linecap='round'><path d='M12 20l-3 22M52 90l-3 22M92 10l-3 22M120 70l-3 22M30 118l-3 22M100 115l-3 22'/></g></svg>");
+  background-size: 140px 140px;
+  animation: rain-fall-small 0.5s linear infinite;
+}
+
+@keyframes rain-fall       { to { background-position: 0 200px; } }
+@keyframes rain-fall-small { to { background-position: 0 140px; } }
+
+.flash {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: none;
+  background: #cfe8ff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.office-screen[data-theme="rain"] .flash { display: block; animation: lightning 11s linear infinite; }
+
+@keyframes lightning {
+  0%, 92%, 100% { opacity: 0; }
+  93% { opacity: 0.16; }
+  94% { opacity: 0; }
+  95% { opacity: 0.1; }
+  97% { opacity: 0; }
+}
+
+html.no-flicker .flash,
+html.no-flicker .scene::after,
+html.no-flicker .garland { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flash, .rain::before, .rain::after, .bats span, .garland, .scene::after { animation: none !important; }
+}
+
+/* ---------- Paper: decision timer, hidden-twist note, "consequence" stamp ---------- */
+.paper-timer {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: rgba(27, 38, 27, 0.15);
+}
+
+.paper-timer.on { display: block; }
+
+#paper-timer-fill {
+  height: 100%;
+  background: var(--danger);
+  transform-origin: left;
+  transition: transform 0.1s linear;
+}
+
+.paper-timer.urgent #paper-timer-fill { animation: blink 0.5s steps(1) infinite; }
+
+.paper-result {
+  display: none;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 2px dashed var(--danger);
+  font-size: clamp(9px, 1.3vw, 14px);
+  line-height: 1.8;
+  color: var(--danger);
+}
+
+.paper-result.show {
+  display: block;
+  animation: scribble 0.6s steps(10) both;
+}
+
+.paper.consequence::after {
+  content: "CONSEQUÊNCIA";
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  padding: 6px 10px;
+  border: 3px solid var(--danger);
+  color: var(--danger);
+  font-size: clamp(7px, 1vw, 11px);
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+  transform: rotate(7deg);
+}
+
+/* ---------- Day intro card ---------- */
+.day-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 18;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 3vh, 26px);
+  padding: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.86);
+  cursor: pointer;
+  animation: intro-in 0.35s steps(4) both;
+}
+
+.day-intro.leaving { animation: intro-out 0.4s steps(4) forwards; }
+
+.di-kicker { font-size: clamp(9px, 1.4vw, 15px); letter-spacing: 0.2em; color: var(--ink-dim); }
+.di-title  { font-size: clamp(20px, 5vw, 56px); color: var(--ink); animation: boot-in 0.8s steps(12) backwards; }
+.di-tag    { font-size: clamp(10px, 1.8vw, 20px); color: #e8c46a; }
+.di-text   { max-width: 36em; font-size: clamp(9px, 1.3vw, 14px); line-height: 1.9; color: var(--ink); }
+.di-timer  { font-size: clamp(8px, 1.1vw, 12px); color: #c96a6a; animation: blink 1s steps(1) infinite; }
+
+@keyframes intro-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes intro-out { to { opacity: 0; } }
+
+/* ---------- Small extras ---------- */
+.hud { padding: 0 80px; }
+
+.overlay-ending {
+  margin: 6px 0 14px;
+  text-align: center;
+  font-size: clamp(14px, 2.6vw, 28px);
+  font-weight: normal;
+  color: #e8c46a;
+}

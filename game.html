@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traffic 'n Trade</title>
 
-    <!-- plays the "zoom out" when arriving from another page; keep it inline and first -->
-    <script>if (sessionStorage.getItem("tt-crt-transition")) document.documentElement.classList.add("crt-entering");</script>
+    <!-- applies the saved CRT setting and plays the "zoom out" when arriving from another page; keep it inline and first -->
+    <script>
+        try { if (JSON.parse(localStorage.getItem("tt-settings") || "{}").crt === false) document.documentElement.classList.add("no-crt"); } catch (e) {}
+        if (sessionStorage.getItem("tt-crt-transition")) document.documentElement.classList.add("crt-entering");
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,56 +18,74 @@
     <link rel="stylesheet" href="styles/game.css">
 </head>
 <body>
-    <main class="screen office-screen" id="game-screen">
+    <main class="screen office-screen" id="game-screen" data-theme="office">
         <p class="hud" id="hud"></p>
         <button id="pause-btn" class="btn" type="button">||</button>
 
-        <!-- Everything inside .scene zooms/dims when the paper comes to the center -->
-        <div class="scene" id="scene">
-            <div class="wall">
-                <div class="window"></div>
-                <div class="window w2"></div>
-                <div class="clock"></div>
-                <div class="plant"></div>
-            </div>
+        <!-- Everything in .camera moves with the mouse (parallax) -->
+        <div class="camera" id="camera">
 
-            <div class="npc" id="npc">
-                <div class="speech" id="speech">
-                    <span class="speech-name" id="speech-name"></span>
-                    <p class="speech-text" id="speech-text"></p>
+            <!-- Everything inside .scene zooms/dims when the paper comes to the center -->
+            <div class="scene" id="scene">
+                <div class="wall">
+                    <div class="window"><i class="sky-obj"></i></div>
+                    <div class="window w2"></div>
+                    <div class="clock"></div>
+                    <div class="plant"></div>
+
+                    <!-- theme decorations (shown by data-theme in game.css) -->
+                    <div class="decor sunrays"></div>
+                    <div class="decor garland"></div>
+                    <div class="decor cobweb l"></div>
+                    <div class="decor cobweb r"></div>
+                    <div class="decor bats"><span></span><span></span><span></span></div>
+                    <div class="decor banner">BLACK FRIDAY -70%</div>
                 </div>
-                <div class="npc-sprite">
-                    <div class="npc-head"><div class="npc-hair"></div></div>
-                    <div class="npc-torso">
-                        <div class="npc-tie"></div>
-                        <div class="npc-arm left"></div>
-                        <div class="npc-arm right"></div>
+
+                <div class="npc" id="npc">
+                    <div class="speech" id="speech">
+                        <span class="speech-name" id="speech-name"></span>
+                        <p class="speech-text" id="speech-text"></p>
                     </div>
-                    <div class="npc-legs"><span></span><span></span></div>
+                    <div class="npc-sprite">
+                        <div class="npc-head"><div class="npc-hair"></div><div class="npc-hat"></div></div>
+                        <div class="npc-torso">
+                            <div class="npc-tie"></div>
+                            <div class="npc-arm left"></div>
+                            <div class="npc-arm right"></div>
+                        </div>
+                        <div class="npc-legs"><span></span><span></span></div>
+                    </div>
                 </div>
+
+                <div class="desk">
+                    <div class="lamp"></div>
+                    <div class="mug"></div>
+                    <div class="pumpkin"></div>
+                    <div class="nameplate">GERENTE</div>
+                </div>
+
+                <div class="rain"></div>
+                <div class="flash"></div>
             </div>
 
-            <div class="desk">
-                <div class="lamp"></div>
-                <div class="mug"></div>
-                <div class="nameplate">GERENTE</div>
-            </div>
-        </div>
-
-        <!-- The paper: sits on the desk, then moves to the center -->
-        <div class="paper" id="paper">
-            <div class="paper-content">
-                <h2 class="paper-title" id="paper-title"></h2>
-                <p class="paper-text" id="paper-text"></p>
-                <div class="paper-options">
-                    <button class="paper-option" id="opt-A" type="button" disabled>
-                        <span class="opt-key">A</span>
-                        <span class="opt-text" id="opt-A-text"></span>
-                    </button>
-                    <button class="paper-option" id="opt-B" type="button" disabled>
-                        <span class="opt-key">B</span>
-                        <span class="opt-text" id="opt-B-text"></span>
-                    </button>
+            <!-- The paper: sits on the desk, then moves to the center -->
+            <div class="paper" id="paper">
+                <div class="paper-timer" id="paper-timer"><div id="paper-timer-fill"></div></div>
+                <div class="paper-content">
+                    <h2 class="paper-title" id="paper-title"></h2>
+                    <p class="paper-text" id="paper-text"></p>
+                    <div class="paper-options">
+                        <button class="paper-option" id="opt-A" type="button" disabled>
+                            <span class="opt-key">A</span>
+                            <span class="opt-text" id="opt-A-text"></span>
+                        </button>
+                        <button class="paper-option" id="opt-B" type="button" disabled>
+                            <span class="opt-key">B</span>
+                            <span class="opt-text" id="opt-B-text"></span>
+                        </button>
+                    </div>
+                    <p class="paper-result" id="paper-result"></p>
                 </div>
             </div>
         </div>

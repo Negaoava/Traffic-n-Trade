@@ -1,45 +1,35 @@
+import "./settings.js";
 import { navigateWithTransition } from "./transition.js";
+import { initUiSounds } from "./sfx.js";
+import { initCursor, initCamera } from "./fx.js";
+import { buildOptionsPanel } from "./options_panel.js";
 
-export const buttonHoverSFX = new Audio('../sfx/button_hover.mp3');
-export const buttonClickSFX = new Audio('../sfx/button_click.mp3');
-
-const buttons = document.querySelectorAll('.btn');
+initUiSounds();
+initCursor();
+initCamera({ root: document.querySelector(".screen") });
 
 const optionsBtn = document.querySelector('.options-btn');
 const closeOptionsBtn = document.querySelector('.close-menu-btn');
 const optionsMenu = document.querySelector('.options-menu');
+const optionsBody = document.getElementById('options-body');
 const blackOverlay = document.querySelector('.black-overlay');
 
-buttonHoverSFX.volume = 0.8;
-buttonClickSFX.volume = 0.8;
+buildOptionsPanel(optionsBody);
 
-// Options menu
-if (optionsBtn && blackOverlay && optionsMenu) {
-    optionsBtn.addEventListener('click', () => {
-        blackOverlay.classList.add('black-overlay-active');
-        optionsMenu.classList.add('options-menu-active');
-    });
+function openOptions() {
+    blackOverlay.classList.add('black-overlay-active');
+    optionsMenu.classList.add('options-menu-active');
 }
 
-// Close options menu
-if (closeOptionsBtn && blackOverlay && optionsMenu) {
-    closeOptionsBtn.addEventListener('click', () => {
-        blackOverlay.classList.remove('black-overlay-active');
-        optionsMenu.classList.remove('options-menu-active');
-    });
+function closeOptions() {
+    blackOverlay.classList.remove('black-overlay-active');
+    optionsMenu.classList.remove('options-menu-active');
 }
 
-// Button sound effects
-buttons.forEach(button => {
-    button.addEventListener('mouseenter', () => {
-        buttonHoverSFX.currentTime = 0;
-        buttonHoverSFX.play().catch(() => {});
-    });
-
-    button.addEventListener('click', () => {
-        buttonClickSFX.currentTime = 0;
-        buttonClickSFX.play().catch(() => {});
-    });
+optionsBtn.addEventListener('click', openOptions);
+closeOptionsBtn.addEventListener('click', closeOptions);
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeOptions();
 });
 
 // Links go through the CRT zoom transition

@@ -130,3 +130,131 @@ html.crt-entering .screen {
     animation: none;
   }
 }
+
+/* ============ Settings switches (CRT / flicker) ============ */
+html.no-flicker .screen::before,
+html.no-flicker .screen::after {
+  animation: none;
+}
+
+html.no-crt .screen::before,
+html.no-crt .screen::after {
+  display: none;
+}
+
+html.no-crt .screen {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html.no-crt .screen,
+html.no-crt .screen *,
+html.no-crt .screen *::before,
+html.no-crt .screen *::after {
+  text-shadow: none !important;
+}
+
+/* with the CRT off, page changes are a plain fade */
+html.no-crt.crt-leaving .screen { animation: plain-fade-out 0.62s ease forwards; }
+html.no-crt.crt-entering .screen { animation: plain-fade-in 0.9s ease both; }
+
+@keyframes plain-fade-out { to { opacity: 0; } }
+@keyframes plain-fade-in { from { opacity: 0; } }
+
+/* ============ Custom cursor (sprites are drawn in scripts/fx.js) ============ */
+html.custom-cursor,
+html.custom-cursor * {
+  cursor: none !important;
+}
+
+.tt-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  z-index: 100000;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+  opacity: 0;
+  will-change: transform;
+}
+
+.tt-cursor-shadow {
+  z-index: 99999;
+  filter: brightness(0) blur(1px);
+}
+
+html:not(.custom-cursor) .tt-cursor { display: none; }
+html.custom-cursor .tt-cursor.visible { opacity: 1; }
+html.custom-cursor .tt-cursor-shadow.visible { opacity: 0.4; }
+
+/* ============ Options panel (shared by menu and pause screen) ============ */
+.opt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 4px;
+  border-bottom: 2px dashed rgba(163, 207, 164, 0.18);
+  font-size: clamp(8px, 1.3vw, 13px);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.opt-label { flex: 1 1 auto; }
+
+.opt-row input[type="range"] {
+  flex: 0 1 42%;
+  accent-color: var(--ink-dim);
+}
+
+.opt-value {
+  flex: none;
+  width: 4.5em;
+  text-align: right;
+}
+
+.opt-toggle {
+  flex: none;
+  min-width: 9em;
+  padding: 10px 14px;
+  background: var(--btn);
+  color: #fff;
+  border-style: solid;
+  border-width: 2px 4px 4px 2px;
+  border-color: var(--bevel-light) var(--bevel-dark) var(--bevel-dark) var(--bevel-light);
+  border-radius: 0;
+  font: inherit;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.opt-toggle:hover,
+.opt-toggle:focus-visible {
+  background: #70767b;
+  outline: none;
+}
+
+.opt-toggle[aria-pressed="false"] {
+  background: #484d50;
+  color: #9aa3a0;
+}
+
+.opt-toggle:active {
+  border-width: 4px 0 0 4px;
+  border-color: var(--bevel-dark);
+}
+
+.opt-reset {
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  background: var(--danger);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-cursor-shadow { transition: none; }
+}

@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Traffic &amp; Trade</title>
 
-  <script>if (sessionStorage.getItem("tt-crt-transition")) document.documentElement.classList.add("crt-entering");</script>
+  <script>
+    try { if (JSON.parse(localStorage.getItem("tt-settings") || "{}").crt === false) document.documentElement.classList.add("no-crt"); } catch (e) {}
+    if (sessionStorage.getItem("tt-crt-transition")) document.documentElement.classList.add("crt-entering");
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,26 +32,18 @@
       <a href="game.html">
         <button class="menu-btn btn" type="button">START</button>
       </a>
-      <button class="menu-btn options-btn btn" type="button">OPTIONS</button>
+      <button class="menu-btn options-btn btn" type="button" data-sfx="gear">OPTIONS</button>
       <button class="menu-btn btn" type="button">CREDITS</button>
-
-      <div class="options-menu">
-        <div style="position: relative; padding-bottom: 50px;">
-          <p style="text-align: center;">Options</p>
-          <button class="close-menu-btn btn">X</button>
-        </div>
-        <div style="display: flex; flex-direction: column; font-size: 12px;">
-          <div class="sound-slider">
-            <p>Sound</p>
-            <input type="range" name="sound" id="">
-          </div>
-          <div class="music-slider">
-            <p class="music">Music</p>
-            <input type="range" name="music" id="">
-          </div>
-        </div>
-      </div>
     </nav>
+
+    <!-- moved out of <nav> so it can be a proper centered panel -->
+    <div class="options-menu" role="dialog" aria-label="Options">
+      <div class="options-head">
+        <p>OPTIONS</p>
+        <button class="close-menu-btn btn" type="button" data-sfx="gearClose">X</button>
+      </div>
+      <div id="options-body"></div>
+    </div>
   </main>
 
   <div class="black-overlay"></div>
