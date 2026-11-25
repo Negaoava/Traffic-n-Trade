@@ -6,7 +6,12 @@ import { buildOptionsPanel } from "./options_panel.js";
 
 initUiSounds();
 initCursor();
-initCamera({ root: document.querySelector(".screen") });
+initCamera({
+    layers: [
+        { el: document.querySelector(".title-container"), k: 1 },
+        { el: document.querySelector(".menu"), k: 0.6, extra: true }
+    ]
+});
 
 const optionsBtn = document.querySelector('.options-btn');
 const closeOptionsBtn = document.querySelector('.close-menu-btn');

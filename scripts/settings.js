@@ -3,12 +3,16 @@ const KEY = "tt-settings";
 const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 export const hasFinePointer = window.matchMedia?.("(hover: hover) and (pointer: fine)").matches ?? true;
 
+// phones/tablets and weak machines get the lighter graphics by default ("auto")
+const looksWeak = !hasFinePointer || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+
 // ms per character for the NPC dialogue (0 = instant)
 export const TEXT_SPEEDS = { slow: 45, normal: 28, fast: 12, instant: 0 };
 
 const DEFAULTS = {
     sfxVolume: 80,
     musicVolume: 80,      // stored already; plug your music player into onSettingChange later
+    quality: "auto",      // "auto" | "high" | "low"
     crt: true,
     flicker: !prefersReduced,
     cursor: true,
@@ -29,10 +33,15 @@ function save() {
     try { localStorage.setItem(KEY, JSON.stringify(settings)); } catch { /* storage blocked */ }
 }
 
+export function isLite() {
+    return settings.quality === "low" || (settings.quality !== "high" && looksWeak);
+}
+
 export function applySettings() {
     const root = document.documentElement;
     root.classList.toggle("no-crt", !settings.crt);
     root.classList.toggle("no-flicker", !settings.flicker);
+    root.classList.toggle("lite", isLite());
     root.classList.toggle("custom-cursor", settings.cursor && hasFinePointer);
 }
 

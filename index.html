@@ -16,6 +16,16 @@
 
   <link rel="stylesheet" href="styles/crt.css">
   <link rel="stylesheet" href="styles/main_menu.css">
+
+  <script>
+    try {
+        var s = JSON.parse(localStorage.getItem("tt-settings") || "{}"), c = document.documentElement.classList;
+        if (s.crt === false) c.add("no-crt");
+        var weak = !matchMedia("(hover: hover) and (pointer: fine)").matches || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+        if (s.quality === "low" || (s.quality !== "high" && weak)) c.add("lite");
+    } catch (e) {}
+    if (sessionStorage.getItem("tt-crt-transition")) document.documentElement.classList.add("crt-entering");
+  </script>
 </head>
 <body>
   <main class="screen">

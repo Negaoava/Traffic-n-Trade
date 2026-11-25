@@ -5,6 +5,7 @@ import { play } from "./sfx.js";
 const ROWS = [
     { key: "sfxVolume", label: "SOUND", type: "slider" },
     { key: "musicVolume", label: "MUSIC", type: "slider" },
+    { key: "quality", label: "GRAPHICS", type: "cycle", values: ["auto", "high", "low"] },
     { key: "crt", label: "CRT EFFECT", type: "toggle" },
     { key: "flicker", label: "SCREEN FLICKER", type: "toggle" },
     { key: "cursor", label: "CUSTOM CURSOR", type: "toggle" },

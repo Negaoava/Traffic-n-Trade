@@ -256,7 +256,8 @@
 .osd             { translate: calc(var(--cam-x, 0px) * -0.6) calc(var(--cam-y, 0px) * -0.6); }
 
 /* CRT off: drop the RGB-split glitch, keep the pulsing */
-html.no-crt .title {
+html.no-crt .title,
+html.lite .title {
   animation:
     title-scaling 0.65s ease-in-out infinite alternate,
     boot-in 0.9s steps(9) backwards;

@@ -1,6 +1,4 @@
 
-/* requires styles/crt.css to be loaded first */
-
 /* ================= SCREEN ================= */
 .office-screen {
   height: 100vh;
@@ -767,13 +765,7 @@
   }
 }
 
-/* =====================================================================
-   WEEK THEMES / CAMERA / EXTRAS
-   ===================================================================== */
 
-/* ---------- Mouse camera (+ punch / shake) ----------
-   --cam-x / --cam-y are set from scripts/fx.js.
-   The far wall moves less than the desk and paper for parallax. */
 .camera {
   position: absolute;
   inset: 0;
@@ -1515,3 +1507,81 @@ html.no-flicker .garland {
   font-weight: normal;
   color: #e8c46a;
 }
+
+/* ------ perfomance stylings ------ */
+
+.scene {
+  transition: transform 1s cubic-bezier(0.3, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+.scene.zoomed { filter: none; }
+
+.scene::before { /* the dimming that replaces brightness(0.35) */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background: #000;
+  opacity: 0;
+  transition: opacity 1s ease;
+  will-change: opacity;
+}
+
+.scene.zoomed::before { opacity: 0.65; }
+
+/* 2. Paper: slides with transform only (left/top transitions re-layout every frame).
+      Starts 26vw right / 40vh down from the center = where it used to sit on the desk. */
+.paper {
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(-50% + 26vw), calc(-50% + 40vh)) rotate(7deg) scale(0.2);
+  transform: translate(calc(-50% + 26vw), calc(-50% + 40dvh)) rotate(7deg) scale(0.2);
+  transition: transform 0.9s cubic-bezier(0.3, 0.7, 0.2, 1);
+  will-change: transform;
+}
+
+/* 3. Rain: move whole layers with transform instead of animating background-position */
+.rain::before { top: -200px; will-change: transform; }
+.rain::after  { top: -140px; will-change: transform; }
+@keyframes rain-fall       { to { transform: translateY(200px); } }
+@keyframes rain-fall-small { to { transform: translateY(140px); } }
+
+/* 4. Midnight: a filter on the walking NPC re-blends every frame; the dark tint already covers it */
+.office-screen[data-theme="midnight"] .npc { filter: none; }
+
+/* 5. The clock ticks once per second instead of redrawing 60 times per second */
+.clock::before { animation-timing-function: steps(60); }
+.clock::after  { animation-timing-function: steps(60); }
+
+/* 6. Camera layers get their own GPU layer, so shaking doesn't repaint the scene */
+.camera { will-change: transform; }
+.camera .wall,
+.camera .desk { will-change: transform; }
+
+/* 7. While the paper is open the scene is dimmed: pause its decorations */
+.scene.zoomed .rain::before,
+.scene.zoomed .rain::after,
+.scene.zoomed .flash,
+.scene.zoomed .bats span,
+.scene.zoomed .garland,
+.scene.zoomed .clock::before,
+.scene.zoomed .clock::after,
+.scene.zoomed::after { animation-play-state: paused; }
+
+/* 8. Decision timer bar: 4 updates per second instead of 10 */
+#paper-timer-fill {
+  transition: transform 0.25s linear;
+  will-change: transform;
+}
+
+/* 9. LITE graphics (phones / weak devices / GRAPHICS: LOW) */
+html.lite .rain::after,
+html.lite .flash { display: none; }
+html.lite .bats span:nth-child(n + 2) { display: none; }
+html.lite .scene::after,
+html.lite .garland { animation: none; }
+html.lite .camera .wall,
+html.lite .camera .desk { will-change: auto; }
+html.lite .paper { box-shadow: inset 0 0 20px rgba(60, 80, 50, 0.35), 0 4px 10px rgba(0, 0, 0, 0.5); }

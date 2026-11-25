@@ -258,3 +258,69 @@ html.custom-cursor .tt-cursor-shadow.visible { opacity: 0.4; }
 @media (prefers-reduced-motion: reduce) {
   .tt-cursor-shadow { transition: none; }
 }
+
+/* =====================================================================
+   PERFORMANCE PASS - append to the very end of crt.css
+   ===================================================================== */
+
+/* page-change zoom: transform + opacity only (the old version also animated blur) */
+html.crt-leaving .screen,
+html.crt-entering .screen { will-change: transform, opacity; }
+
+@keyframes crt-zoom-in {
+  0%   { transform: scale(1);         opacity: 1; }
+  60%  { transform: scale(1.9);       opacity: 1; }
+  100% { transform: scale(3.2, 0.05); opacity: 0; }
+}
+
+@keyframes crt-zoom-out {
+  0%   { transform: scale(3.2, 0.05); opacity: 0; }
+  35%  { transform: scale(1.9);       opacity: 1; }
+  100% { transform: scale(1);         opacity: 1; }
+}
+
+/* desktop only: the brightness flash comes back (cheap, unlike blur) */
+@keyframes crt-zoom-in-bright {
+  0%   { transform: scale(1);         filter: brightness(1);   opacity: 1; }
+  60%  { transform: scale(1.9);       filter: brightness(1.8); opacity: 1; }
+  100% { transform: scale(3.2, 0.05); filter: brightness(5);   opacity: 0; }
+}
+
+@keyframes crt-zoom-out-bright {
+  0%   { transform: scale(3.2, 0.05); filter: brightness(5);   opacity: 0; }
+  35%  { transform: scale(1.9);       filter: brightness(1.8); opacity: 1; }
+  100% { transform: scale(1);         filter: brightness(1);   opacity: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lite):not(.no-crt).crt-leaving .screen  { animation-name: crt-zoom-in-bright; }
+  html:not(.lite):not(.no-crt).crt-entering .screen { animation-name: crt-zoom-out-bright; }
+}
+
+/* LITE graphics: no glow, no noise, no rolling bar, square corners */
+html.lite:not(.no-crt) .screen {
+  border-radius: 0;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);
+}
+
+html.lite .screen,
+html.lite .screen *,
+html.lite .screen *::before,
+html.lite .screen *::after { text-shadow: none !important; }
+
+html.lite .screen::before {
+  animation: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.24) 3px,
+    rgba(0, 0, 0, 0.24) 4px
+  );
+}
+
+html.lite .screen::after { display: none; }
+
+/* phones: no 300ms tap delay, no pull-to-refresh, no grey tap flash */
+html { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+html, body { overscroll-behavior: none; }

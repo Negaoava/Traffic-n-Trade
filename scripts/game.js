@@ -155,7 +155,14 @@ const optTexts = { A: document.getElementById("opt-A-text"), B: document.getElem
 
 initUiSounds();
 initCursor();
-const camera = initCamera({ root: screen });
+const camera = initCamera({
+    layers: [
+        { el: document.getElementById("camera"), k: 1 },
+        { el: document.querySelector(".wall"), k: -0.55, extra: true }, // far layer moves less...
+        { el: document.querySelector(".desk"), k: 0.3, extra: true },
+        { el: paper, k: 0.45, extra: true }                              // ...near layers move more
+    ]
+});
 
 /* ---------------- State ---------------- */
 let pillars;
@@ -396,7 +403,7 @@ function startTimer() {
     let lastWhole = Infinity;
     timerHandle = setInterval(() => {
         if (overlayOpen) return; // paused
-        elapsed += 100;
+        elapsed += 250;
         const left = Math.max(0, total - elapsed);
         timerFill.style.transform = `scaleX(${left / total})`;
         timerEl.classList.toggle("urgent", left / total < 0.3);
@@ -409,7 +416,7 @@ function startTimer() {
             stopTimer();
             onTimeout();
         }
-    }, 100);
+    }, 250);
 }
 
 function onTimeout() {
