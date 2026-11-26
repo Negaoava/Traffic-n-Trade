@@ -1,5 +1,6 @@
 import { settings } from "./settings.js";
 import { play } from "./sfx.js";
+import { stopMusic } from "./music.js";
 
 const KEY = "tt-crt-transition";
 const LEAVE_MS = 620;
@@ -9,6 +10,7 @@ export function navigateWithTransition(url) {
   if (root.classList.contains("crt-leaving")) return;
   sessionStorage.setItem(KEY, "1");
   root.classList.add("crt-leaving");
+  stopMusic(0.55);
   if (settings.crt) play("crtZoomIn");
   setTimeout(() => {
     window.location.href = url;

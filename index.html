@@ -43,7 +43,7 @@
         <button class="menu-btn btn" type="button">START</button>
       </a>
       <button class="menu-btn options-btn btn" type="button" data-sfx="gear">OPTIONS</button>
-      <button class="menu-btn btn" type="button">CREDITS</button>
+      <button class="menu-btn btn credits-btn" type="button">CREDITS</button>
     </nav>
 
     <!-- moved out of <nav> so it can be a proper centered panel -->
@@ -53,6 +53,14 @@
         <button class="close-menu-btn btn" type="button" data-sfx="gearClose">X</button>
       </div>
       <div id="options-body"></div>
+    </div>
+
+    <div class="options-menu credits-menu" role="dialog" aria-label="Credits">
+      <div class="options-head">
+        <p>CREDITS</p>
+        <button class="close-credits-btn close-menu-btn btn" type="button" data-sfx="gearClose">X</button>
+      </div>
+      <div id="credits-body"></div>
     </div>
   </main>
 

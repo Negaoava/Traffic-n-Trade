@@ -6,6 +6,7 @@ import { play, footsteps, setAmbience, initUiSounds } from "./sfx.js";
 import { initCursor, initCamera } from "./fx.js";
 import { buildOptionsPanel } from "./options_panel.js";
 import { WEEK, DAYS_IN_WEEK, TIMEOUT_PENALTY, drawCard, rollEffects, evaluateEnding, hasFlagReq } from "./rules.js";
+import { playMusic, stopMusic, musicForTheme } from "./music.js";
 
 const allCards = { ...cards, ...specialCards };
 
@@ -546,6 +547,8 @@ function applyTheme() {
     screen.style.setProperty("--clock-h", `-${(h % 12) * 60 + m}s`);
     screen.style.setProperty("--clock-m", `-${m}s`);
     setAmbience(AMBIENCE[dayCfg.theme] || null);
+    setAmbience(AMBIENCE[dayCfg.theme] || null);
+    playMusic(musicForTheme(dayCfg.theme), 1.5); // each day crossfades into its own song
 }
 
 async function showDayIntro() {
@@ -764,6 +767,7 @@ function showEnding() {
 function showGameOver(reason) {
     const panel = createOverlay("Game Over", "gameover");
     play("gameOver");
+    stopMusic(0.6);
     camera.shake(14, 700);
 
     const text = document.createElement("p");

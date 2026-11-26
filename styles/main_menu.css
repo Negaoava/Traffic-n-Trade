@@ -262,3 +262,26 @@ html.lite .title {
     title-scaling 0.65s ease-in-out infinite alternate,
     boot-in 0.9s steps(9) backwards;
 }
+
+/* ---------- Credits ---------- */
+.credits-menu { text-align: center; }
+.cr-team { display: grid; gap: 22px; padding: 6px 0 20px; }
+.cr-role { margin: 0 0 8px; font-size: clamp(7px, 1.1vw, 10px); color: var(--ink-dim); letter-spacing: 0.12em; }
+.cr-name { margin: 0; font-size: clamp(10px, 1.7vw, 16px); }
+.cr-heading {
+  margin: 8px 0 4px;
+  padding-top: 18px;
+  border-top: 2px dashed rgba(163, 207, 164, 0.18);
+  font-size: clamp(9px, 1.4vw, 13px);
+}
+.cr-track {
+  padding: 14px 4px;
+  border-bottom: 2px dashed rgba(163, 207, 164, 0.18);
+  text-align: left;
+  font-size: clamp(7px, 1.1vw, 10px);
+  line-height: 1.9;
+}
+.cr-title { margin: 0 0 4px; font-size: clamp(8px, 1.3vw, 12px); }
+.cr-line { margin: 0; color: var(--ink-dim); }
+.cr-plays { margin: 4px 0 0; }
+.cr-note { margin: 18px 0 0; font-size: clamp(6px, 1vw, 9px); line-height: 2; color: var(--ink-dim); }

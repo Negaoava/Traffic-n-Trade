@@ -3,6 +3,8 @@ import { navigateWithTransition } from "./transition.js";
 import { initUiSounds } from "./sfx.js";
 import { initCursor, initCamera } from "./fx.js";
 import { buildOptionsPanel } from "./options_panel.js";
+import { playMusic } from "./music.js";
+import { buildCredits } from "./credits.js";
 
 initUiSounds();
 initCursor();
@@ -13,28 +15,41 @@ initCamera({
     ]
 });
 
+// Mega Man 8 Stage Select (starts on the first click/tap if the browser blocks autoplay)
+playMusic("menu", 0.8);
+
 const optionsBtn = document.querySelector('.options-btn');
 const closeOptionsBtn = document.querySelector('.close-menu-btn');
 const optionsMenu = document.querySelector('.options-menu');
 const optionsBody = document.getElementById('options-body');
+const creditsBtn = document.querySelector('.credits-btn');
+const closeCreditsBtn = document.querySelector('.close-credits-btn');
+const creditsMenu = document.querySelector('.credits-menu');
+const creditsBody = document.getElementById('credits-body');
 const blackOverlay = document.querySelector('.black-overlay');
 
 buildOptionsPanel(optionsBody);
+buildCredits(creditsBody);
 
-function openOptions() {
-    blackOverlay.classList.add('black-overlay-active');
-    optionsMenu.classList.add('options-menu-active');
-}
-
-function closeOptions() {
+function closePanels() {
     blackOverlay.classList.remove('black-overlay-active');
     optionsMenu.classList.remove('options-menu-active');
+    creditsMenu.classList.remove('options-menu-active');
 }
 
-optionsBtn.addEventListener('click', openOptions);
-closeOptionsBtn.addEventListener('click', closeOptions);
+function openPanel(panel) {
+    closePanels();
+    blackOverlay.classList.add('black-overlay-active');
+    panel.classList.add('options-menu-active');
+    panel.scrollTop = 0;
+}
+
+optionsBtn.addEventListener('click', () => openPanel(optionsMenu));
+creditsBtn.addEventListener('click', () => openPanel(creditsMenu));
+closeOptionsBtn.addEventListener('click', closePanels);
+closeCreditsBtn.addEventListener('click', closePanels);
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeOptions();
+    if (e.key === 'Escape') closePanels();
 });
 
 // Links go through the CRT zoom transition
