@@ -927,6 +927,30 @@ function toggleDebug() {
 window.addEventListener("blur", () => heldKeys.clear());
 document.addEventListener("keyup", (e) => heldKeys.delete(e.key.toLowerCase()));
 
+
+/* ---------------- Mobile debug trigger (3-finger touch) ---------------- */
+let debugTouchTriggered = false;
+
+document.addEventListener("touchstart", (e) => {
+    if (e.touches.length >= 3 && !debugTouchTriggered) {
+        e.preventDefault();
+
+        debugTouchTriggered = true;
+        toggleDebug();
+    }
+}, { passive: false });
+
+function resetDebugTouch(e) {
+    if (e.touches.length < 3) {
+        debugTouchTriggered = false;
+    }
+}
+
+
+document.addEventListener("touchend", resetDebugTouch);
+document.addEventListener("touchcancel", resetDebugTouch);
+
+
 /* ---------------- Events ---------------- */
 for (const key of ["A", "B"]) {
     optionBtns[key].addEventListener("click", () => {
