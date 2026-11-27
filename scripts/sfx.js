@@ -1,5 +1,3 @@
-/* Sound effects. The two .mp3 files are played as files; everything else is
-   synthesized with the Web Audio API, so there are no extra assets to download. */
 import { settings, onSettingChange } from "./settings.js";
 
 const clickAudio = new Audio(new URL("../sfx/button_click.mp3", import.meta.url));
@@ -44,8 +42,6 @@ for (const ev of ["pointerdown", "keydown"]) {
     }, { capture: true, passive: true });
 }
 
-// runs fn(startTime) now, or right after the context wakes up. Sounds that would
-// play long after being requested (autoplay-blocked) are dropped instead of piling up.
 function run(fn) {
     const c = getCtx();
     if (!c || curve() <= 0) return;
@@ -60,7 +56,6 @@ function env(g, t, peak, attack, dur) {
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
 }
 
-// f = start frequency, to = end frequency (glide), at = delay in seconds
 function tone(t0, { f = 440, to, type = "square", dur = 0.1, vol = 0.1, at = 0, attack = 0.004 }) {
     const t = t0 + at;
     const o = ctx.createOscillator(), g = ctx.createGain();

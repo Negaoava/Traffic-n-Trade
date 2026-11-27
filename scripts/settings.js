@@ -1,4 +1,4 @@
-/* Player settings: saved in localStorage, applied to <html> as classes. */
+/* Player settings: saved in localStorage, applied to html as classes. */
 const KEY = "tt-settings";
 const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 export const hasFinePointer = window.matchMedia?.("(hover: hover) and (pointer: fine)").matches ?? true;

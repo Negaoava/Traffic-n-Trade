@@ -184,6 +184,7 @@ let overlayKind = null;
 let paperReady = false;
 let skipTyping = null;
 let timerHandle = null;
+let runId = 0; // bumped by the debug day-jump so stale async flows stop themselves
 
 /* ---------------- Helpers ---------------- */
 function clamp(value) {
@@ -337,6 +338,7 @@ function checkGameOver() {
 
 /* ---------------- NPC ---------------- */
 async function npcEnter(data) {
+    const run = runId;
     const fromRight = Math.random() < 0.5;
     npc.style.setProperty("--from", fromRight ? "60vw" : "-60vw");
     npc.style.setProperty("--to", fromRight ? "-60vw" : "60vw");
@@ -350,13 +352,16 @@ async function npcEnter(data) {
     npc.className = "npc walking-in";
     footsteps(5, 330, true);
     await waitAnimation(npc, 2200);
+    if (run !== runId) return;
     npc.className = "npc standing";
 }
 
 async function npcLeave() {
+    const run = runId;
     npc.className = "npc walking-out";
     footsteps(4, 300, false);
     await waitAnimation(npc, 1600);
+    if (run !== runId) return;
     npc.className = "npc";
 }
 
@@ -430,6 +435,7 @@ function onTimeout() {
 
 /* ---------------- Turn flow ---------------- */
 async function nextCard() {
+    const run = runId;
     paperReady = false;
     refreshOptions();
 
@@ -438,6 +444,7 @@ async function nextCard() {
     updateHud();
 
     await npcEnter(data);
+    if (run !== runId) return;
 
     speechName.textContent = `${data.name} · ${data.role}`;
     speechText.textContent = "";
@@ -446,7 +453,9 @@ async function nextCard() {
     const themed = THEME_LINES[dayCfg.theme];
     const line = pickedCard.flavor || (themed && Math.random() < 0.45 ? randomItem(themed) : randomItem(data.lines));
     await typeText(speechText, line, data.voice);
+    if (run !== runId) return;
     await sleep(800);
+    if (run !== runId) return;
     speech.classList.remove("visible");
 
     fillPaper(pickedCard);
@@ -455,6 +464,7 @@ async function nextCard() {
         setTimeout(() => { play("alert"); camera.shake(6, 250); }, 800);
     }
     await sleep(1000);
+    if (run !== runId) return;
 
     paperReady = true;
     refreshOptions();
@@ -463,6 +473,7 @@ async function nextCard() {
 
 async function handleChoice(choice, { timeout = false } = {}) {
     if (overlayOpen || !paperReady) return;
+    const run = runId;
 
     paperReady = false;
     stopTimer();
@@ -480,6 +491,7 @@ async function handleChoice(choice, { timeout = false } = {}) {
     if (result.swing >= 10) camera.shake(4 + result.swing / 2, 300);
 
     await sleep(450);
+    if (run !== runId) return;
     optionBtns[other].classList.add("crossed");
     play("penCross");
 
@@ -493,10 +505,13 @@ async function handleChoice(choice, { timeout = false } = {}) {
     } else {
         await sleep(1100);
     }
+    if (run !== runId) return;
 
     closePaper();
     await sleep(900);
+    if (run !== runId) return;
     await npcLeave();
+    if (run !== runId) return;
 
     advance();
 }
@@ -581,10 +596,12 @@ async function showDayIntro() {
 }
 
 async function beginDay() {
+    const run = runId;
     dayCfg = WEEK[Math.min(day, WEEK.length) - 1];
     applyTheme();
     updateHud();
     await showDayIntro();
+    if (run !== runId) return;
     nextCard();
 }
 
@@ -787,6 +804,129 @@ function showGameOver(reason) {
     panel.appendChild(createButton("Jogar de novo", startGame));
 }
 
+/* ---------------- Debug menu (C + M) ---------------- */
+let debugEl = null;
+let debugPrevOpen = false;
+const heldKeys = new Set();
+
+function closeDebug() {
+    if (!debugEl) return;
+    debugEl.remove();
+    debugEl = null;
+    overlayOpen = debugPrevOpen; // restores whatever overlay was open before
+    refreshOptions();
+}
+
+function debugJumpToDay(target) {
+    runId++; // cancels any in-flight nextCard / handleChoice / beginDay
+    day = Math.max(1, Math.min(DAYS_IN_WEEK, target));
+    choicesMade = 0;
+    totalChoices = (day - 1) * CHOICES_PER_DAY;
+    dayStartPillars = { ...pillars };
+    lastNpcKey = null;
+    lastCategory = null;
+
+    closeDebug();
+    closeOverlay();
+    document.querySelectorAll(".day-intro").forEach(el => el.remove());
+    resetScene();
+    beginDay();
+}
+
+function openDebug() {
+    if (debugEl) return;
+    debugPrevOpen = overlayOpen;
+    overlayOpen = true;
+    refreshOptions();
+
+    debugEl = document.createElement("div");
+    debugEl.className = "debug-overlay";
+
+    const panel = document.createElement("div");
+    panel.className = "overlay-panel debug-panel";
+
+    const title = document.createElement("h2");
+    title.className = "overlay-title";
+    title.innerText = "DEBUG";
+    panel.appendChild(title);
+
+    // --- pillars ---
+    for (const name in PILLAR_CONFIG) {
+        const row = document.createElement("div");
+        row.className = "debug-row";
+
+        const label = document.createElement("span");
+        label.innerText = name;
+
+        const range = document.createElement("input");
+        range.type = "range";
+        range.min = MIN_VALUE;
+        range.max = MAX_VALUE;
+        range.value = pillars[name];
+
+        const num = document.createElement("input");
+        num.type = "number";
+        num.min = MIN_VALUE;
+        num.max = MAX_VALUE;
+        num.value = pillars[name];
+
+        const apply = (raw) => {
+            const v = clamp(Math.round(Number(raw) || 0));
+            pillars[name] = v;
+            range.value = v;
+            if (document.activeElement !== num) num.value = v;
+        };
+        range.addEventListener("input", () => { apply(range.value); num.value = range.value; });
+        num.addEventListener("input", () => apply(num.value));
+        num.addEventListener("blur", () => { num.value = pillars[name]; });
+
+        row.append(label, range, num);
+        panel.appendChild(row);
+    }
+
+    const warn = document.createElement("p");
+    warn.className = "overlay-note";
+    warn.innerText = "A pillar at 0 or 100 triggers game over on the next choice.";
+    panel.appendChild(warn);
+
+    // --- day jump ---
+    const dayRow = document.createElement("div");
+    dayRow.className = "debug-row debug-day-row";
+
+    const dayLabel = document.createElement("span");
+    dayLabel.innerText = "Day";
+
+    const select = document.createElement("select");
+    select.className = "debug-select";
+    WEEK.forEach((w, i) => {
+        const opt = document.createElement("option");
+        opt.value = i + 1;
+        opt.textContent = `${i + 1} · ${w.name}`;
+        if (i + 1 === day) opt.selected = true;
+        select.appendChild(opt);
+    });
+
+    dayRow.append(dayLabel, select);
+    panel.appendChild(dayRow);
+
+    const actions = document.createElement("div");
+    actions.className = "debug-actions";
+    actions.appendChild(createButton("JUMP TO DAY", () => debugJumpToDay(Number(select.value))));
+    actions.appendChild(createButton("CLOSE", closeDebug));
+    panel.appendChild(actions);
+
+    debugEl.appendChild(panel);
+    screen.appendChild(debugEl);
+}
+
+function toggleDebug() {
+    if (debugEl) closeDebug();
+    else openDebug();
+}
+
+window.addEventListener("blur", () => heldKeys.clear());
+document.addEventListener("keyup", (e) => heldKeys.delete(e.key.toLowerCase()));
+
 /* ---------------- Events ---------------- */
 for (const key of ["A", "B"]) {
     optionBtns[key].addEventListener("click", () => {
@@ -802,6 +942,20 @@ for (const key of ["A", "B"]) {
 scene.addEventListener("click", () => skipTyping && skipTyping());
 
 document.addEventListener("keydown", (e) => {
+    heldKeys.add(e.key.toLowerCase());
+
+    // debug chord: hold C and M together (any order)
+    if (!e.repeat && heldKeys.has("c") && heldKeys.has("m")) {
+        e.preventDefault();
+        toggleDebug();
+        return;
+    }
+
+    if (debugEl) {
+        if (e.key === "Escape") closeDebug();
+        return; // nothing else reacts while the debug menu is open
+    }
+
     if (e.key === "Escape") {
         if (overlayKind === "pause") closeOverlay();
         else if (overlayKind === "options") showPauseMenu();

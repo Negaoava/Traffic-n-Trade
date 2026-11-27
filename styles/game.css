@@ -1585,3 +1585,66 @@ html.lite .garland { animation: none; }
 html.lite .camera .wall,
 html.lite .camera .desk { will-change: auto; }
 html.lite .paper { box-shadow: inset 0 0 20px rgba(60, 80, 50, 0.35), 0 4px 10px rgba(0, 0, 0, 0.5); }
+
+/* ================= DEBUG MENU ================= */
+.debug-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.debug-panel {
+  width: min(92%, 640px);
+}
+
+.debug-panel .overlay-title {
+  margin-bottom: 20px;
+}
+
+.debug-row {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr 80px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: clamp(9px, 1.4vw, 14px);
+}
+
+.debug-day-row {
+  grid-template-columns: 1.2fr 3fr;
+  margin-top: 20px;
+}
+
+.debug-row input[type="range"] {
+  width: 100%;
+  accent-color: #a3cfa4;
+}
+
+.debug-row input[type="number"],
+.debug-select {
+  width: 100%;
+  padding: 6px;
+  font-family: inherit;
+  font-size: inherit;
+  background: #000;
+  color: #a3cfa4;
+  border: 2px solid #222;
+  border-radius: 0;
+}
+
+.debug-panel .debug-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.debug-panel .debug-actions .option-btn {
+  flex: 1;
+  width: auto;
+  min-height: 56px;
+  margin-top: 0;
+}

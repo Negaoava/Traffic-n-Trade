@@ -1,5 +1,3 @@
-/* Pure game rules (no DOM). Everything here can be tested in Node. */
-
 export const DAYS_IN_WEEK = 7;
 export const FOLLOWUP_CHANCE = 0.5;               // chance a "consequence" card shows up when one is ready
 export const TIMEOUT_PENALTY = { Investidores: -2 }; // applied when the decision timer runs out
